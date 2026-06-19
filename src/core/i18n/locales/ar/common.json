@@ -1,0 +1,99 @@
+{
+  "appName": "المجمع الطبي",
+  "nav": {
+    "dashboard": "الرئيسية",
+    "appointments": "المواعيد",
+    "patients": "المرضى",
+    "doctors": "الأطباء",
+    "visits": "الزيارات",
+    "prescriptions": "الوصفات الطبية",
+    "labResults": "نتائج المختبر",
+    "labRequests": "طلبات المختبر",
+    "dispensing": "صرف الأدوية",
+    "facilities": "المنشآت",
+    "departments": "الأقسام",
+    "specializations": "التخصصات",
+    "pharmacists": "الصيادلة",
+    "labStaff": "طاقم المختبر",
+    "schedule": "الجدول الزمني",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "groups": {
+      "admin": "الإدارة",
+      "doctor": "الطبيب",
+      "patient": "المريض",
+      "pharmacist": "الصيدلي",
+      "lab": "المختبر"
+    }
+  },
+  "layout": {
+    "openSidebar": "فتح القائمة",
+    "closeSidebar": "إغلاق القائمة",
+    "welcome": "مرحباً",
+    "guest": "زائر",
+    "sidebarHint": "مرّر للأسفل لعرض المزيد"
+  },
+  "actions": {
+    "add": "إضافة",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "search": "بحث",
+    "filter": "تصفية",
+    "view": "عرض",
+    "close": "إغلاق",
+    "submit": "إرسال",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "loading": "جاري التحميل...",
+    "noData": "لا توجد بيانات",
+    "export": "تصدير",
+    "print": "طباعة"
+  },
+  "common": {
+    "name": "الاسم",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "notes": "ملاحظات",
+    "type": "النوع",
+    "id": "الرقم",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "actions": "إجراءات",
+    "yes": "نعم",
+    "no": "لا",
+    "all": "الكل",
+    "welcome": "مرحباً"
+  },
+  "status": {
+    "pending": "قيد الانتظار",
+    "confirmed": "مؤكد",
+    "completed": "مكتمل",
+    "cancelled": "ملغى",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "in_progress": "قيد التنفيذ"
+  },
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن",
+    "toggle": "تبديل المظهر"
+  },
+  "language": {
+    "ar": "العربية",
+    "en": "English",
+    "toggle": "تغيير اللغة"
+  },
+  "errors": {
+    "generic": "حدث خطأ ما، حاول مرة أخرى",
+    "network": "تعذر الاتصال بالخادم",
+    "notFound": "الصفحة غير موجودة",
+    "unauthorized": "غير مصرح لك بالوصول لهذه الصفحة"
+  }
+}

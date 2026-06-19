@@ -1,0 +1,93 @@
+{
+  "admin": {
+    "title": "Admin dashboard",
+    "subtitle": "Overview of the healthcare system",
+    "welcome": "Welcome, {{name}}",
+    "recentAppointments": "Today's appointments",
+    "appointmentsTodayHint": "Latest appointments scheduled for today",
+    "quickLinks": "Quick links",
+    "quickLinksHint": "Jump to the most used sections",
+    "viewAll": "View all",
+    "stats": {
+      "facilities": "Facilities",
+      "doctors": "Doctors",
+      "patients": "Patients",
+      "appointmentsToday": "Today's appointments"
+    }
+  },
+  "doctor": {
+    "title": "Doctor dashboard",
+    "subtitle": "Your appointments and visits",
+    "todayAppointments": "Today's appointments",
+    "upcoming": "Upcoming appointments",
+    "myPatients": "My patients",
+    "startVisit": "Start visit"
+  },
+  "patient": {
+    "title": "My health dashboard",
+    "subtitle": "Track your appointments and health records",
+    "bookAppointment": "Book new appointment",
+    "myAppointments": "My appointments",
+    "myPrescriptions": "My prescriptions",
+    "myLabResults": "My lab results",
+    "medicalHistory": "Medical history"
+  },
+  "pharmacist": {
+    "title": "Pharmacist dashboard",
+    "subtitle": "Prescriptions and dispensing",
+    "pendingPrescriptions": "Pending prescriptions",
+    "dispenseNow": "Dispense now"
+  },
+  "lab": {
+    "title": "Lab dashboard",
+    "subtitle": "Test requests and results",
+    "pendingRequests": "Pending requests",
+    "enterResult": "Enter result"
+  },
+  "appointments": {
+    "title": "Appointments",
+    "newAppointment": "New appointment",
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "scheduledDate": "Scheduled date",
+    "startTime": "Start time",
+    "endTime": "End time",
+    "availableSlots": "Available slots",
+    "changeStatus": "Change status"
+  },
+  "visits": {
+    "title": "Visits",
+    "newVisit": "New visit",
+    "visitedAt": "Visit date",
+    "diagnosis": "Diagnosis",
+    "addDiagnosis": "Add diagnosis",
+    "diagnosisCode": "Diagnosis code",
+    "diagnosisType": "Diagnosis type"
+  },
+  "prescriptions": {
+    "title": "Prescriptions",
+    "newPrescription": "New prescription",
+    "items": "Prescription items",
+    "medicationName": "Medication name",
+    "dosage": "Dosage",
+    "quantity": "Quantity prescribed",
+    "frequency": "Frequency",
+    "duration": "Duration",
+    "dispenseQuantity": "Quantity dispensed"
+  },
+  "labResults": {
+    "title": "Lab results",
+    "test": "Test",
+    "value": "Value",
+    "unit": "Unit",
+    "referenceRange": "Reference range",
+    "completedAt": "Completed at",
+    "newResult": "New result"
+  },
+  "facilities": {
+    "title": "Facilities",
+    "newFacility": "New facility",
+    "facilityType": "Facility type",
+    "parentFacility": "Parent facility"
+  }
+}

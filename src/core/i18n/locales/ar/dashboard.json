@@ -1,0 +1,93 @@
+{
+  "admin": {
+    "title": "لوحة تحكم المدير",
+    "subtitle": "نظرة عامة على المجمع الطبي",
+    "welcome": "مرحباً، {{name}}",
+    "recentAppointments": "مواعيد اليوم",
+    "appointmentsTodayHint": "آخر المواعيد المجدولة لليوم",
+    "quickLinks": "اختصارات سريعة",
+    "quickLinksHint": "انتقل مباشرة إلى الأقسام الأكثر استخداماً",
+    "viewAll": "عرض الكل",
+    "stats": {
+      "facilities": "المنشآت",
+      "doctors": "الأطباء",
+      "patients": "المرضى",
+      "appointmentsToday": "مواعيد اليوم"
+    }
+  },
+  "doctor": {
+    "title": "لوحة تحكم الطبيب",
+    "subtitle": "مواعيدك وزياراتك",
+    "todayAppointments": "مواعيد اليوم",
+    "upcoming": "المواعيد القادمة",
+    "myPatients": "مرضاي",
+    "startVisit": "بدء الزيارة"
+  },
+  "patient": {
+    "title": "لوحتي الصحية",
+    "subtitle": "تابع مواعيدك وحالتك الصحية",
+    "bookAppointment": "حجز موعد جديد",
+    "myAppointments": "مواعيدي",
+    "myPrescriptions": "وصفاتي الطبية",
+    "myLabResults": "نتائج تحاليلي",
+    "medicalHistory": "السجل الطبي"
+  },
+  "pharmacist": {
+    "title": "لوحة تحكم الصيدلي",
+    "subtitle": "الوصفات الطبية وعمليات الصرف",
+    "pendingPrescriptions": "وصفات قيد الانتظار",
+    "dispenseNow": "صرف الآن"
+  },
+  "lab": {
+    "title": "لوحة تحكم المختبر",
+    "subtitle": "طلبات التحاليل والنتائج",
+    "pendingRequests": "طلبات قيد الانتظار",
+    "enterResult": "إدخال نتيجة"
+  },
+  "appointments": {
+    "title": "المواعيد",
+    "newAppointment": "موعد جديد",
+    "patient": "المريض",
+    "doctor": "الطبيب",
+    "scheduledDate": "تاريخ الموعد",
+    "startTime": "وقت البدء",
+    "endTime": "وقت الانتهاء",
+    "availableSlots": "الأوقات المتاحة",
+    "changeStatus": "تغيير الحالة"
+  },
+  "visits": {
+    "title": "الزيارات",
+    "newVisit": "زيارة جديدة",
+    "visitedAt": "تاريخ الزيارة",
+    "diagnosis": "التشخيص",
+    "addDiagnosis": "إضافة تشخيص",
+    "diagnosisCode": "رمز التشخيص",
+    "diagnosisType": "نوع التشخيص"
+  },
+  "prescriptions": {
+    "title": "الوصفات الطبية",
+    "newPrescription": "وصفة جديدة",
+    "items": "عناصر الوصفة",
+    "medicationName": "اسم الدواء",
+    "dosage": "الجرعة",
+    "quantity": "الكمية الموصوفة",
+    "frequency": "التكرار",
+    "duration": "المدة",
+    "dispenseQuantity": "الكمية المصروفة"
+  },
+  "labResults": {
+    "title": "نتائج المختبر",
+    "test": "التحليل",
+    "value": "القيمة",
+    "unit": "الوحدة",
+    "referenceRange": "المعدل الطبيعي",
+    "completedAt": "تاريخ الإكمال",
+    "newResult": "نتيجة جديدة"
+  },
+  "facilities": {
+    "title": "المنشآت",
+    "newFacility": "منشأة جديدة",
+    "facilityType": "نوع المنشأة",
+    "parentFacility": "المنشأة الرئيسية"
+  }
+}

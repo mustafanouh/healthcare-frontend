@@ -1,0 +1,99 @@
+{
+  "appName": "Healthcare System",
+  "nav": {
+    "dashboard": "Dashboard",
+    "appointments": "Appointments",
+    "patients": "Patients",
+    "doctors": "Doctors",
+    "visits": "Visits",
+    "prescriptions": "Prescriptions",
+    "labResults": "Lab Results",
+    "labRequests": "Lab Requests",
+    "dispensing": "Dispensing",
+    "facilities": "Facilities",
+    "departments": "Departments",
+    "specializations": "Specializations",
+    "pharmacists": "Pharmacists",
+    "labStaff": "Lab Staff",
+    "schedule": "Schedule",
+    "settings": "Settings",
+    "profile": "Profile",
+    "groups": {
+      "admin": "Administration",
+      "doctor": "Doctor",
+      "patient": "Patient",
+      "pharmacist": "Pharmacist",
+      "lab": "Laboratory"
+    }
+  },
+  "layout": {
+    "openSidebar": "Open sidebar",
+    "closeSidebar": "Close sidebar",
+    "welcome": "Welcome",
+    "guest": "Guest",
+    "sidebarHint": "Scroll for more items"
+  },
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "search": "Search",
+    "filter": "Filter",
+    "view": "View",
+    "close": "Close",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "export": "Export",
+    "print": "Print"
+  },
+  "common": {
+    "name": "Name",
+    "status": "Status",
+    "date": "Date",
+    "time": "Time",
+    "notes": "Notes",
+    "type": "Type",
+    "id": "ID",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "phone": "Phone",
+    "address": "Address",
+    "actions": "Actions",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "welcome": "Welcome"
+  },
+  "status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "active": "Active",
+    "inactive": "Inactive",
+    "in_progress": "In progress"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "ar": "العربية",
+    "en": "English",
+    "toggle": "Change language"
+  },
+  "errors": {
+    "generic": "Something went wrong, please try again",
+    "network": "Could not connect to the server",
+    "notFound": "Page not found",
+    "unauthorized": "You are not authorized to view this page"
+  }
+}
