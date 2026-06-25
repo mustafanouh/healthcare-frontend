@@ -42,3 +42,6 @@ const SpecializationsPage = () => {
 };
 
 export default SpecializationsPage;
+
+
+
