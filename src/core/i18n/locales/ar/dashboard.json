@@ -77,17 +77,114 @@
   },
   "labResults": {
     "title": "نتائج المختبر",
+    "pageSubtitle": "تسجيل وإدارة نتائج التحاليل المخبرية",
     "test": "التحليل",
     "value": "القيمة",
     "unit": "الوحدة",
     "referenceRange": "المعدل الطبيعي",
     "completedAt": "تاريخ الإكمال",
-    "newResult": "نتيجة جديدة"
+    "newResult": "نتيجة جديدة",
+    "labRequestItemId": "عنصر طلب المختبر",
+    "labStaffId": "طاقم المختبر",
+    "visitId": "الزيارة",
+    "labTestId": "التحليل",
+    "requestedAt": "تاريخ الطلب",
+    "detailsTitle": "نتيجة #{{id}}",
+    "sections": {
+      "result": "تفاصيل النتيجة",
+      "request": "طلب المختبر",
+      "staff": "طاقم المختبر",
+      "meta": "تواريخ السجل"
+    }
   },
   "facilities": {
     "title": "المنشآت",
     "newFacility": "منشأة جديدة",
     "facilityType": "نوع المنشأة",
     "parentFacility": "المنشأة الرئيسية"
+  },
+  "doctors": {
+    "profileId": "معرّف الملف الشخصي",
+    "workPlacement": "المنشأة · القسم · التخصص",
+    "qualification": "المؤهل",
+    "yearsOfExperience": "سنوات الخبرة",
+    "yearsShort": "سنة",
+    "pageSubtitle": "إدارة الأطباء وملفاتهم المهنية",
+    "biography": "السيرة الذاتية",
+    "achievements": "الإنجازات",
+    "languages": "اللغات",
+    "languagesHint": "العربية، الإنجليزية، الفرنسية",
+    "detailsTitle": "طبيب #{{id}}",
+    "nationalNumber": "الرقم الوطني",
+    "gender": "الجنس",
+    "dateOfBirth": "تاريخ الميلاد",
+    "facilityType": "نوع المنشأة",
+    "sections": {
+      "professional": "المعلومات المهنية",
+      "profile": "الملف الشخصي",
+      "placement": "مكان العمل",
+      "meta": "تواريخ السجل"
+    }
+  },
+  "patients": {
+    "pageSubtitle": "إدارة سجلات المرضى وملفاتهم الطبية",
+    "userId": "معرّف المستخدم",
+    "nationalNumber": "الرقم الوطني",
+    "gender": "الجنس",
+    "dateOfBirth": "تاريخ الميلاد",
+    "bloodType": "فصيلة الدم",
+    "height": "الطول (سم)",
+    "weight": "الوزن (كغ)",
+    "allergies": "الحساسية",
+    "chronicDiseases": "الأمراض المزمنة",
+    "medicalHistory": "السجل الطبي",
+    "emergencyContactName": "اسم جهة الاتصال للطوارئ",
+    "emergencyContactPhone": "هاتف جهة الاتصال للطوارئ",
+    "emergencyContactRelation": "صلة القرابة",
+    "detailsTitle": "مريض #{{id}}",
+    "sections": {
+      "profile": "المعلومات الشخصية",
+      "medical": "المعلومات الطبية",
+      "emergency": "جهة الاتصال للطوارئ",
+      "meta": "تواريخ السجل"
+    }
+  },
+  "pharmacists": {
+    "pageSubtitle": "إدارة الصيادلة وتعييناتهم",
+    "profileId": "معرّف الملف الشخصي",
+    "specialization": "التخصص",
+    "degree": "الشهادة",
+    "yearsOfExperience": "سنوات الخبرة",
+    "licenseNumber": "رقم الرخصة",
+    "nationalNumber": "الرقم الوطني",
+    "gender": "الجنس",
+    "dateOfBirth": "تاريخ الميلاد",
+    "facilityType": "نوع المنشأة",
+    "detailsTitle": "صيدلي #{{id}}",
+    "sections": {
+      "professional": "المعلومات المهنية",
+      "profile": "الملف الشخصي",
+      "facility": "المنشأة",
+      "meta": "تواريخ السجل"
+    }
+  },
+  "labStaff": {
+    "pageSubtitle": "إدارة طاقم المختبر وتعييناتهم",
+    "profileId": "معرّف الملف الشخصي",
+    "specialization": "التخصص",
+    "degree": "الشهادة",
+    "yearsOfExperience": "سنوات الخبرة",
+    "licenseNumber": "رقم الرخصة",
+    "nationalNumber": "الرقم الوطني",
+    "gender": "الجنس",
+    "dateOfBirth": "تاريخ الميلاد",
+    "facilityType": "نوع المنشأة",
+    "detailsTitle": "طاقم مختبر #{{id}}",
+    "sections": {
+      "professional": "المعلومات المهنية",
+      "profile": "الملف الشخصي",
+      "facility": "المنشأة",
+      "meta": "تواريخ السجل"
+    }
   }
 }

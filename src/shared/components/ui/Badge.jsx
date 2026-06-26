@@ -9,6 +9,7 @@ const STATUS_STYLES = {
   active: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400',
   inactive: 'bg-gray-100 text-gray-600 dark:bg-surface-800 dark:text-gray-400',
   in_progress: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400',
+  processing: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400',
   default: 'bg-gray-100 text-gray-600 dark:bg-surface-800 dark:text-gray-400',
 };
 

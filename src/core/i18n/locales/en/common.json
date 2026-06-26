@@ -8,6 +8,7 @@
     "visits": "Visits",
     "prescriptions": "Prescriptions",
     "labResults": "Lab Results",
+    "labTests": "Lab Tests",
     "labRequests": "Lab Requests",
     "dispensing": "Dispensing",
     "facilities": "Facilities",
@@ -43,6 +44,7 @@
     "search": "Search",
     "filter": "Filter",
     "view": "View",
+    "viewMore": "View more",
     "close": "Close",
     "submit": "Submit",
     "back": "Back",
@@ -78,7 +80,8 @@
     "cancelled": "Cancelled",
     "active": "Active",
     "inactive": "Inactive",
-    "in_progress": "In progress"
+    "in_progress": "In progress",
+    "processing": "Processing"
   },
   "theme": {
     "light": "Light",

@@ -5,5 +5,7 @@ export { default as Badge } from './Badge';
 export { default as Spinner } from './Spinner';
 export { default as Modal } from './Modal';
 export { default as DataTable } from './DataTable';
+export { default as EnhancedDataTable } from './EnhancedDataTable';
+export { default as TableActionButton } from './TableActionButton';
 export { default as PageHeader } from './PageHeader';
 export { default as Card } from './Card';

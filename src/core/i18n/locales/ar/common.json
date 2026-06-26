@@ -8,6 +8,7 @@
     "visits": "الزيارات",
     "prescriptions": "الوصفات الطبية",
     "labResults": "نتائج المختبر",
+    "labTests": "تحاليل المختبر",
     "labRequests": "طلبات المختبر",
     "dispensing": "صرف الأدوية",
     "facilities": "المنشآت",
@@ -43,6 +44,7 @@
     "search": "بحث",
     "filter": "تصفية",
     "view": "عرض",
+    "viewMore": "عرض المزيد",
     "close": "إغلاق",
     "submit": "إرسال",
     "back": "رجوع",
@@ -78,7 +80,8 @@
     "cancelled": "ملغى",
     "active": "نشط",
     "inactive": "غير نشط",
-    "in_progress": "قيد التنفيذ"
+    "in_progress": "قيد التنفيذ",
+    "processing": "قيد المعالجة"
   },
   "theme": {
     "light": "فاتح",

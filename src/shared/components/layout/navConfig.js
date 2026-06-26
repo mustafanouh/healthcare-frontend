@@ -27,7 +27,8 @@ export const NAV_GROUPS = [
       { to: '/admin/patients', labelKey: 'nav.patients', icon: ICONS.users },
       { to: '/admin/pharmacists', labelKey: 'nav.pharmacists', icon: ICONS.users },
       { to: '/admin/lab-staff', labelKey: 'nav.labStaff', icon: ICONS.users },
-      { to: '/admin/lab-tests', labelKey: 'nav.labResults', icon: ICONS.flask },
+      { to: '/admin/lab-tests', labelKey: 'nav.labTests', icon: ICONS.layers },
+      { to: '/admin/lab-results', labelKey: 'nav.labResults', icon: ICONS.flask },
       { to: '/admin/appointments', labelKey: 'nav.appointments', icon: ICONS.calendar },
       { to: '/admin/visits', labelKey: 'nav.visits', icon: ICONS.clipboard },
     ],
@@ -69,7 +70,7 @@ export const NAV_GROUPS = [
       { to: '/lab/dashboard', labelKey: 'nav.dashboard', icon: ICONS.dashboard },
       { to: '/lab/requests', labelKey: 'nav.labRequests', icon: ICONS.flask },
       { to: '/lab/results', labelKey: 'nav.labResults', icon: ICONS.clipboard },
-      { to: '/lab/tests', labelKey: 'nav.labResults', icon: ICONS.layers },
+      { to: '/lab/tests', labelKey: 'nav.labTests', icon: ICONS.layers },
     ],
   },
 ];

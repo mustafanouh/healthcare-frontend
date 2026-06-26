@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, PageHeader, DataTable, Button, Modal } from '../ui';
+import { Card, PageHeader, EnhancedDataTable, Button, Modal } from '../ui';
 import ResourceFormModal from './ResourceFormModal';
+import { parseApiError } from '../../utils/parseApiError';
 
 /**
  * Fully generic CRUD page.
@@ -18,6 +19,9 @@ import ResourceFormModal from './ResourceFormModal';
  *   onCreate       - async (values) => ... (from useCreate mutation)
  *   onUpdate       - async ({ id, payload }) => ... (from useUpdate mutation)
  *   onDelete       - async (id) => ... (from useRemove mutation)
+ *   mapRecordToForm - optional (record) => form values for edit mode
+ *   renderDetailsModal - optional ({ record, onClose }) => modal for row details
+ *   TableComponent    - optional custom table (defaults to DataTable)
  *   isSubmitting   - create/update mutation isPending
  *   formTitle      - modal title (create and edit share one modal)
  *   formSize       - modal size: 'sm'|'md'|'lg'|'xl'
@@ -38,25 +42,36 @@ const CrudPage = ({
   onCreate,
   onUpdate,
   onDelete,
+  mapRecordToForm,
+  renderDetailsModal,
+  TableComponent,
   isSubmitting = false,
   extraActions,
 }) => {
   const { t } = useTranslation('common');
+  const Table = TableComponent ?? EnhancedDataTable;
   const [formOpen, setFormOpen] = useState(false);
   const [editRecord, setEditRecord] = useState(null);
+  const [viewRecord, setViewRecord] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [submitError, setSubmitError] = useState(null);
 
-  const openCreate = () => { setEditRecord(null); setFormOpen(true); };
-  const openEdit   = (row) => { setEditRecord(row); setFormOpen(true); };
-  const closeForm  = () => { setFormOpen(false); setEditRecord(null); };
+  const openCreate = () => { setEditRecord(null); setSubmitError(null); setFormOpen(true); };
+  const openEdit   = (row) => { setEditRecord(row); setSubmitError(null); setFormOpen(true); };
+  const closeForm  = () => { setFormOpen(false); setEditRecord(null); setSubmitError(null); };
 
   const handleSubmit = async (values) => {
-    if (editRecord) {
-      await onUpdate?.({ id: editRecord.id, payload: values });
-    } else {
-      await onCreate?.(values);
+    setSubmitError(null);
+    try {
+      if (editRecord) {
+        await onUpdate?.({ id: editRecord.id, payload: values });
+      } else {
+        await onCreate?.(values);
+      }
+      closeForm();
+    } catch (error) {
+      setSubmitError(parseApiError(error, t('errors.generic')));
     }
-    closeForm();
   };
 
   const handleDelete = async () => {
@@ -87,10 +102,12 @@ const CrudPage = ({
       />
 
       <Card padded={false} className="overflow-hidden">
-        <DataTable
+        <Table
           columns={columns}
           data={data}
           isLoading={isLoading}
+          onView={renderDetailsModal ? (row) => setViewRecord(row) : undefined}
+          viewLabel={t('actions.viewMore')}
           onEdit={onUpdate ? openEdit : undefined}
           onDelete={onDelete ? (row) => setDeleteTarget(row) : undefined}
         />
@@ -103,11 +120,17 @@ const CrudPage = ({
         title={editRecord ? t('actions.edit') : (addLabel ?? t('actions.add'))}
         fields={fields}
         initialValues={initialValues}
-        record={editRecord}
+        record={editRecord ? (mapRecordToForm?.(editRecord) ?? editRecord) : null}
         onSubmit={handleSubmit}
         isSubmitting={isSubmitting}
         validationSchema={validationSchema}
+        submitError={submitError}
       />
+
+      {viewRecord && renderDetailsModal?.({
+        record: viewRecord,
+        onClose: () => setViewRecord(null),
+      })}
 
       {/* Delete confirmation */}
       <Modal

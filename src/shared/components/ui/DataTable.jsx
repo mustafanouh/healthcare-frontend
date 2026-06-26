@@ -14,6 +14,8 @@ import Spinner from './Spinner';
  *     isLoading={isLoading}
  *     onEdit={(row) => ...}
  *     onDelete={(row) => ...}
+ *     onView={(row) => ...}
+ *     viewLabel={t('actions.viewMore')}
  *   />
  */
 const DataTable = ({
@@ -22,11 +24,13 @@ const DataTable = ({
   isLoading = false,
   onEdit,
   onDelete,
+  onView,
+  viewLabel,
   onRowClick,
   emptyIcon,
 }) => {
   const { t } = useTranslation('common');
-  const showActions = Boolean(onEdit || onDelete);
+  const showActions = Boolean(onEdit || onDelete || onView);
 
   if (isLoading) {
     return (
@@ -82,6 +86,14 @@ const DataTable = ({
               {showActions && (
                 <td className="px-6 py-3.5 whitespace-nowrap">
                   <div className="flex items-center gap-3">
+                    {onView && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onView(row); }}
+                        className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white font-medium text-xs"
+                      >
+                        {viewLabel ?? t('actions.viewMore')}
+                      </button>
+                    )}
                     {onEdit && (
                       <button
                         onClick={(e) => { e.stopPropagation(); onEdit(row); }}

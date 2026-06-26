@@ -56,6 +56,7 @@ export const router = createBrowserRouter([
       { path: '/admin/pharmacists',     element: wrap(<PharmacistsPage />) },
       { path: '/admin/lab-staff',       element: wrap(<LabStaffPage />) },
       { path: '/admin/lab-tests',       element: wrap(<LabTestsPage />) },
+      { path: '/admin/lab-results',     element: wrap(<LabResultsPage />) },
       { path: '/admin/appointments',    element: wrap(<AppointmentsPage />) },
       { path: '/admin/visits',          element: wrap(<VisitsPage />) },
 

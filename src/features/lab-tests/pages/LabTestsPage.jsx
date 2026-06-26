@@ -24,7 +24,7 @@ const LabTestsPage = () => {
 
   return (
     <CrudPage
-      title={t('nav.labResults', { ns: 'common' })}
+      title={t('nav.labTests', { ns: 'common' })}
       addLabel={t('actions.add', { ns: 'common' })}
       columns={columns}
       data={data?.data ?? []}

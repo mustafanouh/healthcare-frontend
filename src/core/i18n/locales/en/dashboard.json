@@ -77,17 +77,114 @@
   },
   "labResults": {
     "title": "Lab results",
+    "pageSubtitle": "Record and manage laboratory test results",
     "test": "Test",
     "value": "Value",
     "unit": "Unit",
     "referenceRange": "Reference range",
     "completedAt": "Completed at",
-    "newResult": "New result"
+    "newResult": "New result",
+    "labRequestItemId": "Lab request item",
+    "labStaffId": "Lab staff",
+    "visitId": "Visit",
+    "labTestId": "Lab test",
+    "requestedAt": "Requested at",
+    "detailsTitle": "Lab result #{{id}}",
+    "sections": {
+      "result": "Result details",
+      "request": "Lab request",
+      "staff": "Lab staff",
+      "meta": "Record dates"
+    }
   },
   "facilities": {
     "title": "Facilities",
     "newFacility": "New facility",
     "facilityType": "Facility type",
     "parentFacility": "Parent facility"
+  },
+  "doctors": {
+    "profileId": "Profile ID",
+    "workPlacement": "Facility · Department · Specialization",
+    "qualification": "Qualification",
+    "yearsOfExperience": "Years of experience",
+    "yearsShort": "yrs",
+    "pageSubtitle": "Manage doctors and their professional profiles",
+    "biography": "Biography",
+    "achievements": "Achievements",
+    "languages": "Languages",
+    "languagesHint": "Arabic, English, French",
+    "detailsTitle": "Doctor #{{id}}",
+    "nationalNumber": "National ID",
+    "gender": "Gender",
+    "dateOfBirth": "Date of birth",
+    "facilityType": "Facility type",
+    "sections": {
+      "professional": "Professional information",
+      "profile": "Profile",
+      "placement": "Work placement",
+      "meta": "Record dates"
+    }
+  },
+  "patients": {
+    "pageSubtitle": "Manage patient records and medical profiles",
+    "userId": "User ID",
+    "nationalNumber": "National ID",
+    "gender": "Gender",
+    "dateOfBirth": "Date of birth",
+    "bloodType": "Blood type",
+    "height": "Height (cm)",
+    "weight": "Weight (kg)",
+    "allergies": "Allergies",
+    "chronicDiseases": "Chronic diseases",
+    "medicalHistory": "Medical history",
+    "emergencyContactName": "Emergency contact name",
+    "emergencyContactPhone": "Emergency contact phone",
+    "emergencyContactRelation": "Emergency contact relation",
+    "detailsTitle": "Patient #{{id}}",
+    "sections": {
+      "profile": "Personal information",
+      "medical": "Medical information",
+      "emergency": "Emergency contact",
+      "meta": "Record dates"
+    }
+  },
+  "pharmacists": {
+    "pageSubtitle": "Manage pharmacists and their assignments",
+    "profileId": "Profile ID",
+    "specialization": "Specialization",
+    "degree": "Degree",
+    "yearsOfExperience": "Years of experience",
+    "licenseNumber": "License number",
+    "nationalNumber": "National ID",
+    "gender": "Gender",
+    "dateOfBirth": "Date of birth",
+    "facilityType": "Facility type",
+    "detailsTitle": "Pharmacist #{{id}}",
+    "sections": {
+      "professional": "Professional information",
+      "profile": "Profile",
+      "facility": "Facility",
+      "meta": "Record dates"
+    }
+  },
+  "labStaff": {
+    "pageSubtitle": "Manage laboratory staff and their assignments",
+    "profileId": "Profile ID",
+    "specialization": "Specialization",
+    "degree": "Degree",
+    "yearsOfExperience": "Years of experience",
+    "licenseNumber": "License number",
+    "nationalNumber": "National ID",
+    "gender": "Gender",
+    "dateOfBirth": "Date of birth",
+    "facilityType": "Facility type",
+    "detailsTitle": "Lab staff #{{id}}",
+    "sections": {
+      "professional": "Professional information",
+      "profile": "Profile",
+      "facility": "Facility",
+      "meta": "Record dates"
+    }
   }
 }

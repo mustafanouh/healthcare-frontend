@@ -24,6 +24,7 @@ const ResourceFormModal = ({
   onSubmit,
   isSubmitting = false,
   validationSchema,
+  submitError,
 }) => {
   const { t } = useTranslation('common');
 
@@ -43,8 +44,17 @@ const ResourceFormModal = ({
   return (
     <Modal open={open} onClose={onClose} title={title} size="lg">
       <form onSubmit={formik.handleSubmit} className="space-y-4" noValidate>
+        {submitError && (
+          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/40 rounded-lg">
+            <p className="text-sm text-red-600 dark:text-red-400 whitespace-pre-line">{submitError}</p>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {fields.map((field) => {
+            if (field.createOnly && record) return null;
+            if (field.editOnly && !record) return null;
+
             if (field.type === 'select') {
               return (
                 <Select
@@ -67,6 +77,7 @@ const ResourceFormModal = ({
                   formik={formik}
                   dir={field.dir}
                   as={field.as}
+                  placeholder={field.placeholder}
                 />
               </div>
             );

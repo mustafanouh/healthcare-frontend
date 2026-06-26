@@ -12,6 +12,8 @@ export const ENDPOINTS = {
   facilities: '/facilities',
   departments: '/departments',
   specializations: '/specialization',
+  facilityDepartments: '/facility-departments',
+  facilityDeptSpecs: '/facility-dept-specs',
 
   // Staff
   doctors: '/doctors',
