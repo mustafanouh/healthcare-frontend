@@ -7,10 +7,7 @@ import { useThemeStore } from '../store/themeStore';
 import { useLanguageStore } from '../store/languageStore';
 import { router } from './router';
 
-/**
- * ThemeSync: applies persisted theme to <html> immediately on mount.
- * This prevents the flash of the wrong theme before Zustand rehydrates.
- */
+
 const ThemeSync = () => {
   const { theme } = useThemeStore();
   useEffect(() => {

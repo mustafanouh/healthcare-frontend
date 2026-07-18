@@ -71,6 +71,8 @@ const LabResultsPage = () => {
     [requestItemsData, t],
   );
 
+  console.log(requestItemOptions);
+
   const labStaffOptions = useMemo(
     () => (labStaffData?.data ?? []).map((s) => ({
       value: s.id,
@@ -164,7 +166,16 @@ const LabResultsPage = () => {
       renderDetailsModal={({ record, onClose }) => (
         <LabResultDetailsModal open onClose={onClose} result={record} />
       )}
-      onCreate={(v) => createMut.mutateAsync(formatCreatePayload(v))}
+
+     onCreate={(v) => {
+  console.log("Form Values:", v);
+
+  const payload = formatCreatePayload(v);
+
+  console.log("Payload:", payload);
+
+  return createMut.mutateAsync(payload);
+}}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
