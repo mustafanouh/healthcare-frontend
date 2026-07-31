@@ -24,7 +24,12 @@ export const useAuthStore = create(
       isAuthenticated: false,
 
       // Called after a successful login/register response
-      setAuth: (user, token) => set({ user, token, isAuthenticated: true }),
+      setAuth: (user, token) =>
+        set({
+          user,
+          token,
+          isAuthenticated: Boolean(user && token),
+        }),
 
       // Update only the user profile (e.g. after editing profile info)
       setUser: (user) => set({ user }),

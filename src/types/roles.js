@@ -11,7 +11,10 @@ export const ROLES = {
 export const normalizeRole = (role) => {
   if (typeof role === 'string') return role;
   if (role && typeof role === 'object') {
-    return role.name ?? role.role ?? role.slug ?? null;
+    if (typeof role.name === 'string') return role.name;
+    if (typeof role.slug === 'string') return role.slug;
+    if (typeof role.role === 'string') return role.role;
+    return normalizeRole(role.role);
   }
   return null;
 };

@@ -26,6 +26,6 @@ export const useAuth = () => {
     role: getRole(),
     hasRole,
     hasAnyRole,
-    fullName: user?.profile?.full_name ?? user?.email ?? '',
+    fullName: user?.profile?.full_name ?? user?.name ?? user?.email ?? '',
   };
 };

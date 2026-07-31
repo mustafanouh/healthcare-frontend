@@ -14,9 +14,17 @@ export const useLoginMutation = () => {
   const setAuth = useAuthStore((s) => s.setAuth);
 
   return useMutation({
-    mutationFn: authService.login,
-    onSuccess: (data) => {
+    mutationFn: async (credentials) => {
+      const data = await authService.login(credentials);
       const { token, user } = parseAuthResponse(data);
+
+      if (!token || !user) {
+        throw new Error('Invalid login response');
+      }
+
+      return { token, user };
+    },
+    onSuccess: ({ token, user }) => {
       setAuth(user, token);
 
       const dashboard = getRoleDashboard(user) ?? '/admin/dashboard';
@@ -49,8 +57,14 @@ export const useLogoutMutation = () => {
   const logout = useAuthStore((s) => s.logout);
 
   return useMutation({
-    mutationFn: authService.logout,
-    onSettled: () => {
+    mutationFn: async () => {
+      try {
+        return await authService.logout();
+      } catch {
+        return null;
+      }
+    },
+    onMutate: () => {
       logout();
       navigate('/login', { replace: true });
     },
