@@ -23,10 +23,14 @@ export const authService = {
   },
 
   /**
-   * GET /logout
+   * POST /logout
    */
-  logout: async () => {
-    const { data } = await axiosInstance.get(ENDPOINTS.auth.logout);
+  logout: async (token) => {
+    const config = token
+      ? { headers: { Authorization: `Bearer ${token}` } }
+      : undefined;
+
+    const { data } = await axiosInstance.post(ENDPOINTS.auth.logout, null, config);
     return data;
   },
 };

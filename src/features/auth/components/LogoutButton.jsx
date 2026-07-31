@@ -15,6 +15,7 @@ const LogoutButton = ({ className }) => {
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen(true)}
         className={
           className ??

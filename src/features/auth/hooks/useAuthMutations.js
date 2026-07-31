@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 import { useAuthStore } from '../../../store/authStore';
@@ -49,22 +49,26 @@ export const useRegisterMutation = () => {
 };
 
 /**
- * Handles GET /logout. Clears local auth state regardless of the
+ * Handles POST /logout. Clears local auth state regardless of the
  * API call's outcome (the token may already be invalid).
  */
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const logout = useAuthStore((s) => s.logout);
 
   return useMutation({
     mutationFn: async () => {
-      try {
-        return await authService.logout();
-      } catch {
-        return null;
+      const token = useAuthStore.getState().token;
+
+      if (!token) {
+        throw new Error('Missing auth token');
       }
+
+      return authService.logout(token);
     },
-    onMutate: () => {
+    onSettled: () => {
+      queryClient.clear();
       logout();
       navigate('/login', { replace: true });
     },

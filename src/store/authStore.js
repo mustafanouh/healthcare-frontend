@@ -34,7 +34,14 @@ export const useAuthStore = create(
       // Update only the user profile (e.g. after editing profile info)
       setUser: (user) => set({ user }),
 
-      logout: () => set({ user: null, token: null, isAuthenticated: false }),
+      logout: () => {
+        set({ user: null, token: null, isAuthenticated: false });
+
+        // Ensure a stale persisted token cannot restore the session on redirect/reload.
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem('healthcare-auth');
+        }
+      },
 
       // Primary role = first entry in the roles array
       getRole: () => getPrimaryRole(get().user),

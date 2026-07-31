@@ -33,7 +33,10 @@ const Modal = ({ open, onClose, title, children, size = 'md' }) => {
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      data-modal-root="true"
+    >
       {/* Overlay */}
       <div
         className="absolute inset-0 bg-black/40"

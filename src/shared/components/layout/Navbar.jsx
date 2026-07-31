@@ -15,7 +15,10 @@ const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
 
   useEffect(() => {
     const handler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+      const isInsideMenu = menuRef.current?.contains(e.target);
+      const isInsideModal = e.target.closest?.('[data-modal-root="true"]');
+
+      if (menuRef.current && !isInsideMenu && !isInsideModal) {
         setMenuOpen(false);
       }
     };
