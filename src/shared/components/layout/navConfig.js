@@ -38,6 +38,7 @@ export const NAV_GROUPS = [
     labelKey: 'nav.groups.doctor',
     items: [
       { to: '/doctor/dashboard', labelKey: 'nav.dashboard', icon: ICONS.dashboard },
+      { to: '/doctor/schedule', labelKey: 'nav.schedule', icon: ICONS.calendar },
       { to: '/doctor/appointments', labelKey: 'nav.appointments', icon: ICONS.calendar },
       { to: '/doctor/visits', labelKey: 'nav.visits', icon: ICONS.clipboard },
       { to: '/doctor/prescriptions', labelKey: 'nav.prescriptions', icon: ICONS.pill },

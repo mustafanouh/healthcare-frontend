@@ -55,6 +55,29 @@
     "availableSlots": "Available slots",
     "changeStatus": "Change status"
   },
+  "doctorSchedule": {
+    "title": "Doctor schedule",
+    "pageSubtitle": "Manage the doctor's available working times",
+    "newSchedule": "New schedule",
+    "selectDoctor": "Select doctor",
+    "dayOfWeek": "Day of week",
+    "workingHours": "Working hours",
+    "avgConsultationTime": "Average consultation time",
+    "minutes": "min",
+    "availability": "Availability",
+    "available": "Available",
+    "offDay": "Off day",
+    "isOff": "Is off",
+    "days": {
+      "Monday": "Monday",
+      "Tuesday": "Tuesday",
+      "Wednesday": "Wednesday",
+      "Thursday": "Thursday",
+      "Friday": "Friday",
+      "Saturday": "Saturday",
+      "Sunday": "Sunday"
+    }
+  },
   "visits": {
     "title": "Visits",
     "newVisit": "New visit",

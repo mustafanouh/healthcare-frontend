@@ -26,6 +26,7 @@ const LabDashboard        = lazy(() => import('../features/lab/pages/LabDashboar
 
 // ── Shared feature pages ──────────────────────────────────────────────────
 const AppointmentsPage    = lazy(() => import('../features/appointments/pages/AppointmentsPage'));
+const DoctorSchedulePage  = lazy(() => import('../features/doctor-schedule/pages/DoctorSchedulePage'));
 const VisitsPage          = lazy(() => import('../features/visits/pages/VisitsPage'));
 const PrescriptionsPage   = lazy(() => import('../features/prescriptions/pages/PrescriptionsPage'));
 const LabResultsPage      = lazy(() => import('../features/lab-results/pages/LabResultsPage'));
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
           { path: '/admin/visits',          element: wrap(<VisitsPage />) },
 
           { path: '/doctor/dashboard',     element: wrap(<DoctorDashboard />) },
+          { path: '/doctor/schedule',      element: wrap(<DoctorSchedulePage />) },
           { path: '/doctor/appointments',  element: wrap(<AppointmentsPage />) },
           { path: '/doctor/visits',        element: wrap(<VisitsPage />) },
           { path: '/doctor/prescriptions', element: wrap(<PrescriptionsPage />) },

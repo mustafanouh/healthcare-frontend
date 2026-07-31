@@ -21,7 +21,7 @@ const STATUS_STYLES = {
 const Badge = ({ status, children, className }) => {
   const { t } = useTranslation('common');
   const style = STATUS_STYLES[status] ?? STATUS_STYLES.default;
-  const label = status ? t(`status.${status}`, status) : children;
+  const label = children ?? (status ? t(`status.${status}`, status) : null);
 
   return (
     <span

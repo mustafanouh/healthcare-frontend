@@ -55,6 +55,29 @@
     "availableSlots": "الأوقات المتاحة",
     "changeStatus": "تغيير الحالة"
   },
+  "doctorSchedule": {
+    "title": "جدول الطبيب",
+    "pageSubtitle": "إدارة الأوقات المتاحة للطبيب",
+    "newSchedule": "جدول جديد",
+    "selectDoctor": "اختر الطبيب",
+    "dayOfWeek": "اليوم",
+    "workingHours": "ساعات العمل",
+    "avgConsultationTime": "متوسط وقت المعاينة",
+    "minutes": "دقيقة",
+    "availability": "الإتاحة",
+    "available": "متاح",
+    "offDay": "يوم عطلة",
+    "isOff": "يوم عطلة",
+    "days": {
+      "Monday": "الاثنين",
+      "Tuesday": "الثلاثاء",
+      "Wednesday": "الأربعاء",
+      "Thursday": "الخميس",
+      "Friday": "الجمعة",
+      "Saturday": "السبت",
+      "Sunday": "الأحد"
+    }
+  },
   "visits": {
     "title": "الزيارات",
     "newVisit": "زيارة جديدة",
