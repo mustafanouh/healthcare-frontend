@@ -69,13 +69,16 @@ const DoctorSchedulePage = () => {
   const updateMut = useUpdateDoctorSchedule();
   const deleteMut = useDeleteDoctorSchedule();
 
+  const scheduleRows = Array.isArray(data?.data) ? data.data : [];
+  const doctorsList = Array.isArray(doctorsData?.data) ? doctorsData.data : [];
+
   const doctors = useMemo(
     () =>
-      (doctorsData?.data ?? []).map((doctor) => ({
+      doctorsList.map((doctor) => ({
         value: String(doctor.id),
         label: getDoctorName(doctor),
       })),
-    [doctorsData],
+    [doctorsList],
   );
 
   const dayOptions = DAYS.map((day) => ({
@@ -159,7 +162,7 @@ const DoctorSchedulePage = () => {
       subtitle={t('doctorSchedule.pageSubtitle')}
       addLabel={t('doctorSchedule.newSchedule')}
       columns={columns}
-      data={data?.data ?? []}
+      data={scheduleRows}
       isLoading={isLoading}
       fields={fields}
       initialValues={EMPTY_VALUES}

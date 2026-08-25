@@ -1,5 +1,15 @@
 import { ENDPOINTS } from '../../../core/api/endpoints';
 import { createResourceService } from '../../../core/api/createResourceService';
+import { normalizeListResponse } from '../../../shared/utils/normalizeListResponse';
 
-export const doctorService = createResourceService(ENDPOINTS.doctors);
+const baseService = createResourceService(ENDPOINTS.doctors);
+
+export const doctorService = {
+    ...baseService,
+    list: async (params = {}) => {
+        const body = await baseService.list(params);
+        return normalizeListResponse(body);
+    },
+};
+
 export default doctorService;

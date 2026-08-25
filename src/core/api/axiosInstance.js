@@ -3,7 +3,7 @@ import { useAuthStore } from '../../store/authStore';
 
 export const BASE_URL =
   import.meta.env.VITE_API_URL ||
-  'https://app-b4a68046-cc76-405f-b0be-527f1eae5608.cleverapps.io/api';
+  'http://127.0.0.1:8000/api';
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,

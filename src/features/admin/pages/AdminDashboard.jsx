@@ -11,10 +11,10 @@ import { useAuth } from '../../../core/hooks/useAuth';
 import { formatDate, formatTime } from '../../../shared/utils/formatters';
 
 const ICONS = {
-  patients:  'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
-  doctors:   'M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z',
-  facilities:'M3 21h18M5 21V7l8-4v18M19 21V10l-6-3',
-  calendar:  'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+  patients: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
+  doctors: 'M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z',
+  facilities: 'M3 21h18M5 21V7l8-4v18M19 21V10l-6-3',
+  calendar: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
 };
 
 const QUICK_LINKS = [
@@ -30,24 +30,57 @@ const AdminDashboard = () => {
   const today = new Date().toISOString().split('T')[0];
   const locale = i18n.language === 'ar' ? 'ar' : 'en';
 
-  const { data: patients,     isLoading: loadP } = usePatients();
-  const { data: doctors,      isLoading: loadD } = useDoctors();
-  const { data: facilities,   isLoading: loadF } = useFacilities();
+  const { data: patients, isLoading: loadP } = usePatients();
+  const { data: doctors, isLoading: loadD } = useDoctors();
+  const { data: facilities, isLoading: loadF } = useFacilities();
   const { data: appointments, isLoading: loadA } = useAppointments({ scheduled_date: today });
 
+  const appointmentList = Array.isArray(appointments?.data?.data)
+    ? appointments.data.data
+    : Array.isArray(appointments?.data)
+      ? appointments.data
+      : [];
+
   const stats = [
-    { key: 'patients',   title: t('admin.stats.patients'),          value: patients?.total ?? patients?.data?.length,   color: 'blue',   icon: ICONS.patients,   loading: loadP },
-    { key: 'doctors',    title: t('admin.stats.doctors'),           value: doctors?.total  ?? doctors?.data?.length,    color: 'green',  icon: ICONS.doctors,    loading: loadD },
-    { key: 'facilities', title: t('admin.stats.facilities'),        value: facilities?.total ?? facilities?.data?.length, color: 'purple', icon: ICONS.facilities, loading: loadF },
-    { key: 'appts',      title: t('admin.stats.appointmentsToday'), value: appointments?.total ?? appointments?.data?.length, color: 'amber',  icon: ICONS.calendar,   loading: loadA },
+    {
+      key: 'patients',
+      title: t('admin.stats.patients'),
+      value: patients?.total ?? patients?.data?.length,
+      color: 'blue',
+      icon: ICONS.patients,
+      loading: loadP,
+    },
+    {
+      key: 'doctors',
+      title: t('admin.stats.doctors'),
+      value: doctors?.total ?? doctors?.data?.length,
+      color: 'green',
+      icon: ICONS.doctors,
+      loading: loadD,
+    },
+    {
+      key: 'facilities',
+      title: t('admin.stats.facilities'),
+      value: facilities?.total ?? facilities?.data?.length,
+      color: 'purple',
+      icon: ICONS.facilities,
+      loading: loadF,
+    },
+    {
+      key: 'appts',
+      title: t('admin.stats.appointmentsToday'),
+      value: appointments?.data?.total ?? appointmentList.length,
+      color: 'amber',
+      icon: ICONS.calendar,
+      loading: loadA,
+    },
   ];
 
-  const recentAppointments = appointments?.data?.slice(0, 10) ?? [];
+  const recentAppointments = appointmentList.slice(0, 10);
   const todayLabel = formatDate(today, locale);
 
   return (
     <div className="space-y-6">
-      {/* Welcome banner */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-6 lg:p-8 text-white shadow-lg">
         <div className="absolute -top-10 -end-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
         <div className="absolute -bottom-8 start-1/3 w-32 h-32 bg-indigo-400/20 rounded-full blur-xl" />
@@ -62,7 +95,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* KPI cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {stats.map((s) => (
           <StatCard key={s.key} {...s} />
@@ -70,7 +102,6 @@ const AdminDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Appointments table */}
         <Card className="xl:col-span-2" padded={false}>
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-surface-800">
             <div>
@@ -143,7 +174,6 @@ const AdminDashboard = () => {
           )}
         </Card>
 
-        {/* Quick links */}
         <Card>
           <h2 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
             {t('admin.quickLinks')}
