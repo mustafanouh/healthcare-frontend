@@ -10,18 +10,24 @@ const VisitsPage = () => {
   const updateMut = useUpdateVisit();
   const deleteMut = useDeleteVisit();
 
+  const listData = Array.isArray(data?.data)
+    ? data.data
+    : Array.isArray(data)
+      ? data
+      : [];
+
   const columns = [
-    { key: 'id',         label: t('common.id',   { ns: 'common' }) },
-    { key: 'patient',    label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
-    { key: 'doctor',     label: t('appointments.doctor'),  render: (r) => r.doctor?.profile?.full_name  ?? `#${r.doctor_id}` },
+    { key: 'id', label: t('common.id', { ns: 'common' }) },
+    { key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
+    { key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.profile?.full_name ?? `#${r.doctor_id}` },
     { key: 'visited_at', label: t('visits.visitedAt'), render: (r) => formatDate(r.visited_at) },
-    { key: 'notes',      label: t('common.notes', { ns: 'common' }) },
+    { key: 'notes', label: t('common.notes', { ns: 'common' }) },
   ];
 
   const fields = [
     { name: 'appointment_id', label: 'Appointment ID', type: 'text', dir: 'ltr' },
-    { name: 'notes',          label: t('common.notes', { ns: 'common' }), type: 'textarea', fullWidth: true },
-    { name: 'visited_at',     label: t('visits.visitedAt'), type: 'datetime-local', dir: 'ltr' },
+    { name: 'notes', label: t('common.notes', { ns: 'common' }), type: 'textarea', fullWidth: true },
+    { name: 'visited_at', label: t('visits.visitedAt'), type: 'datetime-local', dir: 'ltr' },
   ];
 
   return (
@@ -29,7 +35,7 @@ const VisitsPage = () => {
       title={t('visits.title')}
       addLabel={t('visits.newVisit')}
       columns={columns}
-      data={data?.data ?? []}
+      data={listData}
       isLoading={isLoading}
       fields={fields}
       initialValues={{ appointment_id: '', notes: '', visited_at: '' }}

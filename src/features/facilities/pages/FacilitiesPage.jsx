@@ -10,16 +10,16 @@ const FacilitiesPage = () => {
   const deleteMut = useDeleteFacility();
 
   const columns = [
-    { key: 'id',            label: t('common.id',   { ns: 'common' }) },
-    { key: 'name',          label: t('common.name', { ns: 'common' }) },
+    { key: 'id', label: t('common.id', { ns: 'common' }) },
+    { key: 'name', label: t('common.name', { ns: 'common' }) },
     { key: 'facility_type', label: t('facilities.facilityType') },
     // قراءة الهاتف من الحقل الجديد المرجّع من الباكيند لكي يظهر بالجدول بشكل صحيح
-    { key: 'phone_number',   label: t('common.phone',   { ns: 'common' }) }, 
-    { key: 'address',       label: t('common.address', { ns: 'common' }) },
+    { key: 'phone_number', label: t('common.phone', { ns: 'common' }) },
+    { key: 'address', label: t('common.address', { ns: 'common' }) },
   ];
 
   const fields = [
-    { name: 'name',          label: t('common.name', { ns: 'common' }) },
+    { name: 'name', label: t('common.name', { ns: 'common' }) },
     {
       name: 'facility_type',
       label: t('facilities.facilityType'),
@@ -27,7 +27,7 @@ const FacilitiesPage = () => {
       options: ['hospital', 'clinic', 'lab', 'pharmacy'].map((v) => ({ value: v, label: v })),
     },
     // قمنا بتغيير الـ name هنا ليطابق الباكيند مباشرة
-    { name: 'phone_number',   label: t('common.phone',   { ns: 'common' }), dir: 'ltr' },
+    { name: 'phone_number', label: t('common.phone', { ns: 'common' }), dir: 'ltr' },
     { name: 'address', label: t('common.address', { ns: 'common' }), fullWidth: true },
   ];
 
@@ -40,12 +40,18 @@ const FacilitiesPage = () => {
     address: values.address,
   });
 
+  const rows = Array.isArray(data?.data)
+    ? data.data
+    : Array.isArray(data)
+      ? data
+      : [];
+
   return (
     <CrudPage
       title={t('facilities.title')}
       addLabel={t('facilities.newFacility')}
       columns={columns}
-      data={data?.data ?? []}
+      data={rows}
       isLoading={isLoading}
       fields={fields}
       // إعطاء قيم أولية متطابقة

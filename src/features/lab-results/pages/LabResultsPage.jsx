@@ -63,22 +63,32 @@ const LabResultsPage = () => {
   const updateMut = useUpdateLabResult();
   const deleteMut = useDeleteLabResult();
 
+  const requestItems = Array.isArray(requestItemsData?.data)
+    ? requestItemsData.data
+    : Array.isArray(requestItemsData)
+      ? requestItemsData
+      : [];
+
+  const labStaffList = Array.isArray(labStaffData?.data)
+    ? labStaffData.data
+    : Array.isArray(labStaffData)
+      ? labStaffData
+      : [];
+
   const requestItemOptions = useMemo(
-    () => (requestItemsData?.data ?? []).map((item) => ({
+    () => requestItems.map((item) => ({
       value: item.id,
       label: `#${item.id} · ${t('labResults.visitId')} ${item.visit_id} · ${t('labResults.labTestId')} ${item.lab_test_id}`,
     })),
-    [requestItemsData, t],
+    [requestItems, t],
   );
 
-  console.log(requestItemOptions);
-
   const labStaffOptions = useMemo(
-    () => (labStaffData?.data ?? []).map((s) => ({
+    () => labStaffList.map((s) => ({
       value: s.id,
       label: `${s.profile?.full_name ?? t('labResults.labStaffId')} #${s.id}`,
     })),
-    [labStaffData, t],
+    [labStaffList, t],
   );
 
   const statusOptions = STATUS_OPTIONS.map((s) => ({
@@ -158,7 +168,7 @@ const LabResultsPage = () => {
       subtitle={t('labResults.pageSubtitle')}
       addLabel={t('labResults.newResult')}
       columns={columns}
-      data={data?.data ?? []}
+      data={Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : []}
       isLoading={isLoading}
       fields={fields}
       initialValues={EMPTY_VALUES}
@@ -167,15 +177,10 @@ const LabResultsPage = () => {
         <LabResultDetailsModal open onClose={onClose} result={record} />
       )}
 
-     onCreate={(v) => {
-  console.log("Form Values:", v);
-
-  const payload = formatCreatePayload(v);
-
-  console.log("Payload:", payload);
-
-  return createMut.mutateAsync(payload);
-}}
+      onCreate={(v) => {
+        const payload = formatCreatePayload(v);
+        return createMut.mutateAsync(payload);
+      }}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}

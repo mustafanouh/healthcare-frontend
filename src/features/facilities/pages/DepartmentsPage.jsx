@@ -10,7 +10,7 @@ const DepartmentsPage = () => {
   const deleteMut = useDeleteDepartment();
 
   const columns = [
-    { key: 'id',   label: t('common.id',   { ns: 'common' }) },
+    { key: 'id', label: t('common.id', { ns: 'common' }) },
     { key: 'name', label: t('common.name', { ns: 'common' }) },
   ];
 
@@ -18,12 +18,18 @@ const DepartmentsPage = () => {
     { name: 'name', label: t('common.name', { ns: 'common' }) },
   ];
 
+  const rows = Array.isArray(data?.data)
+    ? data.data
+    : Array.isArray(data)
+      ? data
+      : [];
+
   return (
     <CrudPage
       title={t('nav.departments', { ns: 'common' })}
       addLabel={t('actions.add', { ns: 'common' })}
       columns={columns}
-      data={data?.data ?? []}
+      data={rows}
       isLoading={isLoading}
       fields={fields}
       initialValues={{ name: '' }}

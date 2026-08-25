@@ -54,19 +54,21 @@ const LabTestsPage = () => {
   const updateMut = useUpdateLabTest();
   const deleteMut = useDeleteLabTest();
 
+  const listData = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+
   const columns = [
-    { key: 'id',           label: t('common.id',   { ns: 'common' }) },
-    { key: 'name',         label: t('common.name', { ns: 'common' }) },
-    { key: 'range_low',    label: 'Range Low' },
-    { key: 'range_high',   label: 'Range High' },
-    { key: 'unit',         label: t('labResults.unit') },
+    { key: 'id', label: t('common.id', { ns: 'common' }) },
+    { key: 'name', label: t('common.name', { ns: 'common' }) },
+    { key: 'range_low', label: 'Range Low' },
+    { key: 'range_high', label: 'Range High' },
+    { key: 'unit', label: t('labResults.unit') },
   ];
 
   const fields = [
-    { name: 'name',         label: t('common.name', { ns: 'common' }), fullWidth: true },
-    { name: 'range_low',    label: 'Range Low', dir: 'ltr', type: 'number' },
-    { name: 'range_high',   label: 'Range High', dir: 'ltr', type: 'number' },
-    { name: 'unit',         label: t('labResults.unit'), dir: 'ltr' },
+    { name: 'name', label: t('common.name', { ns: 'common' }), fullWidth: true },
+    { name: 'range_low', label: 'Range Low', dir: 'ltr', type: 'number' },
+    { name: 'range_high', label: 'Range High', dir: 'ltr', type: 'number' },
+    { name: 'unit', label: t('labResults.unit'), dir: 'ltr' },
   ];
 
   return (
@@ -74,7 +76,7 @@ const LabTestsPage = () => {
       title={t('nav.labTests', { ns: 'common' })}
       addLabel={t('actions.add', { ns: 'common' })}
       columns={columns}
-      data={data?.data ?? []}
+      data={listData}
       isLoading={isLoading}
       fields={fields}
       initialValues={{ name: '', range_low: '', range_high: '', unit: '' }}

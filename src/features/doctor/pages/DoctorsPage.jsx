@@ -73,18 +73,38 @@ const DoctorsPage = () => {
   const deleteMut = useDeleteDoctor();
 
   const deptSpecs = useMemo(() => {
-    const fdMap = Object.fromEntries(
-      (facilityDeptData?.data ?? []).map((fd) => [fd.id, fd]),
-    );
-    const specMap = Object.fromEntries(
-      (specData?.data ?? []).map((s) => [s.id, s]),
-    );
+    const facilityDepartments = Array.isArray(facilityDeptData?.data)
+      ? facilityDeptData.data
+      : Array.isArray(facilityDeptData)
+        ? facilityDeptData
+        : [];
 
-    const fromApi = (deptSpecData?.data ?? []).map((s) =>
+    const specializations = Array.isArray(specData?.data)
+      ? specData.data
+      : Array.isArray(specData)
+        ? specData
+        : [];
+
+    const deptSpecList = Array.isArray(deptSpecData?.data)
+      ? deptSpecData.data
+      : Array.isArray(deptSpecData)
+        ? deptSpecData
+        : [];
+
+    const doctorsList = Array.isArray(data?.data)
+      ? data.data
+      : Array.isArray(data)
+        ? data
+        : [];
+
+    const fdMap = Object.fromEntries(facilityDepartments.map((fd) => [fd.id, fd]));
+    const specMap = Object.fromEntries(specializations.map((s) => [s.id, s]));
+
+    const fromApi = deptSpecList.map((s) =>
       toDeptSpecOption(s.id, buildDeptSpecLabel(s, fdMap, specMap)),
     );
 
-    const fromDoctors = (data?.data ?? [])
+    const fromDoctors = doctorsList
       .filter((d) => d.facility_department_specialization_id)
       .map((d) =>
         toDeptSpecOption(

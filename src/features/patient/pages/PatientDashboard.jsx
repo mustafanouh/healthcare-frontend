@@ -13,15 +13,33 @@ const PatientDashboard = () => {
   const patientId = user?.patient?.id;
 
   const { data: apptsData, isLoading: loadA } = useAppointments({ patient_id: patientId });
-  const { data: rxData,    isLoading: loadR } = usePrescriptions({ patient_id: patientId });
-  const { data: labData,   isLoading: loadL } = useLabResults({ patient_id: patientId });
+  const { data: rxData, isLoading: loadR } = usePrescriptions({ patient_id: patientId });
+  const { data: labData, isLoading: loadL } = useLabResults({ patient_id: patientId });
 
-  const upcoming = (apptsData?.data ?? [])
+  const appointmentsList = Array.isArray(apptsData?.data)
+    ? apptsData.data
+    : Array.isArray(apptsData)
+      ? apptsData
+      : [];
+
+  const prescriptionsList = Array.isArray(rxData?.data)
+    ? rxData.data
+    : Array.isArray(rxData)
+      ? rxData
+      : [];
+
+  const labResultsList = Array.isArray(labData?.data)
+    ? labData.data
+    : Array.isArray(labData)
+      ? labData
+      : [];
+
+  const upcoming = appointmentsList
     .filter((a) => ['pending', 'confirmed'].includes(a.status))
     .slice(0, 5);
 
-  const recentRx  = (rxData?.data   ?? []).slice(0, 3);
-  const recentLab = (labData?.data  ?? []).slice(0, 3);
+  const recentRx = prescriptionsList.slice(0, 3);
+  const recentLab = labResultsList.slice(0, 3);
 
   return (
     <div className="space-y-6">

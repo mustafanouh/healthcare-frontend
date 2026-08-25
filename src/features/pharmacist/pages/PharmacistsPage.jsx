@@ -42,7 +42,13 @@ const PharmacistsPage = () => {
   const updateMut = useUpdatePharmacist();
   const deleteMut = useDeletePharmacist();
 
-  const facilities = (facilData?.data ?? []).map((f) => ({ value: f.id, label: f.name }));
+  const facilitiesList = Array.isArray(facilData?.data)
+    ? facilData.data
+    : Array.isArray(facilData)
+      ? facilData
+      : [];
+
+  const facilities = facilitiesList.map((f) => ({ value: f.id, label: f.name }));
 
   const activeOptions = [
     { value: 'true', label: t('status.active', { ns: 'common' }) },
@@ -85,13 +91,19 @@ const PharmacistsPage = () => {
     { name: 'is_active', label: t('common.status', { ns: 'common' }), type: 'select', options: activeOptions },
   ];
 
+  const rows = Array.isArray(data?.data)
+    ? data.data
+    : Array.isArray(data)
+      ? data
+      : [];
+
   return (
     <CrudPage
       title={t('nav.pharmacists', { ns: 'common' })}
       subtitle={t('pharmacists.pageSubtitle')}
       addLabel={t('actions.add', { ns: 'common' })}
       columns={columns}
-      data={data?.data ?? []}
+      data={rows}
       isLoading={isLoading}
       fields={fields}
       initialValues={EMPTY_VALUES}
