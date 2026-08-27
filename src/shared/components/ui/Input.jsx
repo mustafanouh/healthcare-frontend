@@ -24,6 +24,7 @@ const Input = ({
   error,
   touched,
   dir,
+  as,
   className,
   ...rest
 }) => {
@@ -38,6 +39,7 @@ const Input = ({
   const fieldError = formik ? formik.errors[name] : error;
   const fieldTouched = formik ? formik.touched[name] : touched;
   const showError = fieldTouched && fieldError;
+  const Element = as || 'input';
 
   return (
     <div className="w-full">
@@ -49,10 +51,10 @@ const Input = ({
           {label}
         </label>
       )}
-      <input
+      <Element
         id={name}
         name={name}
-        type={type}
+        type={as === 'textarea' ? undefined : type}
         dir={dir}
         className={clsx(
           'w-full px-4 py-2.5 rounded-lg border text-sm',

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import { Badge } from '../../../shared/components/ui';
+import PrescriptionDetailsModal from '../components/PrescriptionDetailsModal';
 import { usePrescriptions, useCreatePrescription, useUpdatePrescription, useDeletePrescription } from '../hooks/usePrescriptions';
 import { useVisits } from '../../visits/hooks/useVisits';
 import { formatDate } from '../../../shared/utils/formatters';
@@ -63,6 +64,9 @@ const PrescriptionsPage = () => {
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
+      renderDetailsModal={({ record, onClose }) => (
+        <PrescriptionDetailsModal open onClose={onClose} prescription={record} />
+      )}
     />
   );
 };

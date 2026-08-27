@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import CrudPage from '../../../shared/components/crud/CrudPage';
+import FacilitiesTable from '../components/FacilitiesTable';
 import { useFacilities, useCreateFacility, useUpdateFacility, useDeleteFacility } from '../hooks/useFacilities';
 
 const FacilitiesPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const navigate = useNavigate();
   const { data, isLoading } = useFacilities();
   const createMut = useCreateFacility();
   const updateMut = useUpdateFacility();
@@ -51,6 +54,7 @@ const FacilitiesPage = () => {
       title={t('facilities.title')}
       addLabel={t('facilities.newFacility')}
       columns={columns}
+      TableComponent={FacilitiesTable}
       data={rows}
       isLoading={isLoading}
       fields={fields}
@@ -60,6 +64,12 @@ const FacilitiesPage = () => {
       onUpdate={(v) => updateMut.mutateAsync(formatPayload(v))}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
+      onView={(facility) => navigate(`/admin/facilities/${facility.id}`)}
+      onViewStaff={(facility) => navigate(`/admin/facilities/${facility.id}/staff`)}
+      onViewDepartments={(facility) => navigate(`/admin/facilities/${facility.id}/departments`)}
+      viewLabel={t('facilities.viewDetails')}
+      staffLabel={t('facilities.viewStaff')}
+      departmentsLabel={t('facilities.viewDepartments')}
     />
   );
 };

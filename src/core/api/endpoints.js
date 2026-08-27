@@ -11,6 +11,7 @@ export const ENDPOINTS = {
 
   // Organization
   facilities: '/facilities',
+  facilityStaff: (id) => `/facilities/${id}/staff`,
   departments: '/departments',
   specializations: '/specialization',
   facilityDepartments: '/facility-departments',
@@ -40,6 +41,7 @@ export const ENDPOINTS = {
   // Pharmacy
   prescriptions: '/prescriptions',
   prescriptionItems: '/prescription-items',
+  prescriptionItemsByPrescription: (id) => `/prescriptions/${id}/items`,
   dispensings: '/dispensings',
 
   // Laboratory

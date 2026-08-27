@@ -96,7 +96,10 @@
     "quantity": "الكمية الموصوفة",
     "frequency": "التكرار",
     "duration": "المدة",
-    "dispenseQuantity": "الكمية المصروفة"
+    "dispenseQuantity": "الكمية المصروفة",
+    "detailsTitle": "الوصفة #{{id}}",
+    "visitId": "معرّف الزيارة",
+    "patient": "المريض"
   },
   "labResults": {
     "title": "نتائج المختبر",
@@ -124,7 +127,18 @@
     "title": "المنشآت",
     "newFacility": "منشأة جديدة",
     "facilityType": "نوع المنشأة",
-    "parentFacility": "المنشأة الرئيسية"
+    "parentFacility": "المنشأة الرئيسية",
+    "details": "تفاصيل المنشأة",
+    "viewDetails": "عرض التفاصيل",
+    "viewStaff": "عرض الموظفين",
+    "viewDepartments": "عرض الأقسام",
+    "departments": "أقسام المنشأة",
+    "addDepartment": "إضافة قسم",
+    "department": "القسم",
+    "staff": "موظفو المنشأة",
+    "staffSubtitle": "الموظفون التابعون لهذه المنشأة",
+    "staffType": "نوع الموظف",
+    "qualification": "المؤهل"
   },
   "doctors": {
     "profileId": "معرّف الملف الشخصي",
@@ -164,11 +178,20 @@
     "emergencyContactName": "اسم جهة الاتصال للطوارئ",
     "emergencyContactPhone": "هاتف جهة الاتصال للطوارئ",
     "emergencyContactRelation": "صلة القرابة",
+    "condition": "الحالة الطبية",
+    "diagnosedAt": "تاريخ التشخيص",
+    "addCondition": "إضافة حالة طبية",
     "detailsTitle": "مريض #{{id}}",
+    "patientRecord": "سجل المريض",
+    "condition": "الحالة الطبية",
+    "diagnosedAt": "تاريخ التشخيص",
+    "addCondition": "إضافة حالة طبية",
+    "conditionsSubtitle": "الأمراض والحساسيات المشخصة",
     "sections": {
       "profile": "المعلومات الشخصية",
       "medical": "المعلومات الطبية",
       "emergency": "جهة الاتصال للطوارئ",
+      "conditions": "الحالات الطبية",
       "meta": "تواريخ السجل"
     }
   },

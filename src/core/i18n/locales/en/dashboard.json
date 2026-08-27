@@ -96,7 +96,10 @@
     "quantity": "Quantity prescribed",
     "frequency": "Frequency",
     "duration": "Duration",
-    "dispenseQuantity": "Quantity dispensed"
+    "dispenseQuantity": "Quantity dispensed",
+    "detailsTitle": "Prescription #{{id}}",
+    "visitId": "Visit ID",
+    "patient": "Patient"
   },
   "labResults": {
     "title": "Lab results",
@@ -124,7 +127,18 @@
     "title": "Facilities",
     "newFacility": "New facility",
     "facilityType": "Facility type",
-    "parentFacility": "Parent facility"
+    "parentFacility": "Parent facility",
+    "details": "Facility details",
+    "viewDetails": "View details",
+    "viewStaff": "View staff",
+    "viewDepartments": "View departments",
+    "departments": "Facility departments",
+    "addDepartment": "Add department",
+    "department": "Department",
+    "staff": "Facility staff",
+    "staffSubtitle": "Staff members assigned to this facility",
+    "staffType": "Staff type",
+    "qualification": "Qualification"
   },
   "doctors": {
     "profileId": "Profile ID",
@@ -164,11 +178,20 @@
     "emergencyContactName": "Emergency contact name",
     "emergencyContactPhone": "Emergency contact phone",
     "emergencyContactRelation": "Emergency contact relation",
+    "condition": "Medical condition",
+    "diagnosedAt": "Diagnosed at",
+    "addCondition": "Add medical condition",
     "detailsTitle": "Patient #{{id}}",
+    "patientRecord": "Patient record",
+    "condition": "Medical condition",
+    "diagnosedAt": "Diagnosed at",
+    "addCondition": "Add medical condition",
+    "conditionsSubtitle": "Diagnosed conditions and allergies",
     "sections": {
       "profile": "Personal information",
       "medical": "Medical information",
       "emergency": "Emergency contact",
+      "conditions": "Medical conditions",
       "meta": "Record dates"
     }
   },

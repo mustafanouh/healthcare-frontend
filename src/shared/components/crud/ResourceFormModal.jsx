@@ -64,6 +64,7 @@ const ResourceFormModal = ({
                   formik={formik}
                   options={field.options || []}
                   placeholder={field.placeholder}
+                  required={field.required}
                   className={field.fullWidth ? 'sm:col-span-2' : ''}
                 />
               );
@@ -73,10 +74,11 @@ const ResourceFormModal = ({
                 <Input
                   label={field.label}
                   name={field.name}
-                  type={field.type || 'text'}
+                  type={field.type === 'textarea' ? undefined : (field.type || 'text')}
                   formik={formik}
                   dir={field.dir}
-                  as={field.as}
+                  as={field.as || (field.type === 'textarea' ? 'textarea' : undefined)}
+                  rows={field.rows}
                   placeholder={field.placeholder}
                 />
               </div>

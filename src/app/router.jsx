@@ -35,11 +35,15 @@ const ProfilePage = lazy(() => import('../shared/pages/ProfilePage'));
 
 // ── Admin-only pages ──────────────────────────────────────────────────────
 const FacilitiesPage = lazy(() => import('../features/facilities/pages/FacilitiesPage'));
+const FacilityDetailsPage = lazy(() => import('../features/facilities/pages/FacilityDetailsPage'));
+const FacilityStaffPage = lazy(() => import('../features/facilities/pages/FacilityStaffPage'));
+const FacilityDepartmentsPage = lazy(() => import('../features/facilities/pages/FacilityDepartmentsPage'));
 const DepartmentsPage = lazy(() => import('../features/facilities/pages/DepartmentsPage'));
 const SpecializationsPage = lazy(() => import('../features/facilities/pages/SpecializationsPage'));
 const DoctorsPage = lazy(() => import('../features/doctor/pages/DoctorsPage'));
 const DoctorDetailsPage = lazy(() => import('../features/doctor/pages/DoctorDetailsPage'));
 const PatientsPage = lazy(() => import('../features/patient/pages/PatientsPage'));
+const PatientDetailsPage = lazy(() => import('../features/patient/pages/PatientDetailsPage'));
 const MedicalConditionsPage = lazy(() => import('../features/medical-conditions/pages/MedicalConditionsPage'));
 const PharmacistsPage = lazy(() => import('../features/pharmacist/pages/PharmacistsPage'));
 const LabStaffPage = lazy(() => import('../features/lab/pages/LabStaffPage'));
@@ -64,11 +68,15 @@ export const router = createBrowserRouter([
           { path: '/profile', element: wrap(<ProfilePage />) },
           { path: '/admin/dashboard', element: wrap(<AdminDashboard />) },
           { path: '/admin/facilities', element: wrap(<FacilitiesPage />) },
+          { path: '/admin/facilities/:id', element: wrap(<FacilityDetailsPage />) },
+          { path: '/admin/facilities/:id/staff', element: wrap(<FacilityStaffPage />) },
+          { path: '/admin/facilities/:id/departments', element: wrap(<FacilityDepartmentsPage />) },
           { path: '/admin/departments', element: wrap(<DepartmentsPage />) },
           { path: '/admin/specializations', element: wrap(<SpecializationsPage />) },
           { path: '/admin/doctors', element: wrap(<DoctorsPage />) },
           { path: '/admin/doctors/:id', element: wrap(<DoctorDetailsPage />) },
           { path: '/admin/patients', element: wrap(<PatientsPage />) },
+          { path: '/admin/patients/:id', element: wrap(<PatientDetailsPage />) },
           { path: '/admin/medical-conditions', element: wrap(<MedicalConditionsPage />) },
           { path: '/admin/pharmacists', element: wrap(<PharmacistsPage />) },
           { path: '/admin/lab-staff', element: wrap(<LabStaffPage />) },

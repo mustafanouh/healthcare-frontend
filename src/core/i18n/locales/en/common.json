@@ -75,6 +75,7 @@
   },
   "common": {
     "name": "Name",
+    "description": "Description",
     "status": "Status",
     "date": "Date",
     "time": "Time",

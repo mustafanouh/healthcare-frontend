@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import PatientDetailsModal from '../components/PatientDetailsModal';
 import { usePatients, useCreatePatient, useUpdatePatient, useDeletePatient } from '../hooks/usePatients';
@@ -78,6 +79,7 @@ const mapRecordToForm = (record) => ({
 
 const PatientsPage = () => {
   const { t } = useTranslation(['dashboard', 'common', 'auth']);
+  const navigate = useNavigate();
   const { data, isLoading } = usePatients();
   const createMut = useCreatePatient();
   const updateMut = useUpdatePatient();
@@ -143,6 +145,7 @@ const PatientsPage = () => {
       renderDetailsModal={({ record, onClose }) => (
         <PatientDetailsModal open onClose={onClose} patient={record} />
       )}
+      onView={(patient) => navigate(`/admin/patients/${patient.id}`)}
       onCreate={(v) => createMut.mutateAsync(formatCreatePayload(v))}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}

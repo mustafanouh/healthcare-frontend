@@ -45,6 +45,11 @@ const CrudPage = ({
   mapRecordToForm,
   renderDetailsModal,
   onView,
+  viewLabel,
+  onViewStaff,
+  staffLabel,
+  onViewDepartments,
+  departmentsLabel,
   TableComponent,
   isSubmitting = false,
   extraActions,
@@ -108,7 +113,11 @@ const CrudPage = ({
           data={data}
           isLoading={isLoading}
           onView={onView ?? (renderDetailsModal ? (row) => setViewRecord(row) : undefined)}
-          viewLabel={t('actions.viewMore')}
+          onViewStaff={onViewStaff}
+          staffLabel={staffLabel}
+          onViewDepartments={onViewDepartments}
+          departmentsLabel={departmentsLabel}
+          viewLabel={viewLabel ?? t('actions.viewMore')}
           onEdit={onUpdate ? openEdit : undefined}
           onDelete={onDelete ? (row) => setDeleteTarget(row) : undefined}
         />

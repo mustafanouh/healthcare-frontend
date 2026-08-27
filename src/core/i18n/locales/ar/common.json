@@ -75,6 +75,7 @@
   },
   "common": {
     "name": "الاسم",
+    "description": "الوصف",
     "status": "الحالة",
     "date": "التاريخ",
     "time": "الوقت",
