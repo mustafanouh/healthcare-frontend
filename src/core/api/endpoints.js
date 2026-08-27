@@ -6,6 +6,7 @@ export const ENDPOINTS = {
     login: '/login',
     register: '/register',
     logout: '/logout',
+    me: '/me',
   },
 
   // Organization
@@ -23,6 +24,7 @@ export const ENDPOINTS = {
   // Patients & medical data
   patients: '/patients',
   medicalConditions: '/medical-conditions',
+  medicalConditionsUpdate: '/medical_conditions',
   patientMedicalConditions: '/patient-medical-conditions',
 
   // Scheduling

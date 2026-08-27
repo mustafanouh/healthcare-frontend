@@ -172,6 +172,13 @@
       "meta": "Record dates"
     }
   },
+  "medicalConditions": {
+    "pageSubtitle": "Manage chronic conditions and allergies",
+    "type": "Type",
+    "chronic": "Chronic",
+    "allergy": "Allergy",
+    "notes": "Notes"
+  },
   "pharmacists": {
     "pageSubtitle": "Manage pharmacists and their assignments",
     "profileId": "Profile ID",

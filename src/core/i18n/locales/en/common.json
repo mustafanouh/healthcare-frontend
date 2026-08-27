@@ -4,6 +4,7 @@
     "dashboard": "Dashboard",
     "appointments": "Appointments",
     "patients": "Patients",
+    "medicalConditions": "Medical Conditions",
     "doctors": "Doctors",
     "visits": "Visits",
     "prescriptions": "Prescriptions",
@@ -33,6 +34,23 @@
     "welcome": "Welcome",
     "guest": "Guest",
     "sidebarHint": "Scroll for more items"
+  },
+  "profile": {
+    "title": "My profile",
+    "subtitle": "Your personal account information",
+    "account": "Account",
+    "personalDetails": "Personal details",
+    "email": "Email address",
+    "role": "Role",
+    "nationalNumber": "National ID number",
+    "phone": "Phone number",
+    "gender": "Gender",
+    "address": "Address",
+    "dateOfBirth": "Date of birth",
+    "active": "Active",
+    "inactive": "Inactive",
+    "notAvailable": "Not available",
+    "loadError": "Could not load your profile"
   },
   "actions": {
     "add": "Add",

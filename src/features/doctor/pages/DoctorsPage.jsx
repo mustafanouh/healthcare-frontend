@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import DoctorDetailsModal from '../components/DoctorDetailsModal';
 import DoctorsTable from '../components/DoctorsTable';
@@ -64,6 +65,7 @@ const mapRecordToForm = (record) => ({
 
 const DoctorsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const navigate = useNavigate();
   const { data, isLoading } = useDoctors();
   const { data: deptSpecData } = useFacilityDeptSpecs();
   const { data: facilityDeptData } = useFacilityDepartments();
@@ -147,6 +149,7 @@ const DoctorsPage = () => {
       renderDetailsModal={({ record, onClose }) => (
         <DoctorDetailsModal open onClose={onClose} doctor={record} />
       )}
+      onView={(doctor) => navigate(`/admin/doctors/${doctor.id}`)}
       onCreate={(v) => createMut.mutateAsync(formatPayload(v))}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatPayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}

@@ -172,6 +172,13 @@
       "meta": "تواريخ السجل"
     }
   },
+  "medicalConditions": {
+    "pageSubtitle": "إدارة الأمراض المزمنة والحساسيات",
+    "type": "النوع",
+    "chronic": "مزمن",
+    "allergy": "حساسية",
+    "notes": "الملاحظات"
+  },
   "pharmacists": {
     "pageSubtitle": "إدارة الصيادلة وتعييناتهم",
     "profileId": "معرّف الملف الشخصي",

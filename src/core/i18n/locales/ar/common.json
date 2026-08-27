@@ -4,6 +4,7 @@
     "dashboard": "الرئيسية",
     "appointments": "المواعيد",
     "patients": "المرضى",
+    "medicalConditions": "الحالات الطبية",
     "doctors": "الأطباء",
     "visits": "الزيارات",
     "prescriptions": "الوصفات الطبية",
@@ -33,6 +34,23 @@
     "welcome": "مرحباً",
     "guest": "زائر",
     "sidebarHint": "مرّر للأسفل لعرض المزيد"
+  },
+  "profile": {
+    "title": "ملفي الشخصي",
+    "subtitle": "معلومات حسابك الشخصية",
+    "account": "الحساب",
+    "personalDetails": "التفاصيل الشخصية",
+    "email": "البريد الإلكتروني",
+    "role": "الدور",
+    "nationalNumber": "الرقم الوطني",
+    "phone": "الهاتف",
+    "gender": "الجنس",
+    "address": "العنوان",
+    "dateOfBirth": "تاريخ الميلاد",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "notAvailable": "غير متوفر",
+    "loadError": "تعذر تحميل ملفك الشخصي"
   },
   "actions": {
     "add": "إضافة",

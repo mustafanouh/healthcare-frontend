@@ -33,6 +33,15 @@ export const authService = {
     const { data } = await axiosInstance.post(ENDPOINTS.auth.logout, null, config);
     return data;
   },
+
+  /**
+   * GET /me
+   * Returns the authenticated user and their profile.
+   */
+  me: async () => {
+    const { data } = await axiosInstance.get(ENDPOINTS.auth.me);
+    return data;
+  },
 };
 
 export default authService;

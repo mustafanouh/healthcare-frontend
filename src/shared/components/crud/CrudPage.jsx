@@ -44,6 +44,7 @@ const CrudPage = ({
   onDelete,
   mapRecordToForm,
   renderDetailsModal,
+  onView,
   TableComponent,
   isSubmitting = false,
   extraActions,
@@ -57,8 +58,8 @@ const CrudPage = ({
   const [submitError, setSubmitError] = useState(null);
 
   const openCreate = () => { setEditRecord(null); setSubmitError(null); setFormOpen(true); };
-  const openEdit   = (row) => { setEditRecord(row); setSubmitError(null); setFormOpen(true); };
-  const closeForm  = () => { setFormOpen(false); setEditRecord(null); setSubmitError(null); };
+  const openEdit = (row) => { setEditRecord(row); setSubmitError(null); setFormOpen(true); };
+  const closeForm = () => { setFormOpen(false); setEditRecord(null); setSubmitError(null); };
 
   const handleSubmit = async (values) => {
     setSubmitError(null);
@@ -106,7 +107,7 @@ const CrudPage = ({
           columns={columns}
           data={data}
           isLoading={isLoading}
-          onView={renderDetailsModal ? (row) => setViewRecord(row) : undefined}
+          onView={onView ?? (renderDetailsModal ? (row) => setViewRecord(row) : undefined)}
           viewLabel={t('actions.viewMore')}
           onEdit={onUpdate ? openEdit : undefined}
           onDelete={onDelete ? (row) => setDeleteTarget(row) : undefined}

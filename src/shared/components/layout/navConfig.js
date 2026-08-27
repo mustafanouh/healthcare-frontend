@@ -25,6 +25,7 @@ export const NAV_GROUPS = [
       { to: '/admin/specializations', labelKey: 'nav.specializations', icon: ICONS.briefcase },
       { to: '/admin/doctors', labelKey: 'nav.doctors', icon: ICONS.users },
       { to: '/admin/patients', labelKey: 'nav.patients', icon: ICONS.users },
+      { to: '/admin/medical-conditions', labelKey: 'nav.medicalConditions', icon: ICONS.clipboard },
       { to: '/admin/pharmacists', labelKey: 'nav.pharmacists', icon: ICONS.users },
       { to: '/admin/lab-staff', labelKey: 'nav.labStaff', icon: ICONS.users },
       { to: '/admin/lab-tests', labelKey: 'nav.labTests', icon: ICONS.layers },
