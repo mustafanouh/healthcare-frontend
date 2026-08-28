@@ -15,6 +15,31 @@
       "appointmentsToday": "Today's appointments"
     }
   },
+  "auditLogs": {
+    "title": "Audit logs",
+    "subtitle": "A complete record of additions, updates, and deletions across the system",
+    "performedBy": "Performed by",
+    "resource": "Table",
+    "action": "Action",
+    "record": "Record",
+    "changes": "Changes",
+    "date": "Date",
+    "table": "Table name",
+    "tablePlaceholder": "Example: appointments",
+    "clearFilters": "Clear filters",
+    "viewDetails": "View details",
+    "backToList": "Back to audit logs",
+    "details": "Operation details",
+    "oldValue": "Previous value",
+    "newValue": "New value",
+    "notAvailable": "No data",
+    "page": "Page {{current}} of {{total}} records",
+    "actions": {
+      "create": "Added",
+      "update": "Updated",
+      "delete": "Deleted"
+    }
+  },
   "doctor": {
     "title": "Doctor dashboard",
     "subtitle": "Your appointments and visits",
@@ -99,7 +124,8 @@
     "dispenseQuantity": "Quantity dispensed",
     "detailsTitle": "Prescription #{{id}}",
     "visitId": "Visit ID",
-    "patient": "Patient"
+    "patient": "Patient",
+    "dispensingMissingPharmacist": "The current pharmacist could not be identified or the quantity is invalid"
   },
   "labResults": {
     "title": "Lab results",

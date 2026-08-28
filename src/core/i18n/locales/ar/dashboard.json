@@ -15,6 +15,31 @@
       "appointmentsToday": "مواعيد اليوم"
     }
   },
+  "auditLogs": {
+    "title": "سجل العمليات",
+    "subtitle": "جميع الإضافات والتعديلات والحذف التي تحدث ضمن النظام",
+    "performedBy": "بواسطة",
+    "resource": "الجدول",
+    "action": "العملية",
+    "record": "السجل",
+    "changes": "التغييرات",
+    "date": "التاريخ",
+    "table": "اسم الجدول",
+    "tablePlaceholder": "مثال: appointments",
+    "clearFilters": "مسح التصفية",
+    "viewDetails": "عرض التفاصيل",
+    "backToList": "العودة إلى سجل العمليات",
+    "details": "تفاصيل العملية",
+    "oldValue": "القيمة السابقة",
+    "newValue": "القيمة الجديدة",
+    "notAvailable": "لا توجد بيانات",
+    "page": "الصفحة {{current}} من {{total}} سجل",
+    "actions": {
+      "create": "إضافة",
+      "update": "تعديل",
+      "delete": "حذف"
+    }
+  },
   "doctor": {
     "title": "لوحة تحكم الطبيب",
     "subtitle": "مواعيدك وزياراتك",
@@ -99,7 +124,8 @@
     "dispenseQuantity": "الكمية المصروفة",
     "detailsTitle": "الوصفة #{{id}}",
     "visitId": "معرّف الزيارة",
-    "patient": "المريض"
+    "patient": "المريض",
+    "dispensingMissingPharmacist": "تعذر تحديد الصيدلي الحالي أو أن الكمية غير صحيحة"
   },
   "labResults": {
     "title": "نتائج المختبر",

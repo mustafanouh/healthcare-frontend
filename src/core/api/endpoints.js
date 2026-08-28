@@ -48,4 +48,7 @@ export const ENDPOINTS = {
   labTests: '/lab-tests',
   labRequestItems: '/lab-request-items',
   labResults: '/lab-results',
+
+  // Administration
+  auditLogs: '/audit-logs',
 };

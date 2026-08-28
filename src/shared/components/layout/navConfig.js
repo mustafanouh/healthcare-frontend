@@ -11,6 +11,7 @@ const ICONS = {
   building: 'M3 21h18M5 21V7l8-4v18M19 21V10l-6-3M9 9v.01M9 12v.01M9 15v.01',
   layers: 'M12 2l9 4.9-9 4.9-9-4.9L12 2zM3 12l9 4.9 9-4.9M3 17l9 4.9 9-4.9',
   briefcase: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m-4 6h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8z',
+  history: 'M3 12a9 9 0 101.76-5.38M3 4v5h5m4-1v4l3 2',
 };
 
 /** Grouped navigation for scrollable sidebar sections. */
@@ -32,6 +33,7 @@ export const NAV_GROUPS = [
       { to: '/admin/lab-results', labelKey: 'nav.labResults', icon: ICONS.flask },
       { to: '/admin/appointments', labelKey: 'nav.appointments', icon: ICONS.calendar },
       { to: '/admin/visits', labelKey: 'nav.visits', icon: ICONS.clipboard },
+      { to: '/admin/audit-logs', labelKey: 'nav.auditLogs', icon: ICONS.history },
     ],
   },
   {
