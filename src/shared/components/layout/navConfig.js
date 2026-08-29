@@ -34,6 +34,7 @@ export const NAV_GROUPS = [
       { to: '/admin/appointments', labelKey: 'nav.appointments', icon: ICONS.calendar },
       { to: '/admin/visits', labelKey: 'nav.visits', icon: ICONS.clipboard },
       { to: '/admin/audit-logs', labelKey: 'nav.auditLogs', icon: ICONS.history },
+      { to: '/admin/user-roles', labelKey: 'nav.userRoles', icon: ICONS.users },
     ],
   },
   {

@@ -40,6 +40,24 @@
       "delete": "حذف"
     }
   },
+  "userRoles": {
+    "title": "أدوار المستخدمين",
+    "subtitle": "إسناد دور واحد أو أكثر لمستخدمي النظام",
+    "search": "بحث عن المستخدمين",
+    "searchPlaceholder": "ابحث بالاسم أو البريد الإلكتروني",
+    "roleFilter": "تصفية حسب الدور",
+    "user": "المستخدم",
+    "roles": "الأدوار",
+    "saveSuccess": "تم تحديث الأدوار بنجاح",
+    "roleNames": {
+      "admin": "مدير النظام",
+      "doctor": "طبيب",
+      "laboratory": "مختبر",
+      "manager": "مدير",
+      "patient": "مريض",
+      "pharmacist": "صيدلي"
+    }
+  },
   "doctor": {
     "title": "لوحة تحكم الطبيب",
     "subtitle": "مواعيدك وزياراتك",

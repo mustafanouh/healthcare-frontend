@@ -8,6 +8,7 @@
     "doctors": "Doctors",
     "visits": "Visits",
     "auditLogs": "Audit logs",
+    "userRoles": "User roles",
     "prescriptions": "Prescriptions",
     "labResults": "Lab Results",
     "labTests": "Lab Tests",

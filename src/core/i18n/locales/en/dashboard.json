@@ -40,6 +40,24 @@
       "delete": "Deleted"
     }
   },
+  "userRoles": {
+    "title": "User roles",
+    "subtitle": "Assign one or more roles to system users",
+    "search": "Search users",
+    "searchPlaceholder": "Search by name or email",
+    "roleFilter": "Filter by role",
+    "user": "User",
+    "roles": "Roles",
+    "saveSuccess": "Roles updated successfully",
+    "roleNames": {
+      "admin": "Admin",
+      "doctor": "Doctor",
+      "laboratory": "Laboratory",
+      "manager": "Manager",
+      "patient": "Patient",
+      "pharmacist": "Pharmacist"
+    }
+  },
   "doctor": {
     "title": "Doctor dashboard",
     "subtitle": "Your appointments and visits",

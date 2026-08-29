@@ -51,4 +51,7 @@ export const ENDPOINTS = {
 
   // Administration
   auditLogs: '/audit-logs',
+  roles: '/roles',
+  availableRoles: '/get-roles',
+  syncUserRoles: (id) => `/roles/sync-role/${id}`,
 };

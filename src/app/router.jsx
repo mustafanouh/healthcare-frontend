@@ -51,6 +51,7 @@ const LabTestsPage = lazy(() => import('../features/lab-tests/pages/LabTestsPage
 const LabRequestsPage = lazy(() => import('../features/lab/pages/LabRequestsPage'));
 const AuditLogsPage = lazy(() => import('../features/admin/pages/AuditLogsPage'));
 const AuditLogDetailsPage = lazy(() => import('../features/admin/pages/AuditLogDetailsPage'));
+const UserRolesPage = lazy(() => import('../features/admin/pages/UserRolesPage'));
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,7 @@ export const router = createBrowserRouter([
           { path: '/admin/visits', element: wrap(<VisitsPage />) },
           { path: '/admin/audit-logs', element: wrap(<AuditLogsPage />) },
           { path: '/admin/audit-logs/:id', element: wrap(<AuditLogDetailsPage />) },
+          { path: '/admin/user-roles', element: wrap(<UserRolesPage />) },
 
           { path: '/doctor/dashboard', element: wrap(<DoctorDashboard />) },
           { path: '/doctor/schedule', element: wrap(<DoctorSchedulePage />) },
