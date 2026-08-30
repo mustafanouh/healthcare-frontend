@@ -50,6 +50,7 @@ const CrudPage = ({
   staffLabel,
   onViewDepartments,
   departmentsLabel,
+  renderRowActions,
   TableComponent,
   isSubmitting = false,
   extraActions,
@@ -117,6 +118,7 @@ const CrudPage = ({
           staffLabel={staffLabel}
           onViewDepartments={onViewDepartments}
           departmentsLabel={departmentsLabel}
+          renderRowActions={renderRowActions}
           viewLabel={viewLabel ?? t('actions.viewMore')}
           onEdit={onUpdate ? openEdit : undefined}
           onDelete={onDelete ? (row) => setDeleteTarget(row) : undefined}

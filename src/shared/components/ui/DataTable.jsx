@@ -26,11 +26,12 @@ const DataTable = ({
   onDelete,
   onView,
   viewLabel,
+  renderRowActions,
   onRowClick,
   emptyIcon,
 }) => {
   const { t } = useTranslation('common');
-  const showActions = Boolean(onEdit || onDelete || onView);
+  const showActions = Boolean(onEdit || onDelete || onView || renderRowActions);
 
   if (isLoading) {
     return (
@@ -110,6 +111,7 @@ const DataTable = ({
                         {t('actions.delete')}
                       </button>
                     )}
+                    {renderRowActions?.(row)}
                   </div>
                 </td>
               )}

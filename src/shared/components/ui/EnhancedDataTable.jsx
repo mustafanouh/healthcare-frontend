@@ -135,9 +135,10 @@ const EnhancedDataTable = ({
   onDelete,
   onView,
   viewLabel,
+  renderRowActions,
 }) => {
   const { t } = useTranslation('common');
-  const showActions = Boolean(onEdit || onDelete || onView);
+  const showActions = Boolean(onEdit || onDelete || onView || renderRowActions);
 
   if (isLoading) {
     return (
@@ -210,6 +211,7 @@ const EnhancedDataTable = ({
                         onClick={() => onDelete(row)}
                       />
                     )}
+                    {renderRowActions?.(row)}
                   </div>
                 </td>
               )}

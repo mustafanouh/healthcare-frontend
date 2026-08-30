@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import { Badge } from '../../../shared/components/ui';
 import LabResultDetailsModal from '../components/LabResultDetailsModal';
-import { useLabResults, useCreateLabResult, useUpdateLabResult, useDeleteLabResult } from '../hooks/useLabResults';
+import { useLabResults, useUpdateLabResult, useDeleteLabResult } from '../hooks/useLabResults';
 import { useLabRequestItems } from '../hooks/useLabRequestItems';
 import { useLabStaffList } from '../../lab/hooks/useLabStaff';
 import { formatDate } from '../../../shared/utils/formatters';
@@ -20,13 +20,6 @@ const EMPTY_VALUES = {
   reference_range: '',
   completed_at: '',
 };
-
-const formatCreatePayload = (values) => ({
-  lab_request_item_id: Number(values.lab_request_item_id),
-  lab_staff_id: Number(values.lab_staff_id),
-  value: Number(values.value),
-  notes: values.notes,
-});
 
 const formatUpdatePayload = (values) => ({
   lab_request_item_id: Number(values.lab_request_item_id),
@@ -59,7 +52,6 @@ const LabResultsPage = () => {
   const { data, isLoading } = useLabResults();
   const { data: requestItemsData } = useLabRequestItems();
   const { data: labStaffData } = useLabStaffList();
-  const createMut = useCreateLabResult();
   const updateMut = useUpdateLabResult();
   const deleteMut = useDeleteLabResult();
 
@@ -166,7 +158,6 @@ const LabResultsPage = () => {
     <CrudPage
       title={t('labResults.title')}
       subtitle={t('labResults.pageSubtitle')}
-      addLabel={t('labResults.newResult')}
       columns={columns}
       data={Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : []}
       isLoading={isLoading}
@@ -177,13 +168,9 @@ const LabResultsPage = () => {
         <LabResultDetailsModal open onClose={onClose} result={record} />
       )}
 
-      onCreate={(v) => {
-        const payload = formatCreatePayload(v);
-        return createMut.mutateAsync(payload);
-      }}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
-      isSubmitting={createMut.isPending || updateMut.isPending}
+      isSubmitting={updateMut.isPending}
     />
   );
 };
