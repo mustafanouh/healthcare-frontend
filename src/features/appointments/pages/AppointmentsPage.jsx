@@ -9,6 +9,7 @@ import {
   useDeleteAppointment,
   useAvailableSlots,
   useChangeAppointmentStatus,
+  useStartVisitFromAppointment,
 } from '../hooks/useAppointments';
 import { useDoctors } from '../../doctor/hooks/useDoctors';
 import { usePatients } from '../../patient/hooks/usePatients';
@@ -154,12 +155,13 @@ const AppointmentsPage = () => {
   const updateMut = useUpdateAppointment();
   const deleteMut = useDeleteAppointment();
   const statusMut = useChangeAppointmentStatus();
+  const startVisitMut = useStartVisitFromAppointment();
 
-  const { data: doctorsData }  = useDoctors();
+  const { data: doctorsData } = useDoctors();
   const { data: patientsData } = usePatients();
   const [bookingOpen, setBookingOpen] = useState(false);
 
-  const doctors  = (doctorsData?.data  ?? []).map((d) => ({ value: d.id, label: d.profile?.full_name ?? `Dr #${d.id}` }));
+  const doctors = (doctorsData?.data ?? []).map((d) => ({ value: d.id, label: d.employee?.profile?.full_name ?? `Dr #${d.id}` }));
   const patients = (patientsData?.data ?? []).map((p) => ({ value: p.id, label: p.profile?.full_name ?? `#${p.id}` }));
   const patientRecord = (patientsData?.data ?? []).find((patient) => String(patient.profile?.user_id) === String(user?.id));
   const patientId = user?.patient?.id ?? user?.patient_id ?? patientRecord?.id ?? user?.id;
@@ -190,7 +192,9 @@ const AppointmentsPage = () => {
               <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
                 {(data?.data ?? []).map((appointment) => (
                   <tr key={appointment.id}>
-                    <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{appointment.doctor?.profile?.full_name ?? `#${appointment.doctor_id}`}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{appointment.doctor?.employee?.profile?.full_name
+                      ?? appointment.doctor?.profile?.full_name
+                      ?? `#${appointment.doctor_id}`}</td>
                     <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{formatDate(appointment.scheduled_date)}</td>
                     <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{formatTime(appointment.start_time)}</td>
                     <td className="px-6 py-4"><Badge status={appointment.status} /></td>
@@ -217,20 +221,40 @@ const AppointmentsPage = () => {
   }
 
   const columns = [
-    { key: 'id',             label: t('common.id', { ns: 'common' }) },
-    { key: 'patient',        label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
-    { key: 'doctor',         label: t('appointments.doctor'),  render: (r) => r.doctor?.profile?.full_name  ?? `#${r.doctor_id}` },
+    { key: 'id', label: t('common.id', { ns: 'common' }) },
+    { key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
+    {
+      key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.employee?.profile?.full_name
+        ?? r.doctor?.profile?.full_name
+        ?? `#${r.doctor_id}`
+    },
     { key: 'scheduled_date', label: t('appointments.scheduledDate'), render: (r) => formatDate(r.scheduled_date) },
-    { key: 'time',           label: t('appointments.startTime'), render: (r) => `${formatTime(r.start_time)} – ${formatTime(r.end_time)}` },
-    { key: 'status',         label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
+    { key: 'time', label: t('appointments.startTime'), render: (r) => `${formatTime(r.start_time)} ` },
+    { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
+    {
+      key: 'actions',
+      label: t('common.actions', { ns: 'common' }),
+      render: (r) => (
+        r.status === 'confirmed' && (
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => startVisitMut.mutate(r.id)}
+            loading={startVisitMut.isPending}
+          >
+            {t('appointments.startVisit', { defaultValue: 'Start Visit' })}
+          </Button>
+        )
+      ),
+    },
   ];
 
   const fields = [
     { name: 'patient_id', label: t('appointments.patient'), type: 'select', options: patients },
-    { name: 'doctor_id',  label: t('appointments.doctor'),  type: 'select', options: doctors  },
+    { name: 'doctor_id', label: t('appointments.doctor'), type: 'select', options: doctors },
     { name: 'scheduled_date', label: t('appointments.scheduledDate'), type: 'date' },
-    { name: 'start_time',     label: t('appointments.startTime'),     type: 'time', dir: 'ltr' },
-    { name: 'end_time',       label: t('appointments.endTime'),       type: 'time', dir: 'ltr' },
+    { name: 'start_time', label: t('appointments.startTime'), type: 'time', dir: 'ltr' },
+    { name: 'end_time', label: t('appointments.endTime'), type: 'time', dir: 'ltr' },
     {
       name: 'status',
       label: t('common.status', { ns: 'common' }),

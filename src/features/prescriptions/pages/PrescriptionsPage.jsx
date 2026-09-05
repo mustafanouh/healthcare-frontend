@@ -5,9 +5,11 @@ import PrescriptionDetailsModal from '../components/PrescriptionDetailsModal';
 import { usePrescriptions, useCreatePrescription, useUpdatePrescription, useDeletePrescription } from '../hooks/usePrescriptions';
 import { useVisits } from '../../visits/hooks/useVisits';
 import { formatDate } from '../../../shared/utils/formatters';
+import { useRole } from '../../../core/hooks/useRole';
 
 const PrescriptionsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const { isDoctor, isAdmin, isPharmacist } = useRole();
   const { data, isLoading } = usePrescriptions();
   const { data: visitsData } = useVisits();
   const createMut = useCreatePrescription();
@@ -27,7 +29,13 @@ const PrescriptionsPage = () => {
 
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
-    { key: 'visit_id', label: 'Visit ID' },
+    {
+      key: 'doctor',
+      label: t('appointments.doctor'),
+      render: (prescription) => prescription.visit?.doctor?.employee?.profile?.full_name
+        ?? prescription.visit?.doctor?.profile?.full_name
+        ?? `#${prescription.visit?.doctor_id ?? '—'}`,
+    },
     { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
     { key: 'notes', label: t('common.notes', { ns: 'common' }) },
     { key: 'created_at', label: t('common.createdAt', { ns: 'common' }), render: (r) => formatDate(r.created_at) },
@@ -51,6 +59,8 @@ const PrescriptionsPage = () => {
     visit_id: Number(values.visit_id),
   });
 
+  const canManage = isDoctor || isAdmin;
+
   return (
     <CrudPage
       title={t('prescriptions.title')}
@@ -58,14 +68,14 @@ const PrescriptionsPage = () => {
       columns={columns}
       data={Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : []}
       isLoading={isLoading}
-      fields={fields}
+      fields={canManage ? fields : []}
       initialValues={{ visit_id: '', status: 'pending', notes: '' }}
-      onCreate={(v) => createMut.mutateAsync(normalizePayload(v))}
-      onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) })}
-      onDelete={(id) => deleteMut.mutateAsync(id)}
-      isSubmitting={createMut.isPending || updateMut.isPending}
+      onCreate={canManage ? (v) => createMut.mutateAsync(normalizePayload(v)) : undefined}
+      onUpdate={canManage ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) }) : undefined}
+      onDelete={canManage ? (id) => deleteMut.mutateAsync(id) : undefined}
+      isSubmitting={canManage && (createMut.isPending || updateMut.isPending)}
       renderDetailsModal={({ record, onClose }) => (
-        <PrescriptionDetailsModal open onClose={onClose} prescription={record} />
+        <PrescriptionDetailsModal open onClose={onClose} prescription={record} canDispense={isPharmacist || isAdmin} />
       )}
     />
   );

@@ -88,11 +88,7 @@ const DoctorSchedulePage = () => {
 
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
-    {
-      key: 'doctor',
-      label: t('appointments.doctor'),
-      render: (row) => getDoctorName(row.doctor) ?? `Dr #${row.doctor_id}`,
-    },
+  
     {
       key: 'day_of_week',
       label: t('doctorSchedule.dayOfWeek'),

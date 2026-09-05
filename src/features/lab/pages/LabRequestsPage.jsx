@@ -8,9 +8,13 @@ import { useVisits } from '../../visits/hooks/useVisits';
 import { formatDate } from '../../../shared/utils/formatters';
 import AddLabResultModal from '../components/AddLabResultModal';
 import { TableActionButton } from '../../../shared/components/ui';
+import { useRole } from '../../../core/hooks/useRole';
 
 const LabRequestsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const { isDoctor, isLabStaff, isAdmin } = useRole();
+  const canManageRequests = isDoctor || isAdmin;
+  const canAddResults = isLabStaff || isAdmin;
   const [resultRequest, setResultRequest] = useState(null);
   const { data, isLoading } = useLabRequestItems();
   const { data: labTestsData } = useLabTests();
@@ -70,19 +74,19 @@ const LabRequestsPage = () => {
         columns={columns}
         data={Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : []}
         isLoading={isLoading}
-        fields={fields}
+        fields={canManageRequests ? fields : []}
         initialValues={{ visit_id: '', lab_test_id: '', requested_at: '', notes: '' }}
-        onCreate={(v) => createMut.mutateAsync(normalizePayload(v))}
-        onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) })}
-        onDelete={(id) => deleteMut.mutateAsync(id)}
-        isSubmitting={createMut.isPending || updateMut.isPending}
-        renderRowActions={(row) => (
+        onCreate={canManageRequests ? (v) => createMut.mutateAsync(normalizePayload(v)) : undefined}
+        onUpdate={canManageRequests ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) }) : undefined}
+        onDelete={canManageRequests ? (id) => deleteMut.mutateAsync(id) : undefined}
+        isSubmitting={canManageRequests && (createMut.isPending || updateMut.isPending)}
+        renderRowActions={canAddResults ? (row) => (
           <TableActionButton
             variant="primary"
             label={t('labResults.addForRequest')}
             onClick={() => setResultRequest(row)}
           />
-        )}
+        ) : undefined}
       />
       <AddLabResultModal
         open={Boolean(resultRequest)}

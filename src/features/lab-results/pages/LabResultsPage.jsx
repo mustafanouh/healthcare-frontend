@@ -7,6 +7,7 @@ import { useLabResults, useUpdateLabResult, useDeleteLabResult } from '../hooks/
 import { useLabRequestItems } from '../hooks/useLabRequestItems';
 import { useLabStaffList } from '../../lab/hooks/useLabStaff';
 import { formatDate } from '../../../shared/utils/formatters';
+import { useRole } from '../../../core/hooks/useRole';
 
 const STATUS_OPTIONS = ['pending', 'processing', 'completed'];
 
@@ -49,6 +50,8 @@ const mapRecordToForm = (record) => ({
 
 const LabResultsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const { isLabStaff, isAdmin } = useRole();
+  const canManage = isLabStaff || isAdmin;
   const { data, isLoading } = useLabResults();
   const { data: requestItemsData } = useLabRequestItems();
   const { data: labStaffData } = useLabStaffList();
@@ -161,16 +164,16 @@ const LabResultsPage = () => {
       columns={columns}
       data={Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : []}
       isLoading={isLoading}
-      fields={fields}
+      fields={canManage ? fields : []}
       initialValues={EMPTY_VALUES}
       mapRecordToForm={mapRecordToForm}
       renderDetailsModal={({ record, onClose }) => (
         <LabResultDetailsModal open onClose={onClose} result={record} />
       )}
 
-      onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) })}
-      onDelete={(id) => deleteMut.mutateAsync(id)}
-      isSubmitting={updateMut.isPending}
+      onUpdate={canManage ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) }) : undefined}
+      onDelete={canManage ? (id) => deleteMut.mutateAsync(id) : undefined}
+      isSubmitting={canManage && updateMut.isPending}
     />
   );
 };

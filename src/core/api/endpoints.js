@@ -12,12 +12,16 @@ export const ENDPOINTS = {
   // Organization
   facilities: '/facilities',
   facilityStaff: (id) => `/facilities/${id}/staff`,
+  facilityManager: (id) => `/facilities/${id}/manager`,
   departments: '/departments',
   specializations: '/specialization',
   facilityDepartments: '/facility-departments',
   facilityDeptSpecs: '/facility-dept-specs',
 
-  // Staff
+  // Employees (new system)
+  employees: '/employees',
+
+  // Staff (using employee_id)
   doctors: '/doctors',
   labStaff: '/labstaff',
   pharmacists: '/pharmacists',
@@ -32,10 +36,13 @@ export const ENDPOINTS = {
   appointments: '/appointments',
   availableSlots: '/available-slots',
   appointmentStatus: (id) => `/appointments/${id}/status`,
+  appointmentStartVisit: (id) => `/appointments/${id}/start-visit`,
   doctorSchedule: '/doctor-schedule',
 
   // Clinical
   visits: '/visits',
+  visitComplete: (id) => `/visits/${id}/complete`,
+  visitStatus: (id) => `/visits/${id}/status`,
   diagnoses: '/diagnoses',
 
   // Pharmacy

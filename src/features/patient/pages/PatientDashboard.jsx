@@ -74,7 +74,7 @@ const PatientDashboard = () => {
                 <div key={a.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-surface-800">
                   <div>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                      {a.doctor?.profile?.full_name ?? `Dr. #${a.doctor_id}`}
+                      {a.doctor?.employee?.profile?.full_name ?? `Dr. #${a.doctor_id}`}
                     </p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       {formatDate(a.scheduled_date)} — {formatTime(a.start_time)}
@@ -101,7 +101,10 @@ const PatientDashboard = () => {
                 <div key={rx.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-surface-800">
                   <div>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                      {t('prescriptions.title', { ns: 'dashboard' })} #{rx.id}
+                      {t('prescriptions.title', { ns: 'dashboard' })} 
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {t('appointments.doctor', { ns: 'dashboard' })}: {rx.visit?.doctor?.employee?.profile?.full_name ?? `#${rx.visit?.doctor_id ?? '—'}`}
                     </p>
                     <p className="text-xs text-gray-400 mt-0.5">{formatDate(rx.created_at)}</p>
                   </div>

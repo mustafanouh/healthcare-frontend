@@ -60,7 +60,7 @@ const DoctorsTable = ({
         </thead>
         <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
           {data.map((doctor) => {
-            const name = doctor.profile?.full_name ?? `#${doctor.id}`;
+            const name = doctor.employee?.profile?.full_name ?? `#${doctor.id}`;
             const specialization = getDoctorPlacement(doctor)?.specialization?.name;
             const years = doctor.years_of_experience;
 

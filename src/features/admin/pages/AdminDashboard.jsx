@@ -153,11 +153,11 @@ const AdminDashboard = () => {
                           {appt.patient?.profile?.full_name ?? `#${appt.patient_id}`}
                         </p>
                         <p className="text-xs text-gray-400 sm:hidden mt-0.5">
-                          {appt.doctor?.profile?.full_name ?? `Dr. #${appt.doctor_id}`}
+                          {appt.employee?.profile?.full_name ?? `Dr. #${appt.employee?.doctor_id}`}
                         </p>
                       </td>
                       <td className="px-6 py-3.5 text-gray-600 dark:text-gray-300 hidden sm:table-cell">
-                        {appt.doctor?.profile?.full_name ?? `Dr. #${appt.doctor_id}`}
+                        {appt.doctor.employee?.profile?.full_name }
                       </td>
                       <td className="px-6 py-3.5 whitespace-nowrap">
                         <p className="text-gray-700 dark:text-gray-300">{formatTime(appt.start_time)}</p>

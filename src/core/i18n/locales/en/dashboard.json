@@ -75,6 +75,22 @@
     "myLabResults": "My lab results",
     "medicalHistory": "Medical history"
   },
+  "diagnoses": {
+    "title": "Diagnoses and allergies",
+    "subtitle": "View diagnoses and allergies linked to your visits",
+    "detailsTitle": "Diagnosis details #{{id}}",
+    "code": "Diagnosis code",
+    "description": "Description",
+    "type": "Diagnosis type",
+    "visitId": "Visit ID",
+    "visitStatus": "Visit status",
+    "diagnosedAt": "Diagnosed at",
+    "types": {
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "allergy": "Allergy"
+    }
+  },
   "pharmacist": {
     "title": "Pharmacist dashboard",
     "subtitle": "Prescriptions and dispensing",

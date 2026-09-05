@@ -2,9 +2,18 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { NAV_GROUPS } from './navConfig';
+import { useRole } from '../../../core/hooks/useRole';
 
 const Sidebar = ({ mobileOpen, desktopOpen, onMobileClose }) => {
   const { t } = useTranslation('common');
+  const { isAdmin, isDoctor, isPatient, isPharmacist, isLabStaff } = useRole();
+  const visibleGroups = NAV_GROUPS.filter((group) => ({
+    admin: isAdmin,
+    doctor: isDoctor,
+    patient: isPatient,
+    pharmacist: isPharmacist,
+    lab: isLabStaff,
+  }[group.id]));
 
   const handleNavClick = () => {
     if (window.matchMedia('(max-width: 1023px)').matches) {
@@ -64,7 +73,7 @@ const Sidebar = ({ mobileOpen, desktopOpen, onMobileClose }) => {
         </div>
 
         <nav className="flex-1 min-h-0 overflow-y-auto overscroll-contain sidebar-scroll px-3 py-4 space-y-5 min-w-[16rem]">
-          {NAV_GROUPS.map((group) => (
+          {visibleGroups.map((group) => (
             <div key={group.id}>
               <p className="px-3 mb-2 text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                 {t(group.labelKey)}

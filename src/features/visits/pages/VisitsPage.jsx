@@ -1,12 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import CrudPage from '../../../shared/components/crud/CrudPage';
-import { useVisits, useCreateVisit, useUpdateVisit, useDeleteVisit } from '../hooks/useVisits';
+import { Button } from '../../../shared/components/ui';
+import { useVisits, useCreateVisit, useUpdateVisit, useDeleteVisit, useCompleteVisit, useChangeVisitStatus } from '../hooks/useVisits';
 import { useAppointments } from '../../appointments/hooks/useAppointments';
 import { formatDate, formatTime } from '../../../shared/utils/formatters';
+import { useRole } from '../../../core/hooks/useRole';
 
 const VisitsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const { isDoctor } = useRole();
   const [searchParams] = useSearchParams();
   const { data, isLoading } = useVisits();
   const { data: appointmentsData } = useAppointments();
@@ -39,7 +42,7 @@ const VisitsPage = () => {
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
     { key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
-    { key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.profile?.full_name ?? `#${r.doctor_id}` },
+    ...(!isDoctor ? [{ key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.employee?.profile?.full_name ?? `#${r.doctor_id}` }] : []),
     { key: 'visited_at', label: t('visits.visitedAt'), render: (r) => formatDate(r.visited_at) },
     { key: 'notes', label: t('common.notes', { ns: 'common' }) },
   ];
@@ -60,14 +63,14 @@ const VisitsPage = () => {
   return (
     <CrudPage
       title={t('visits.title')}
-      addLabel={t('visits.newVisit')}
+      // addLabel={t('visits.newVisit')}
       columns={columns}
       data={listData}
       isLoading={isLoading}
       fields={fields}
       initialValues={{ appointment_id: searchParams.get('appointment_id') ?? '', notes: '', visited_at: '' }}
-      onCreate={(v) => createMut.mutateAsync(normalizePayload(v))}
-      onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) })}
+      // onCreate={(v) => createMut.mutateAsync(normalizePayload(v))}
+      // onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
     />

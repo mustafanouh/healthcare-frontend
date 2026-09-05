@@ -75,6 +75,22 @@
     "myLabResults": "نتائج تحاليلي",
     "medicalHistory": "السجل الطبي"
   },
+  "diagnoses": {
+    "title": "التشخيصات والحساسيات",
+    "subtitle": "عرض التشخيصات والحساسيات المرتبطة بزياراتك",
+    "detailsTitle": "تفاصيل التشخيص #{{id}}",
+    "code": "رمز التشخيص",
+    "description": "الوصف",
+    "type": "نوع التشخيص",
+    "visitId": "معرّف الزيارة",
+    "visitStatus": "حالة الزيارة",
+    "diagnosedAt": "تاريخ التشخيص",
+    "types": {
+      "primary": "رئيسي",
+      "secondary": "ثانوي",
+      "allergy": "حساسية"
+    }
+  },
   "pharmacist": {
     "title": "لوحة تحكم الصيدلي",
     "subtitle": "الوصفات الطبية وعمليات الصرف",

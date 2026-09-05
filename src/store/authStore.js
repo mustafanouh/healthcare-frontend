@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getPrimaryRole } from '../types/roles';
+import { getPrimaryRole, getUserRoles } from '../types/roles';
 
 /**
  * Auth store — persisted to localStorage.
@@ -12,9 +12,21 @@ import { getPrimaryRole } from '../types/roles';
  *   is_active: boolean,
  *   roles: ['doctor'],            // array of role names (user_role -> role)
  *   profile: {
- *     full_name, national_number, phone, gender, address, date_of_birth
+ *     id: number,
+ *     full_name, national_number, phone, gender, address, date_of_birth,
+ *     employee: {
+ *       id: number,
+ *       facility_id: number,
+ *       languages: array,
+ *       is_active: boolean,
+ *       doctor: { ... },        // if user is a doctor
+ *       pharmacist: { ... },    // if user is a pharmacist
+ *       labStaff: { ... }       // if user is lab staff
+ *     }
  *   }
  * }
+ *
+ * NOTE: Data access patterns changed from profile.doctor to profile.employee.doctor
  */
 export const useAuthStore = create(
   persist(
@@ -46,9 +58,8 @@ export const useAuthStore = create(
       // Primary role = first entry in the roles array
       getRole: () => getPrimaryRole(get().user),
 
-      // Role checks disabled — always allow
-      hasRole: () => true,
-      hasAnyRole: () => true,
+      hasRole: (role) => getUserRoles(get().user).includes(role),
+      hasAnyRole: (roles) => roles.some((role) => getUserRoles(get().user).includes(role)),
     }),
     {
       name: 'healthcare-auth',

@@ -1,5 +1,25 @@
 {
   "appName": "المجمع الطبي",
+  "employees": {
+    "title": "الموظفون",
+    "subtitle": "إدارة موظفي النظام",
+    "searchPlaceholder": "البحث باسم الموظف",
+    "detailsTitle": "تفاصيل الموظف #{{id}}",
+    "profileSection": "البيانات الشخصية",
+    "workSection": "بيانات العمل",
+    "professionalSection": "البيانات المهنية",
+    "professionalType": "نوع الموظف",
+    "profileId": "معرّف الملف الشخصي",
+    "employeeId": "معرّف الموظف",
+    "facilityType": "نوع المنشأة",
+    "languages": "اللغات",
+    "qualification": "المؤهل",
+    "licenseNumber": "رقم الترخيص",
+    "degree": "الدرجة العلمية",
+    "doctor": "طبيب",
+    "pharmacist": "صيدلي",
+    "labStaff": "طاقم مختبر"
+  },
   "nav": {
     "dashboard": "الرئيسية",
     "appointments": "المواعيد",
@@ -19,7 +39,9 @@
     "specializations": "التخصصات",
     "pharmacists": "الصيادلة",
     "labStaff": "طاقم المختبر",
+    "diagnoses": "التشخيصات والحساسيات",
     "schedule": "الجدول الزمني",
+    "employees": "الموظفين",
     "settings": "الإعدادات",
     "profile": "الملف الشخصي",
     "groups": {
@@ -77,6 +99,7 @@
   },
   "common": {
     "name": "الاسم",
+    "fullName": "الاسم الكامل",
     "description": "الوصف",
     "status": "الحالة",
     "date": "التاريخ",
@@ -93,6 +116,9 @@
     "no": "لا",
     "all": "الكل",
     "welcome": "مرحباً"
+    ,"clear": "مسح"
+    ,"page": "صفحة"
+    ,"doctor": "الطبيب"
   },
   "status": {
     "pending": "قيد الانتظار",

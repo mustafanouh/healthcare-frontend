@@ -1,19 +1,21 @@
 // Roles, mirrored from the `role` table in the ERD and the `user_role` pivot.
 export const ROLES = {
   ADMIN: 'admin',
+  MANAGER: 'manager',
   DOCTOR: 'doctor',
   PATIENT: 'patient',
   LAB_STAFF: 'lab_staff',
+  LABORATORY: 'laboratory',
   PHARMACIST: 'pharmacist',
 };
 
 /** Normalize API role values (string or nested object) to a role slug. */
 export const normalizeRole = (role) => {
-  if (typeof role === 'string') return role;
+  if (typeof role === 'string') return role === ROLES.LABORATORY ? ROLES.LAB_STAFF : role;
   if (role && typeof role === 'object') {
-    if (typeof role.name === 'string') return role.name;
-    if (typeof role.slug === 'string') return role.slug;
-    if (typeof role.role === 'string') return role.role;
+    if (typeof role.name === 'string') return normalizeRole(role.name);
+    if (typeof role.slug === 'string') return normalizeRole(role.slug);
+    if (typeof role.role === 'string') return normalizeRole(role.role);
     return normalizeRole(role.role);
   }
   return null;
@@ -32,9 +34,12 @@ export const getRoleDashboard = (user) => {
   return role ? ROLE_DASHBOARDS[role] ?? null : null;
 };
 
+export const ADMIN_ROLES = [ROLES.ADMIN, ROLES.MANAGER];
+
 // Maps a role to the dashboard route it should land on after login.
 export const ROLE_DASHBOARDS = {
   [ROLES.ADMIN]: '/admin/dashboard',
+  [ROLES.MANAGER]: '/admin/dashboard',
   [ROLES.DOCTOR]: '/doctor/dashboard',
   [ROLES.PATIENT]: '/patient/dashboard',
   [ROLES.LAB_STAFF]: '/lab/dashboard',
@@ -44,8 +49,10 @@ export const ROLE_DASHBOARDS = {
 // Human-readable labels (ar/en) for role badges in the UI.
 export const ROLE_LABELS = {
   [ROLES.ADMIN]: { ar: 'مدير النظام', en: 'Administrator' },
+  [ROLES.MANAGER]: { ar: 'مدير', en: 'Manager' },
   [ROLES.DOCTOR]: { ar: 'طبيب', en: 'Doctor' },
   [ROLES.PATIENT]: { ar: 'مريض', en: 'Patient' },
   [ROLES.LAB_STAFF]: { ar: 'فني مختبر', en: 'Lab staff' },
+  [ROLES.LABORATORY]: { ar: 'المختبر', en: 'Laboratory' },
   [ROLES.PHARMACIST]: { ar: 'صيدلي', en: 'Pharmacist' },
 };

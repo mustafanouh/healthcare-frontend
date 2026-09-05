@@ -1,5 +1,25 @@
 {
   "appName": "Healthcare System",
+  "employees": {
+    "title": "Employees",
+    "subtitle": "Manage system employees",
+    "searchPlaceholder": "Search by employee name",
+    "detailsTitle": "Employee details #{{id}}",
+    "profileSection": "Personal information",
+    "workSection": "Work information",
+    "professionalSection": "Professional information",
+    "professionalType": "Employee type",
+    "profileId": "Profile ID",
+    "employeeId": "Employee ID",
+    "facilityType": "Facility type",
+    "languages": "Languages",
+    "qualification": "Qualification",
+    "licenseNumber": "License number",
+    "degree": "Degree",
+    "doctor": "Doctor",
+    "pharmacist": "Pharmacist",
+    "labStaff": "Lab staff"
+  },
   "nav": {
     "dashboard": "Dashboard",
     "appointments": "Appointments",
@@ -19,7 +39,9 @@
     "specializations": "Specializations",
     "pharmacists": "Pharmacists",
     "labStaff": "Lab Staff",
+    "diagnoses": "Diagnoses and allergies",
     "schedule": "Schedule",
+    "employees": "Employees",
     "settings": "Settings",
     "profile": "Profile",
     "groups": {
@@ -77,6 +99,7 @@
   },
   "common": {
     "name": "Name",
+    "fullName": "Full name",
     "description": "Description",
     "status": "Status",
     "date": "Date",
@@ -93,6 +116,9 @@
     "no": "No",
     "all": "All",
     "welcome": "Welcome"
+    ,"clear": "Clear"
+    ,"page": "Page"
+    ,"doctor": "Doctor"
   },
   "status": {
     "pending": "Pending",

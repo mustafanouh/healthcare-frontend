@@ -32,7 +32,7 @@ const formatLanguagesForForm = (value) => {
 
 const EMPTY_VALUES = {
   facility_department_specialization_id: '',
-  profile_id: '',
+  employee_id: '',
   qualification: '',
   years_of_experience: '',
   biography: '',
@@ -42,7 +42,7 @@ const EMPTY_VALUES = {
 
 const formatPayload = (values) => ({
   facility_department_specialization_id: String(values.facility_department_specialization_id),
-  profile_id: String(values.profile_id),
+  employee_id: String(values.employee_id),
   qualification: values.qualification,
   years_of_experience: Number(values.years_of_experience),
   biography: values.biography,
@@ -55,7 +55,7 @@ const mapRecordToForm = (record) => ({
     record?.facility_department_specialization_id != null
       ? String(record.facility_department_specialization_id)
       : '',
-  profile_id: record?.profile_id ?? '',
+  employee_id: record?.employee_id ?? '',
   qualification: record?.qualification ?? '',
   years_of_experience: record?.years_of_experience ?? '',
   biography: record?.biography ?? '',
@@ -126,7 +126,7 @@ const DoctorsPage = () => {
       options: deptSpecs,
       fullWidth: true,
     },
-    { name: 'profile_id', label: t('doctors.profileId'), type: 'number', dir: 'ltr' },
+    { name: 'employee_id', label: t('doctors.employeeId'), type: 'number', dir: 'ltr' },
     { name: 'qualification', label: t('doctors.qualification') },
     { name: 'years_of_experience', label: t('doctors.yearsOfExperience'), type: 'number', dir: 'ltr' },
     { name: 'languages', label: t('doctors.languages'), placeholder: t('doctors.languagesHint'), fullWidth: true },

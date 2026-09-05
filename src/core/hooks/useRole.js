@@ -1,5 +1,5 @@
 import { useAuthStore } from '../../store/authStore';
-import { getPrimaryRole, getUserRoles, ROLE_LABELS } from '../../types/roles';
+import { ADMIN_ROLES, getPrimaryRole, getUserRoles, ROLE_LABELS, ROLES } from '../../types/roles';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -23,11 +23,11 @@ export const useRole = () => {
     roles: getUserRoles(user),
     hasRole,
     hasAnyRole,
-    isAdmin: true,
-    isDoctor: true,
-    isPatient: true,
-    isLabStaff: true,
-    isPharmacist: true,
+    isAdmin: hasAnyRole(ADMIN_ROLES),
+    isDoctor: hasRole(ROLES.DOCTOR),
+    isPatient: hasRole(ROLES.PATIENT),
+    isLabStaff: hasRole(ROLES.LAB_STAFF),
+    isPharmacist: hasRole(ROLES.PHARMACIST),
     label: role ? ROLE_LABELS[role]?.[lang] ?? role : '',
   };
 };

@@ -22,6 +22,11 @@ export const appointmentService = {
     const { data } = await axiosInstance.patch(ENDPOINTS.appointmentStatus(id), { status });
     return data;
   },
+
+  startVisitFromAppointment: async (id) => {
+    const { data } = await axiosInstance.post(ENDPOINTS.appointmentStartVisit(id));
+    return data;
+  },
 };
 
 export default appointmentService;

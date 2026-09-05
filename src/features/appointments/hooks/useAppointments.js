@@ -35,3 +35,19 @@ export const useChangeAppointmentStatus = () => {
     },
   });
 };
+
+/**
+ * POST /appointments/{id}/start-visit
+ *   startVisit.mutate(appointmentId)
+ *   Creates and returns a visit in 'in_progress' status
+ */
+export const useStartVisitFromAppointment = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (appointmentId) => appointmentService.startVisitFromAppointment(appointmentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['appointments', 'list'] });
+      queryClient.invalidateQueries({ queryKey: ['visits', 'list'] });
+    },
+  });
+};

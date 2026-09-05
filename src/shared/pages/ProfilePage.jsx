@@ -27,11 +27,12 @@ const ProfilePage = () => {
 
     const user = data?.user ?? storedUser;
     const profile = user?.profile ?? {};
+    const employee = profile.employee ?? {};
     const locale = i18n.language === 'ar' ? 'ar' : 'en';
     const role = user?.roles?.join(', ') || t('profile.notAvailable');
-    const statusLabel = user?.is_active
-        ? t('profile.active')
-        : t('profile.inactive');
+    const statusLabel = employee.is_active != null
+        ? (employee.is_active ? t('profile.active') : t('profile.inactive'))
+        : (user?.is_active ? t('profile.active') : t('profile.inactive'));
 
     useEffect(() => {
         if (data?.user) setUser(data.user);
@@ -82,6 +83,10 @@ const ProfilePage = () => {
                         <ProfileField label={t('profile.address')} value={profile.address} />
                         <ProfileField label={t('profile.dateOfBirth')} value={formatDate(profile.date_of_birth, locale)} />
                         <ProfileField label={t('profile.role')} value={role} />
+                        {employee.facility && <ProfileField label={t('nav.facilities', { ns: 'common' })} value={employee.facility?.name} />}
+                        {employee.languages && employee.languages.length > 0 && (
+                            <ProfileField label={t('profile.languages', { defaultValue: 'Languages' })} value={Array.isArray(employee.languages) ? employee.languages.join(', ') : employee.languages} />
+                        )}
                     </dl>
                 </Card>
             </div>

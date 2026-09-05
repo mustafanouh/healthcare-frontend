@@ -30,6 +30,7 @@ const DoctorSchedulePage = lazy(() => import('../features/doctor-schedule/pages/
 const VisitsPage = lazy(() => import('../features/visits/pages/VisitsPage'));
 const PrescriptionsPage = lazy(() => import('../features/prescriptions/pages/PrescriptionsPage'));
 const LabResultsPage = lazy(() => import('../features/lab-results/pages/LabResultsPage'));
+const DiagnosesPage = lazy(() => import('../features/patient/pages/DiagnosesPage'));
 const DispensingPage = lazy(() => import('../features/dispensings/pages/DispensingPage'));
 const ProfilePage = lazy(() => import('../shared/pages/ProfilePage'));
 
@@ -53,6 +54,8 @@ const LabRequestsPage = lazy(() => import('../features/lab/pages/LabRequestsPage
 const AuditLogsPage = lazy(() => import('../features/admin/pages/AuditLogsPage'));
 const AuditLogDetailsPage = lazy(() => import('../features/admin/pages/AuditLogDetailsPage'));
 const UserRolesPage = lazy(() => import('../features/admin/pages/UserRolesPage'));
+const EmployeesPage = lazy(() => import('../features/admin/pages/EmployeesPage'));
+const EmployeeDetailsPage = lazy(() => import('../features/admin/pages/EmployeeDetailsPage'));
 
 export const router = createBrowserRouter([
   {
@@ -86,12 +89,14 @@ export const router = createBrowserRouter([
           { path: '/admin/pharmacists', element: wrap(<PharmacistsPage />) },
           { path: '/admin/lab-staff', element: wrap(<LabStaffPage />) },
           { path: '/admin/lab-tests', element: wrap(<LabTestsPage />) },
-          { path: '/admin/lab-results', element: wrap(<LabResultsPage />) },
+          // { path: '/admin/lab-results', element: wrap(<LabResultsPage />) },
           { path: '/admin/appointments', element: wrap(<AppointmentsPage />) },
           { path: '/admin/visits', element: wrap(<VisitsPage />) },
           { path: '/admin/audit-logs', element: wrap(<AuditLogsPage />) },
           { path: '/admin/audit-logs/:id', element: wrap(<AuditLogDetailsPage />) },
           { path: '/admin/user-roles', element: wrap(<UserRolesPage />) },
+          { path: '/admin/employees', element: wrap(<EmployeesPage />) },
+          { path: '/admin/employees/:id', element: wrap(<EmployeeDetailsPage />) },
 
           { path: '/doctor/dashboard', element: wrap(<DoctorDashboard />) },
           { path: '/doctor/schedule', element: wrap(<DoctorSchedulePage />) },
@@ -104,6 +109,7 @@ export const router = createBrowserRouter([
           { path: '/patient/appointments', element: wrap(<AppointmentsPage />) },
           { path: '/patient/prescriptions', element: wrap(<PrescriptionsPage />) },
           { path: '/patient/lab-results', element: wrap(<LabResultsPage />) },
+          { path: '/patient/diagnoses', element: wrap(<DiagnosesPage />) },
 
           { path: '/pharmacist/dashboard', element: wrap(<PharmacistDashboard />) },
           { path: '/pharmacist/prescriptions', element: wrap(<PrescriptionsPage />) },
