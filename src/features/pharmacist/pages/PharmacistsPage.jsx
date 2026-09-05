@@ -84,7 +84,7 @@ const PharmacistsPage = () => {
       renderDetailsModal={({ record, onClose }) => (
         <PharmacistDetailsModal open onClose={onClose} pharmacist={record} />
       )}
-      onCreate={(v) => createMut.mutateAsync(formatPayload(v))}
+      // onCreate={(v) => createMut.mutateAsync(formatPayload(v))}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatPayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}

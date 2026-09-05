@@ -42,29 +42,46 @@ const PrescriptionDetailsModal = ({ open, prescription, onClose, canDispense = f
     const patientName = prescription.visit?.patient?.profile?.full_name;
 
     const handleDispense = async (item) => {
-        if (!canDispense) return;
-        const quantity = Number(quantities[item.id] ?? item.quantity_prescribed);
-        if (!pharmacistId || !quantity || quantity < 1) {
-            setDispensingError(t('prescriptions.dispensingMissingPharmacist'));
-            return;
-        }
+    if (!canDispense) return;
 
-        setDispensingItemId(item.id);
-        setDispensingError(null);
-        try {
-            await createDispensing.mutateAsync({
-                prescription_item_id: Number(item.id),
-                pharmacist_id: Number(pharmacistId),
-                quantity_dispensed: quantity,
-                dispensed_at: getDispensedAt(),
-            });
-            await queryClient.invalidateQueries({ queryKey: ['prescriptions', 'items', prescription.id] });
-        } catch (error) {
-            setDispensingError(parseApiError(error, t('errors.generic', { ns: 'common' })));
-        } finally {
-            setDispensingItemId(null);
-        }
-    };
+    const quantity = Number(
+        quantities[item.id] ?? item.quantity_prescribed
+    );
+
+    const prescribedQuantity = Number(item.quantity_prescribed);
+
+    if (
+        !Number.isFinite(quantity) ||
+        quantity < 1 ||
+        quantity > prescribedQuantity
+    ) {
+        setDispensingError(t('errors.generic', { ns: 'common' }));
+        return;
+    }
+
+    setDispensingItemId(item.id);
+    setDispensingError(null);
+
+    try {
+        await createDispensing.mutateAsync({
+            prescription_item_id: Number(item.id),
+            quantity_dispensed: quantity,
+        });
+
+        await queryClient.invalidateQueries({
+            queryKey: ['prescriptions', 'items', prescription.id],
+        });
+    } catch (error) {
+        setDispensingError(
+            parseApiError(
+                error,
+                t('errors.generic', { ns: 'common' })
+            )
+        );
+    } finally {
+        setDispensingItemId(null);
+    }
+};
 
     return (
         <Modal open={open} onClose={onClose} title={t('prescriptions.detailsTitle', { id: prescription.id })} size="xl">

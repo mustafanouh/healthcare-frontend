@@ -13,7 +13,6 @@ const DispensingPage = () => {
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
     { key: 'prescription_item_id', label: 'Prescription Item ID' },
-    { key: 'pharmacist', label: t('nav.pharmacists', { ns: 'common' }), render: (r) => r.pharmacist?.profile?.full_name ?? `#${r.pharmacist_id}` },
     { key: 'quantity_dispensed', label: t('prescriptions.dispenseQuantity') },
     { key: 'dispensed_at', label: t('common.date', { ns: 'common' }), render: (r) => formatDate(r.dispensed_at) },
   ];
@@ -39,8 +38,8 @@ const DispensingPage = () => {
       isLoading={isLoading}
       fields={fields}
       initialValues={{ prescription_item_id: '', quantity_dispensed: '', dispensed_at: '' }}
-      onCreate={(v) => createMut.mutateAsync(v)}
-      onUpdate={(v) => updateMut.mutateAsync(v)}
+      // onCreate={(v) => createMut.mutateAsync(v)}
+      // onUpdate={(v) => updateMut.mutateAsync(v)}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
     />

@@ -146,7 +146,7 @@ const PatientsPage = () => {
         <PatientDetailsModal open onClose={onClose} patient={record} />
       )}
       onView={(patient) => navigate(`/admin/patients/${patient.id}`)}
-      onCreate={(v) => createMut.mutateAsync(formatCreatePayload(v))}
+      // onCreate={(v) => createMut.mutateAsync(formatCreatePayload(v))}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) })}
       onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}

@@ -36,13 +36,16 @@ const PrescriptionsPage = () => {
         ?? prescription.visit?.doctor?.profile?.full_name
         ?? `#${prescription.visit?.doctor_id ?? '—'}`,
     },
+    { key: 'patient', label: t('appointments.patient'), render: (prescription) => prescription.visit?.patient?.profile?.full_name ?? `#${prescription.visit?.patient_id ?? '—'}` },
     { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
     { key: 'notes', label: t('common.notes', { ns: 'common' }) },
     { key: 'created_at', label: t('common.createdAt', { ns: 'common' }), render: (r) => formatDate(r.created_at) },
   ];
 
   const fields = [
+   
     { name: 'visit_id', label: 'Visit', type: 'select', options: visitOptions, placeholder: 'Select visit', fullWidth: true },
+   { name: 'patient_id', label: 'Patient', type: 'select', options: visitOptions, placeholder: 'Select patient', fullWidth: true },
     {
       name: 'status',
       label: t('common.status', { ns: 'common' }),

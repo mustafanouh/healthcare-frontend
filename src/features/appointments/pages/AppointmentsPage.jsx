@@ -232,21 +232,72 @@ const AppointmentsPage = () => {
     { key: 'time', label: t('appointments.startTime'), render: (r) => `${formatTime(r.start_time)} ` },
     { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
     {
-      key: 'actions',
-      label: t('common.actions', { ns: 'common' }),
-      render: (r) => (
-        r.status === 'confirmed' && (
+  key: 'actions',
+  label: t('common.actions', { ns: 'common' }),
+  render: (r) => {
+    if (r.status === 'pending') {
+      return (
+        <div className="flex items-center gap-2">
           <Button
             size="sm"
-            variant="secondary"
-            onClick={() => startVisitMut.mutate(r.id)}
-            loading={startVisitMut.isPending}
+            variant="primary"
+            onClick={() =>
+              statusMut.mutate({
+                id: r.id,
+                status: 'confirmed',
+              })
+            }
+            loading={
+              statusMut.isPending &&
+              statusMut.variables?.id === r.id &&
+              statusMut.variables?.status === 'confirmed'
+            }
           >
-            {t('appointments.startVisit', { defaultValue: 'Start Visit' })}
+            {t('appointments.confirm', { defaultValue: 'Confirm' })}
           </Button>
-        )
-      ),
-    },
+
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() =>
+              statusMut.mutate({
+                id: r.id,
+                status: 'cancelled',
+              })
+            }
+            loading={
+              statusMut.isPending &&
+              statusMut.variables?.id === r.id &&
+              statusMut.variables?.status === 'cancelled'
+            }
+          >
+            {t('appointments.cancel', { defaultValue: 'Cancel' })}
+          </Button>
+        </div>
+      );
+    }
+
+    if (r.status === 'confirmed') {
+      return (
+        <Button
+          size="sm"
+          variant="secondary"
+          onClick={() => startVisitMut.mutate(r.id)}
+          loading={
+            startVisitMut.isPending &&
+            startVisitMut.variables === r.id
+          }
+        >
+          {t('appointments.startVisit', {
+            defaultValue: 'Start Visit',
+          })}
+        </Button>
+      );
+    }
+
+    return null;
+  },
+},
   ];
 
   const fields = [
@@ -254,17 +305,9 @@ const AppointmentsPage = () => {
     { name: 'doctor_id', label: t('appointments.doctor'), type: 'select', options: doctors },
     { name: 'scheduled_date', label: t('appointments.scheduledDate'), type: 'date' },
     { name: 'start_time', label: t('appointments.startTime'), type: 'time', dir: 'ltr' },
-    { name: 'end_time', label: t('appointments.endTime'), type: 'time', dir: 'ltr' },
-    {
-      name: 'status',
-      label: t('common.status', { ns: 'common' }),
-      type: 'select',
-      options: ['pending', 'confirmed', 'completed', 'cancelled'].map((s) => ({
-        value: s,
-        label: t(`status.${s}`, { ns: 'common' }),
-      })),
-    },
+   
   ];
+
 
   return (
     <CrudPage

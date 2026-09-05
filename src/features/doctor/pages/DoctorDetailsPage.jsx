@@ -32,7 +32,7 @@ const DoctorDetailsPage = () => {
     const doctor = response?.data ?? response;
     const locale = i18n.language?.startsWith('ar') ? 'ar' : 'en';
     const placement = getDoctorPlacement(doctor);
-    const profile = doctor?.profile;
+    const profile = doctor?.employee?.profile;
     const facility = placement?.facility_department?.facility;
     const department = placement?.facility_department?.department;
     const specialization = placement?.specialization;
@@ -105,12 +105,6 @@ const DoctorDetailsPage = () => {
                     </div>
                     <div><p className="text-xs text-gray-400">{t('nav.specializations', { ns: 'common' })}</p><p className="mt-1 truncate text-sm font-bold text-gray-900 dark:text-white">{specialization?.name || '—'}</p></div>
                 </Card>
-                <Card className="flex items-center gap-4 border-s-4 border-s-emerald-500">
-                    <div className="rounded-xl bg-emerald-50 p-3 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400">
-                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" /></svg>
-                    </div>
-                    <div><p className="text-xs text-gray-400">{t('nav.departments', { ns: 'common' })}</p><p className="mt-1 truncate text-sm font-bold text-gray-900 dark:text-white">{department?.name || '—'}</p></div>
-                </Card>
             </div>
 
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
@@ -121,12 +115,12 @@ const DoctorDetailsPage = () => {
                     <DetailRow label={t('doctors.languages')} value={formatLanguagesDisplay(doctor.languages)} />
                     <DetailRow label={t('doctors.biography')} value={doctor.biography} />
                     <DetailRow label={t('doctors.achievements')} value={doctor.achievements} />
-                    <DetailRow label={t('common.status', { ns: 'common' })} value={doctor.is_active ? t('status.active', { ns: 'common' }) : t('status.inactive', { ns: 'common' })} />
+                    {/* <DetailRow label={t('common.status', { ns: 'common' })} value={doctor.is_active ? t('status.active', { ns: 'common' }) : t('status.inactive', { ns: 'common' })} /> */}
                 </Section>
 
                 <Section title={t('doctors.sections.profile')}>
                     <DetailRow label={t('common.name', { ns: 'common' })} value={profile?.full_name} />
-                    <DetailRow label={t('doctors.profileId')} value={doctor.profile_id} dir="ltr" />
+                    {/* <DetailRow label={t('doctors.profileId')} value={doctor.profile_id} dir="ltr" /> */}
                     <DetailRow label={t('doctors.nationalNumber')} value={profile?.national_number} dir="ltr" />
                     <DetailRow label={t('common.phone', { ns: 'common' })} value={profile?.phone} dir="ltr" />
                     <DetailRow label={t('doctors.gender')} value={profile?.gender} />

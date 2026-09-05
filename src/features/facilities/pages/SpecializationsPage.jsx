@@ -16,17 +16,18 @@ const SpecializationsPage = () => {
   const columns = [
     { key: 'id',            label: t('common.id',   { ns: 'common' }) },
     { key: 'name',          label: t('common.name', { ns: 'common' }) },
-    { key: 'description',    label: t('nav.description', { ns: 'common' }), render: (r) => r.department?.name ?? `#${r.department_id}` },
+    { key: 'description',    label: t('common.description', { ns: 'common' }), render: (r) => r?.description },
   ];
 
   const fields = [
     { name: 'name',          label: t('common.name', { ns: 'common' }) },
+    { name: 'description',   label: t('common.description', { ns: 'common' }) },
     { name: 'department_id', label: t('nav.departments', { ns: 'common' }), type: 'select', options: departments },
   ];
 
   return (
     <CrudPage
-      title={t('nav.specializations', { ns: 'common' })}
+      title={t('nav.description', { ns: 'common' })}
       addLabel={t('actions.add', { ns: 'common' })}
       columns={columns}
       data={data?.data ?? []}

@@ -103,21 +103,13 @@ const EmployeeDetailsPage = () => {
                     <DetailRow label={t('common.status', { ns: 'common' })} value={employee.is_active ? t('status.active', { ns: 'common' }) : t('status.inactive', { ns: 'common' })} />
                     <DetailRow label={t('common.createdAt', { ns: 'common' })} value={formatDateTime(employee.created_at, locale)} dir="ltr" />
                     <DetailRow label={t('common.updatedAt', { ns: 'common' })} value={formatDateTime(employee.updated_at, locale)} dir="ltr" />
+                    <DetailRow label={t('common.id', { ns: 'common' })} value={professional.id} dir="ltr" />
+
+                    <DetailRow label={t('employees.professionalType', { ns: 'common' })} value={professionalType} />
+
                 </Section>
 
-                {professional && (
-                    <Section title={t('employees.professionalSection', { ns: 'common' })}>
-                        <DetailRow label={t('employees.professionalType', { ns: 'common' })} value={professionalType} />
-                        <DetailRow label={t('common.id', { ns: 'common' })} value={professional.id} dir="ltr" />
-                        <DetailRow label={t('employees.employeeId', { ns: 'common' })} value={professional.employee_id} dir="ltr" />
-                        {professional.qualification != null && <DetailRow label={t('employees.qualification', { ns: 'common' })} value={professional.qualification} />}
-                        {professional.years_of_experience != null && <DetailRow label={t('doctors.yearsOfExperience')} value={professional.years_of_experience} dir="ltr" />}
-                        {professional.biography != null && <DetailRow label={t('doctors.biography')} value={professional.biography} />}
-                        {professional.achievements != null && <DetailRow label={t('doctors.achievements')} value={professional.achievements} />}
-                        {professional.license_number != null && <DetailRow label={t('employees.licenseNumber', { ns: 'common' })} value={professional.license_number} />}
-                        {professional.degree != null && <DetailRow label={t('employees.degree', { ns: 'common' })} value={professional.degree} />}
-                    </Section>
-                )}
+             
             </div>
         </div>
     );

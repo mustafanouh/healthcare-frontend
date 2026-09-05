@@ -44,7 +44,7 @@ const VisitsPage = () => {
     { key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
     ...(!isDoctor ? [{ key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.employee?.profile?.full_name ?? `#${r.doctor_id}` }] : []),
     { key: 'visited_at', label: t('visits.visitedAt'), render: (r) => formatDate(r.visited_at) },
-    { key: 'notes', label: t('common.notes', { ns: 'common' }) },
+    // { key: 'notes', label: t('common.notes', { ns: 'common' }) },
   ];
 
   const fields = [
@@ -56,7 +56,7 @@ const VisitsPage = () => {
       placeholder: t('appointments.selectAppointment', { defaultValue: 'Select appointment' }),
       fullWidth: true,
     },
-    { name: 'notes', label: t('common.notes', { ns: 'common' }), type: 'textarea', fullWidth: true },
+    // { name: 'notes', label: t('common.notes', { ns: 'common' }), type: 'textarea', fullWidth: true },
     { name: 'visited_at', label: t('visits.visitedAt'), type: 'datetime-local', dir: 'ltr' },
   ];
 

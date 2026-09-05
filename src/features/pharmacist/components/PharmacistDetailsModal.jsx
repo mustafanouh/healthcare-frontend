@@ -24,8 +24,8 @@ const PharmacistDetailsModal = ({ open, pharmacist, onClose }) => {
 
   if (!pharmacist) return null;
 
-  const profile = pharmacist.profile;
-  const facility = pharmacist.facility;
+  const profile = pharmacist.employee?.profile;
+  const facility = pharmacist.employee?.facility;
 
   return (
     <Modal
@@ -37,9 +37,7 @@ const PharmacistDetailsModal = ({ open, pharmacist, onClose }) => {
       <div className="space-y-6 max-h-[70vh] overflow-y-auto pe-1">
         <Section title={t('pharmacists.sections.professional')}>
           <DetailRow label={t('common.id', { ns: 'common' })} value={pharmacist.id} dir="ltr" />
-          <DetailRow label={t('pharmacists.profileId')} value={pharmacist.profile_id} dir="ltr" />
           <DetailRow label={t('pharmacists.degree')} value={pharmacist.degree} />
-          <DetailRow label={t('pharmacists.specialization')} value={pharmacist.specialization} />
           <DetailRow label={t('pharmacists.yearsOfExperience')} value={pharmacist.years_of_experience} dir="ltr" />
           <DetailRow label={t('pharmacists.licenseNumber')} value={pharmacist.license_number} dir="ltr" />
           <DetailRow
@@ -49,7 +47,7 @@ const PharmacistDetailsModal = ({ open, pharmacist, onClose }) => {
         </Section>
 
         <Section title={t('pharmacists.sections.profile')}>
-          <DetailRow label={t('common.name', { ns: 'common' })} value={profile?.full_name} />
+          <DetailRow label={t('common.name', { ns: 'common' })} value={profile?.full_name}  />
           <DetailRow label={t('pharmacists.nationalNumber')} value={profile?.national_number} dir="ltr" />
           <DetailRow label={t('common.phone', { ns: 'common' })} value={profile?.phone} dir="ltr" />
           <DetailRow label={t('pharmacists.gender')} value={profile?.gender} />

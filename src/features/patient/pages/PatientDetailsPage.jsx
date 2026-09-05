@@ -43,7 +43,14 @@ const PatientDetailsPage = () => {
                     <Card><h2 className="mb-5 border-b border-gray-100 pb-4 text-base font-semibold text-gray-900 dark:border-surface-800 dark:text-white">{t('patients.sections.profile')}</h2><dl className="grid grid-cols-1 gap-4 sm:grid-cols-2"><Detail label={t('common.name', { ns: 'common' })} value={profile?.full_name} /><Detail label={t('patients.userId')} value={profile?.user_id} dir="ltr" /><Detail label={t('patients.nationalNumber')} value={profile?.national_number} dir="ltr" /><Detail label={t('common.phone', { ns: 'common' })} value={profile?.phone} dir="ltr" /><Detail label={t('patients.gender')} value={profile?.gender} /><Detail label={t('patients.dateOfBirth')} value={profile?.date_of_birth ? formatDate(profile.date_of_birth, locale) : null} dir="ltr" /><Detail label={t('common.address', { ns: 'common' })} value={profile?.address} /></dl></Card>
                     <Card><h2 className="mb-5 border-b border-gray-100 pb-4 text-base font-semibold text-gray-900 dark:border-surface-800 dark:text-white">{t('patients.sections.medical')}</h2><dl className="grid grid-cols-1 gap-4 sm:grid-cols-2"><Detail label={t('patients.bloodType')} value={patient.blood_type} /><Detail label={t('patients.height')} value={patient.height} dir="ltr" /><Detail label={t('patients.weight')} value={patient.weight} dir="ltr" /><Detail label={t('patients.emergencyContactName')} value={patient.emergency_contact_name} /><Detail label={t('patients.emergencyContactPhone')} value={patient.emergency_contact_phone} dir="ltr" /><Detail label={t('patients.emergencyContactRelation')} value={patient.emergency_contact_relation} /></dl></Card>
                 </div>
-                <div className="space-y-6"><PatientMedicalConditionsSection patient={patient} /><Card><h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">{t('patients.sections.meta')}</h2><dl className="space-y-4"><Detail label={t('common.id', { ns: 'common' })} value={patient.id} dir="ltr" /><Detail label={t('common.createdAt', { ns: 'common' })} value={formatDateTime(patient.created_at, locale)} dir="ltr" /><Detail label={t('common.updatedAt', { ns: 'common' })} value={formatDateTime(patient.updated_at, locale)} dir="ltr" /></dl></Card></div>
+                <div className="space-y-6">
+                    <PatientMedicalConditionsSection patient={patient} />
+                    <Card><h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">{t('patients.sections.meta')}</h2>
+                        <dl className="space-y-4"><Detail label={t('common.id', { ns: 'common' })} value={patient.id} dir="ltr" />
+                            <Detail label={t('common.createdAt', { ns: 'common' })} value={formatDateTime(patient.created_at, locale)} dir="ltr" />
+                            <Detail label={t('common.updatedAt', { ns: 'common' })} value={formatDateTime(patient.updated_at, locale)} dir="ltr" />
+                        </dl>
+                    </Card></div>
             </div>
         </div>
     );

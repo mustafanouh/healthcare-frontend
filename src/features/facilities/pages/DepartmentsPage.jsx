@@ -12,10 +12,12 @@ const DepartmentsPage = () => {
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
     { key: 'name', label: t('common.name', { ns: 'common' }) },
+    { key: 'description', label: t('common.description', { ns: 'common' }) },
   ];
 
   const fields = [
     { name: 'name', label: t('common.name', { ns: 'common' }) },
+    { name: 'description', label: t('common.description', { ns: 'common' }) },
   ];
 
   const rows = Array.isArray(data?.data)
@@ -32,7 +34,7 @@ const DepartmentsPage = () => {
       data={rows}
       isLoading={isLoading}
       fields={fields}
-      initialValues={{ name: '' }}
+      initialValues={{ name: '', description: '' }}
       onCreate={(v) => createMut.mutateAsync(v)}
       onUpdate={(v) => updateMut.mutateAsync(v)}
       onDelete={(id) => deleteMut.mutateAsync(id)}
