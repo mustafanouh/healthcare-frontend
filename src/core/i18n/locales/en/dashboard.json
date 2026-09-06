@@ -182,6 +182,8 @@
   "labResults": {
     "title": "Lab results",
     "pageSubtitle": "Record and manage laboratory test results",
+    "searchPlaceholder": "Search lab results",
+    "page": "Page {{current}} of {{total}}",
     "test": "Test",
     "value": "Value",
     "unit": "Unit",
@@ -201,6 +203,13 @@
       "staff": "Lab staff",
       "meta": "Record dates"
     }
+  },
+  "labRequests": {
+    "searchPlaceholder": "Search requests",
+    "selectVisit": "Select visit",
+    "selectTest": "Select lab test",
+    "start": "Start",
+    "page": "Page {{current}} of {{total}}"
   },
   "facilities": {
     "title": "Facilities",

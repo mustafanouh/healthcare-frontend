@@ -56,6 +56,8 @@ const CrudPage = ({
   TableComponent,
   isSubmitting = false,
   extraActions,
+  tableToolbar,
+  tableFooter,
 }) => {
   const { t } = useTranslation('common');
   const Table = TableComponent ?? EnhancedDataTable;
@@ -111,6 +113,7 @@ const CrudPage = ({
       />
 
       <Card padded={false} className="overflow-hidden">
+        {tableToolbar}
         <Table
           columns={columns}
           data={data}
@@ -127,6 +130,7 @@ const CrudPage = ({
           onEdit={onUpdate ? openEdit : undefined}
           onDelete={onDelete ? (row) => setDeleteTarget(row) : undefined}
         />
+        {tableFooter}
       </Card>
 
       {/* Create / Edit modal */}

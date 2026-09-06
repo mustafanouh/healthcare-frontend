@@ -182,6 +182,8 @@
   "labResults": {
     "title": "نتائج المختبر",
     "pageSubtitle": "تسجيل وإدارة نتائج التحاليل المخبرية",
+    "searchPlaceholder": "البحث في نتائج المختبر",
+    "page": "الصفحة {{current}} من {{total}}",
     "test": "التحليل",
     "value": "القيمة",
     "unit": "الوحدة",
@@ -201,6 +203,13 @@
       "staff": "طاقم المختبر",
       "meta": "تواريخ السجل"
     }
+  },
+  "labRequests": {
+    "searchPlaceholder": "البحث في الطلبات",
+    "selectVisit": "اختر الزيارة",
+    "selectTest": "اختر التحليل",
+    "start": "بدء التحليل",
+    "page": "الصفحة {{current}} من {{total}}"
   },
   "facilities": {
     "title": "المنشآت",
