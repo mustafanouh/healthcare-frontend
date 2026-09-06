@@ -160,7 +160,7 @@ const CrudPage = ({
         size="sm"
       >
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
-          {t('errors.generic')}
+          {t('actions.confirmDelete')}
         </p>
         <div className="flex gap-3 justify-end">
           <Button variant="secondary" onClick={() => setDeleteTarget(null)}>

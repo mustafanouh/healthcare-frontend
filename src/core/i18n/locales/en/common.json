@@ -80,6 +80,7 @@
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete this record?",
     "save": "Save",
     "cancel": "Cancel",
     "confirm": "Confirm",
