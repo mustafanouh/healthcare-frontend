@@ -21,3 +21,21 @@ export const useFacilityManager = (id) => useQuery({
   queryFn: () => facilityService.manager(id),
   enabled: Boolean(id),
 });
+
+export const useFacilityBookingDepartments = (facilityId) => useQuery({
+  queryKey: ['facilities', 'booking-departments', facilityId],
+  queryFn: () => facilityService.departments(facilityId),
+  enabled: Boolean(facilityId),
+});
+
+export const useFacilityBookingSpecializations = (facilityId, departmentId) => useQuery({
+  queryKey: ['facilities', 'booking-specializations', facilityId, departmentId],
+  queryFn: () => facilityService.specializations(facilityId, departmentId),
+  enabled: Boolean(facilityId && departmentId),
+});
+
+export const useFacilityBookingDoctors = (facilityId, departmentId, specializationId) => useQuery({
+  queryKey: ['facilities', 'booking-doctors', facilityId, departmentId, specializationId],
+  queryFn: () => facilityService.doctorsBySpecialization(facilityId, departmentId, specializationId),
+  enabled: Boolean(facilityId && departmentId && specializationId),
+});

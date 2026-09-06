@@ -19,6 +19,18 @@ export const facilityService = {
         const { data } = await axiosInstance.get(ENDPOINTS.facilityManager(id));
         return data;
     },
+    departments: async (facilityId) => {
+        const { data } = await axiosInstance.get(`/facilities/${facilityId}/departments`);
+        return normalizeListResponse(data);
+    },
+    specializations: async (facilityId, departmentId) => {
+        const { data } = await axiosInstance.get(`/facilities/${facilityId}/departments/${departmentId}/specializations`);
+        return normalizeListResponse(data);
+    },
+    doctorsBySpecialization: async (facilityId, departmentId, specializationId) => {
+        const { data } = await axiosInstance.get(`/facilities/${facilityId}/departments/${departmentId}/specializations/${specializationId}/doctors`);
+        return normalizeListResponse(data);
+    },
 };
 
 export default facilityService;

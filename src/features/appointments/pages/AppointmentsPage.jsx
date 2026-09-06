@@ -11,25 +11,69 @@ import {
   useChangeAppointmentStatus,
   useStartVisitFromAppointment,
 } from '../hooks/useAppointments';
-import { useDoctors } from '../../doctor/hooks/useDoctors';
 import { usePatients } from '../../patient/hooks/usePatients';
+import { useFacilities, useFacilityBookingDepartments, useFacilityBookingSpecializations, useFacilityBookingDoctors } from '../../facilities/hooks/useFacilities';
 import { useAuth } from '../../../core/hooks/useAuth';
 import { formatDate, formatTime } from '../../../shared/utils/formatters';
 import { parseApiError } from '../../../shared/utils/parseApiError';
 
-const PatientBookingModal = ({ open, onClose, doctors, patientId, onSubmit, isSubmitting }) => {
+const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = false, patientsError = '', patientId, onSubmit, isSubmitting }) => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const [selectedPatientId, setSelectedPatientId] = useState(patientId ? String(patientId) : '');
+  const [facilityId, setFacilityId] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
+  const [specializationId, setSpecializationId] = useState('');
   const [doctorId, setDoctorId] = useState('');
   const [scheduledDate, setScheduledDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [reason, setReason] = useState('');
   const [submitError, setSubmitError] = useState('');
 
+  const { data: facilitiesData, isLoading: facilitiesLoading } = useFacilities();
+  const { data: departmentsData, isLoading: departmentsLoading } = useFacilityBookingDepartments(facilityId);
+  const { data: specializationsData, isLoading: specializationsLoading } = useFacilityBookingSpecializations(facilityId, departmentId);
+  const { data: doctorsData, isLoading: doctorsLoading } = useFacilityBookingDoctors(facilityId, departmentId, specializationId);
+
+  const listFromResponse = (response) => Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+  const facilities = listFromResponse(facilitiesData).filter((facility) => facility.facility_type === 'hospital' && Boolean(facility.is_active));
+  const departments = listFromResponse(departmentsData).filter((department) => Boolean(department.is_active));
+  const specializations = listFromResponse(specializationsData).filter((specialization) => Boolean(specialization.is_active));
+  const doctors = listFromResponse(doctorsData).filter((doctor) => Boolean(doctor.employee?.is_active));
+  const facilityOptions = facilities.map((facility) => ({ value: String(facility.id), label: facility.name }));
+  const departmentOptions = departments.map((department) => ({ value: String(department.id), label: department.name }));
+  const specializationOptions = specializations.map((specialization) => ({ value: String(specialization.id), label: specialization.name }));
+  const doctorOptions = doctors.map((doctor) => ({ value: String(doctor.id), label: doctor.employee?.profile?.full_name ?? `Dr #${doctor.id}` }));
+
+  useEffect(() => {
+    if (patientId) setSelectedPatientId(String(patientId));
+  }, [patientId]);
+
   const { data: slotsResponse, isLoading: slotsLoading, isError: slotsError } = useAvailableSlots({
     doctor_id: doctorId,
     date: scheduledDate,
   });
   const slots = Array.isArray(slotsResponse?.data) ? slotsResponse.data : [];
+
+  useEffect(() => {
+    setDepartmentId('');
+    setSpecializationId('');
+    setDoctorId('');
+    setScheduledDate('');
+    setStartTime('');
+  }, [facilityId]);
+
+  useEffect(() => {
+    setSpecializationId('');
+    setDoctorId('');
+    setScheduledDate('');
+    setStartTime('');
+  }, [departmentId]);
+
+  useEffect(() => {
+    setDoctorId('');
+    setScheduledDate('');
+    setStartTime('');
+  }, [specializationId]);
 
   useEffect(() => {
     setStartTime('');
@@ -40,6 +84,10 @@ const PatientBookingModal = ({ open, onClose, doctors, patientId, onSubmit, isSu
   }, [slots, startTime]);
 
   const reset = () => {
+    setSelectedPatientId(patientId ? String(patientId) : '');
+    setFacilityId('');
+    setDepartmentId('');
+    setSpecializationId('');
     setDoctorId('');
     setScheduledDate('');
     setStartTime('');
@@ -57,9 +105,8 @@ const PatientBookingModal = ({ open, onClose, doctors, patientId, onSubmit, isSu
     setSubmitError('');
     try {
       await onSubmit({
-        patient_id: patientId,
+        patient_id: Number(selectedPatientId),
         doctor_id: Number(doctorId),
-        status: 'pending',
         reason: reason.trim(),
         scheduled_date: scheduledDate,
         start_time: startTime.slice(0, 5),
@@ -77,15 +124,12 @@ const PatientBookingModal = ({ open, onClose, doctors, patientId, onSubmit, isSu
             {submitError}
           </div>
         )}
-        <Select
-          label={t('appointments.doctor')}
-          name="doctor_id"
-          value={doctorId}
-          onChange={(event) => setDoctorId(event.target.value)}
-          options={doctors}
-          placeholder={t('appointments.selectDoctor', { defaultValue: 'Select a doctor' })}
-          required
-        />
+        {!patientId && <Select label={t('appointments.patient')} name="patient_id" value={selectedPatientId} onChange={(event) => setSelectedPatientId(event.target.value)} options={patients} placeholder={patientsLoading ? t('appointments.loadingPatients', { defaultValue: 'Loading patients...' }) : patientsError || t('appointments.selectPatient', { defaultValue: 'Select a patient' })} disabled={patientsLoading || Boolean(patientsError)} required />}
+
+        <Select label={t('appointments.facility', { defaultValue: 'Facility' })} name="facility_id" value={facilityId} onChange={(event) => setFacilityId(event.target.value)} options={facilityOptions} placeholder={facilitiesLoading ? t('appointments.loadingFacilities', { defaultValue: 'Loading facilities...' }) : t('appointments.selectFacility', { defaultValue: 'Select a hospital' })} disabled={facilitiesLoading} required />
+        <Select label={t('appointments.department', { defaultValue: 'Department' })} name="department_id" value={departmentId} onChange={(event) => setDepartmentId(event.target.value)} options={departmentOptions} placeholder={departmentsLoading ? t('appointments.loadingDepartments', { defaultValue: 'Loading departments...' }) : t('appointments.selectDepartment', { defaultValue: 'Select a department' })} disabled={!facilityId || departmentsLoading} required />
+        <Select label={t('appointments.specialization', { defaultValue: 'Specialization' })} name="specialization_id" value={specializationId} onChange={(event) => setSpecializationId(event.target.value)} options={specializationOptions} placeholder={specializationsLoading ? t('appointments.loadingSpecializations', { defaultValue: 'Loading specializations...' }) : t('appointments.selectSpecialization', { defaultValue: 'Select a specialization' })} disabled={!departmentId || specializationsLoading} required />
+        <Select label={t('appointments.doctor')} name="doctor_id" value={doctorId} onChange={(event) => setDoctorId(event.target.value)} options={doctorOptions} placeholder={doctorsLoading ? t('appointments.loadingDoctors', { defaultValue: 'Loading doctors...' }) : t('appointments.selectDoctor', { defaultValue: 'Select a doctor' })} disabled={!specializationId || doctorsLoading} required />
 
         <Input
           label={t('appointments.scheduledDate')}
@@ -135,10 +179,10 @@ const PatientBookingModal = ({ open, onClose, doctors, patientId, onSubmit, isSu
 
         <div className="flex justify-end gap-3 pt-2">
           <Button type="button" variant="secondary" onClick={handleClose}>
-            {t('common.cancel', { defaultValue: 'Cancel' })}
+            {t('actions.cancel', { ns: 'common' })}
           </Button>
-          <Button type="submit" loading={isSubmitting} disabled={!patientId || !startTime || !reason.trim()}>
-            {t('common.save', { defaultValue: 'Book appointment' })}
+          <Button type="submit" loading={isSubmitting} disabled={!selectedPatientId || !doctorId || !startTime || !reason.trim()}>
+            {t('appointments.bookAppointment')}
           </Button>
         </div>
       </form>
@@ -157,7 +201,6 @@ const AppointmentsPage = () => {
   const statusMut = useChangeAppointmentStatus();
   const startVisitMut = useStartVisitFromAppointment();
 
-  const { data: doctorsData } = useDoctors();
   const {
     data: patientsData,
     isLoading: patientsLoading,
@@ -168,7 +211,6 @@ const AppointmentsPage = () => {
   const [startVisitError, setStartVisitError] = useState('');
   const [startVisitAppointment, setStartVisitAppointment] = useState(null);
 
-  const doctors = (doctorsData?.data ?? []).map((d) => ({ value: d.id, label: d.employee?.profile?.full_name ?? `Dr #${d.id}` }));
   const patientList = Array.isArray(patientsData?.data)
     ? patientsData.data
     : Array.isArray(patientsData?.data?.data)
@@ -257,7 +299,6 @@ const AppointmentsPage = () => {
         <PatientBookingModal
           open={bookingOpen}
           onClose={() => setBookingOpen(false)}
-          doctors={doctors}
           patientId={patientId}
           onSubmit={(values) => createMut.mutateAsync(values).then(() => setBookingOpen(false))}
           isSubmitting={createMut.isPending}
@@ -358,10 +399,6 @@ const AppointmentsPage = () => {
           ? patientsErrorMessage || t('appointments.patientsError', { defaultValue: 'Could not load patients.' })
           : t('appointments.selectPatient', { defaultValue: 'Select a patient' }),
     },
-    { name: 'doctor_id', label: t('appointments.doctor'), type: 'select', options: doctors },
-    { name: 'scheduled_date', label: t('appointments.scheduledDate'), type: 'date' },
-    { name: 'start_time', label: t('appointments.startTime'), type: 'time', dir: 'ltr' },
-
   ];
 
 
@@ -375,10 +412,24 @@ const AppointmentsPage = () => {
         isLoading={isLoading}
         fields={fields}
         initialValues={{ patient_id: '', doctor_id: '', scheduled_date: '', start_time: '', end_time: '', status: 'pending' }}
-        onCreate={(v) => createMut.mutateAsync(v)}
-        onUpdate={(v) => updateMut.mutateAsync(v)}
+        extraActions={(
+          <Button onClick={() => setBookingOpen(true)}>
+            {t('appointments.newAppointment')}
+          </Button>
+        )}
+        onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload })}
         onDelete={(id) => deleteMut.mutateAsync(id)}
-        isSubmitting={createMut.isPending || updateMut.isPending}
+        isSubmitting={updateMut.isPending}
+      />
+
+      <PatientBookingModal
+        open={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        patients={patients}
+        patientsLoading={patientsLoading}
+        patientsError={patientsError ? patientsErrorMessage || t('appointments.patientsError', { defaultValue: 'Could not load patients.' }) : ''}
+        onSubmit={(values) => createMut.mutateAsync(values).then(() => setBookingOpen(false))}
+        isSubmitting={createMut.isPending}
       />
 
       <Modal
