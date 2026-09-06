@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 export const loginSchema = (t) =>
   Yup.object({
     email: Yup.string()
-      .email(t('login.errors.invalidEmail', { ns: 'auth' }))
+      .email(t('errors.invalidEmail', { ns: 'auth' }))
       .required(t('errors.required', { ns: 'auth' })),
     password: Yup.string()
       .min(8, t('errors.minPassword', { ns: 'auth' }))

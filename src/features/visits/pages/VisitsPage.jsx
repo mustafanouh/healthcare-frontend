@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import { Button } from '../../../shared/components/ui';
 import { useVisits, useCreateVisit, useUpdateVisit, useDeleteVisit, useCompleteVisit, useChangeVisitStatus } from '../hooks/useVisits';
@@ -10,6 +10,7 @@ import { useRole } from '../../../core/hooks/useRole';
 const VisitsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
   const { isDoctor } = useRole();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { data, isLoading } = useVisits();
   const { data: appointmentsData } = useAppointments();
@@ -67,6 +68,7 @@ const VisitsPage = () => {
       columns={columns}
       data={listData}
       isLoading={isLoading}
+      onView={(row) => navigate(`${isDoctor ? '/doctor' : '/admin'}/visits/${row.id}`)}
       fields={fields}
       initialValues={{ appointment_id: searchParams.get('appointment_id') ?? '', notes: '', visited_at: '' }}
       // onCreate={(v) => createMut.mutateAsync(normalizePayload(v))}

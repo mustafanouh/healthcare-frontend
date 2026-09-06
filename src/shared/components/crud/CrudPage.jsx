@@ -50,6 +50,8 @@ const CrudPage = ({
   staffLabel,
   onViewDepartments,
   departmentsLabel,
+  onViewManager,
+  managerLabel,
   renderRowActions,
   TableComponent,
   isSubmitting = false,
@@ -118,6 +120,8 @@ const CrudPage = ({
           staffLabel={staffLabel}
           onViewDepartments={onViewDepartments}
           departmentsLabel={departmentsLabel}
+          onViewManager={onViewManager}
+          managerLabel={managerLabel}
           renderRowActions={renderRowActions}
           viewLabel={viewLabel ?? t('actions.viewMore')}
           onEdit={onUpdate ? openEdit : undefined}

@@ -64,7 +64,9 @@
     "todayAppointments": "مواعيد اليوم",
     "upcoming": "المواعيد القادمة",
     "myPatients": "مرضاي",
-    "startVisit": "بدء الزيارة"
+    "startVisit": "بدء الزيارة",
+    "startVisitConfirmTitle": "بدء الزيارة",
+    "startVisitConfirmMessage": "هل أنت متأكد من رغبتك في بدء هذه الزيارة؟"
   },
   "patient": {
     "title": "لوحتي الصحية",
@@ -139,8 +141,24 @@
   },
   "visits": {
     "title": "الزيارات",
+    "detailsTitle": "تفاصيل الزيارة #{{id}}",
     "newVisit": "زيارة جديدة",
     "visitedAt": "تاريخ الزيارة",
+    "status": "الحالة",
+    "appointment": "الموعد",
+    "patient": "المريض",
+    "doctor": "الطبيب",
+    "diagnoses": "التشخيصات",
+    "prescription": "الوصفة الطبية",
+    "appointmentDetails": "تفاصيل الموعد",
+    "appointmentDate": "التاريخ المجدول",
+    "appointmentTime": "وقت البدء",
+    "appointmentReason": "السبب",
+    "labRequests": "طلبات المختبر",
+    "recordDates": "تواريخ السجل",
+    "sections": {
+      "overview": "نظرة عامة على الزيارة"
+    },
     "diagnosis": "التشخيص",
     "addDiagnosis": "إضافة تشخيص",
     "diagnosisCode": "رمز التشخيص",
@@ -193,6 +211,10 @@
     "viewDetails": "عرض التفاصيل",
     "viewStaff": "عرض الموظفين",
     "viewDepartments": "عرض الأقسام",
+    "viewManager": "عرض المدير",
+    "manager": "مدير المنشأة",
+    "managerAccount": "بيانات الحساب",
+    "managerProfile": "البيانات الشخصية",
     "viewSpecializations": "عرض الاختصاصات",
     "departments": "أقسام المنشأة",
     "addDepartment": "إضافة قسم",

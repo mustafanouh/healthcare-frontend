@@ -67,9 +67,11 @@ const FacilitiesPage = () => {
       onView={(facility) => navigate(`/admin/facilities/${facility.id}`)}
       onViewStaff={(facility) => navigate(`/admin/facilities/${facility.id}/staff`)}
       onViewDepartments={(facility) => navigate(`/admin/facilities/${facility.id}/departments`)}
+      onViewManager={(facility) => navigate(`/admin/facilities/${facility.id}/manager`)}
       viewLabel={t('facilities.viewDetails')}
       staffLabel={t('facilities.viewStaff')}
       departmentsLabel={t('facilities.viewDepartments')}
+      managerLabel={t('facilities.viewManager')}
     />
   );
 };

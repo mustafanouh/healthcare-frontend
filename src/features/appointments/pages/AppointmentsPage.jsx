@@ -158,14 +158,60 @@ const AppointmentsPage = () => {
   const startVisitMut = useStartVisitFromAppointment();
 
   const { data: doctorsData } = useDoctors();
-  const { data: patientsData } = usePatients();
+  const {
+    data: patientsData,
+    isLoading: patientsLoading,
+    isError: patientsError,
+    error: patientsQueryError,
+  } = usePatients();
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [startVisitError, setStartVisitError] = useState('');
+  const [startVisitAppointment, setStartVisitAppointment] = useState(null);
 
   const doctors = (doctorsData?.data ?? []).map((d) => ({ value: d.id, label: d.employee?.profile?.full_name ?? `Dr #${d.id}` }));
-  const patients = (patientsData?.data ?? []).map((p) => ({ value: p.id, label: p.profile?.full_name ?? `#${p.id}` }));
-  const patientRecord = (patientsData?.data ?? []).find((patient) => String(patient.profile?.user_id) === String(user?.id));
+  const patientList = Array.isArray(patientsData?.data)
+    ? patientsData.data
+    : Array.isArray(patientsData?.data?.data)
+      ? patientsData.data.data
+      : Array.isArray(patientsData)
+        ? patientsData
+        : [];
+  const patients = patientList.map((patient) => ({
+    value: patient.id,
+    label: patient.profile?.full_name ?? patient.full_name ?? patient.name ?? `#${patient.id}`,
+  }));
+  const patientsErrorMessage = patientsQueryError
+    ? parseApiError(
+      patientsQueryError,
+      patientsQueryError.response?.status
+        ? `Could not load patients (HTTP ${patientsQueryError.response.status}).`
+        : 'Could not load patients. Check the API connection.'
+    )
+    : '';
+  const patientRecord = patientList.find((patient) => String(patient.profile?.user_id ?? patient.user_id) === String(user?.id));
   const patientId = user?.patient?.id ?? user?.patient_id ?? patientRecord?.id ?? user?.id;
   const { data, isLoading } = useAppointments(isPatientPage ? { patient_id: patientId } : {});
+
+  const handleStartVisit = async (appointment) => {
+    setStartVisitAppointment(appointment);
+    setStartVisitError('');
+
+    try {
+      await startVisitMut.mutateAsync(appointment.id);
+    } catch (error) {
+      setStartVisitError(
+        parseApiError(error, t('common.requestError', { defaultValue: 'Could not start the visit.' }))
+      );
+    }
+  };
+
+  const closeStartVisitError = () => {
+    if (!startVisitMut.isPending) {
+      setStartVisitAppointment(null);
+      setStartVisitError('');
+      startVisitMut.reset();
+    }
+  };
 
   if (isPatientPage) {
     return (
@@ -232,97 +278,125 @@ const AppointmentsPage = () => {
     { key: 'time', label: t('appointments.startTime'), render: (r) => `${formatTime(r.start_time)} ` },
     { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
     {
-  key: 'actions',
-  label: t('common.actions', { ns: 'common' }),
-  render: (r) => {
-    if (r.status === 'pending') {
-      return (
-        <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="primary"
-            onClick={() =>
-              statusMut.mutate({
-                id: r.id,
-                status: 'confirmed',
-              })
-            }
-            loading={
-              statusMut.isPending &&
-              statusMut.variables?.id === r.id &&
-              statusMut.variables?.status === 'confirmed'
-            }
-          >
-            {t('appointments.confirm', { defaultValue: 'Confirm' })}
-          </Button>
+      key: 'actions',
+      label: t('common.actions', { ns: 'common' }),
+      render: (r) => {
+        if (r.status === 'pending') {
+          return (
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={() =>
+                  statusMut.mutate({
+                    id: r.id,
+                    status: 'confirmed',
+                  })
+                }
+                loading={
+                  statusMut.isPending &&
+                  statusMut.variables?.id === r.id &&
+                  statusMut.variables?.status === 'confirmed'
+                }
+              >
+                {t('appointments.confirm', { defaultValue: 'Confirm' })}
+              </Button>
 
-          <Button
-            size="sm"
-            variant="danger"
-            onClick={() =>
-              statusMut.mutate({
-                id: r.id,
-                status: 'cancelled',
-              })
-            }
-            loading={
-              statusMut.isPending &&
-              statusMut.variables?.id === r.id &&
-              statusMut.variables?.status === 'cancelled'
-            }
-          >
-            {t('appointments.cancel', { defaultValue: 'Cancel' })}
-          </Button>
-        </div>
-      );
-    }
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() =>
+                  statusMut.mutate({
+                    id: r.id,
+                    status: 'cancelled',
+                  })
+                }
+                loading={
+                  statusMut.isPending &&
+                  statusMut.variables?.id === r.id &&
+                  statusMut.variables?.status === 'cancelled'
+                }
+              >
+                {t('appointments.cancel', { defaultValue: 'Cancel' })}
+              </Button>
+            </div>
+          );
+        }
 
-    if (r.status === 'confirmed') {
-      return (
-        <Button
-          size="sm"
-          variant="secondary"
-          onClick={() => startVisitMut.mutate(r.id)}
-          loading={
-            startVisitMut.isPending &&
-            startVisitMut.variables === r.id
-          }
-        >
-          {t('appointments.startVisit', {
-            defaultValue: 'Start Visit',
-          })}
-        </Button>
-      );
-    }
+        if (r.status === 'confirmed') {
+          return (
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => handleStartVisit(r)}
+              loading={
+                startVisitMut.isPending &&
+                startVisitMut.variables === r.id
+              }
+            >
+              {t('appointments.startVisit', {
+                defaultValue: 'Start Visit',
+              })}
+            </Button>
+          );
+        }
 
-    return null;
-  },
-},
+        return null;
+      },
+    },
   ];
 
   const fields = [
-    { name: 'patient_id', label: t('appointments.patient'), type: 'select', options: patients },
+    {
+      name: 'patient_id',
+      label: t('appointments.patient'),
+      type: 'select',
+      options: patients,
+      placeholder: patientsLoading
+        ? t('appointments.loadingPatients', { defaultValue: 'Loading patients...' })
+        : patientsError
+          ? patientsErrorMessage || t('appointments.patientsError', { defaultValue: 'Could not load patients.' })
+          : t('appointments.selectPatient', { defaultValue: 'Select a patient' }),
+    },
     { name: 'doctor_id', label: t('appointments.doctor'), type: 'select', options: doctors },
     { name: 'scheduled_date', label: t('appointments.scheduledDate'), type: 'date' },
     { name: 'start_time', label: t('appointments.startTime'), type: 'time', dir: 'ltr' },
-   
+
   ];
 
 
   return (
-    <CrudPage
-      title={t('appointments.title')}
-      addLabel={t('appointments.newAppointment')}
-      columns={columns}
-      data={data?.data ?? []}
-      isLoading={isLoading}
-      fields={fields}
-      initialValues={{ patient_id: '', doctor_id: '', scheduled_date: '', start_time: '', end_time: '', status: 'pending' }}
-      onCreate={(v) => createMut.mutateAsync(v)}
-      onUpdate={(v) => updateMut.mutateAsync(v)}
-      onDelete={(id) => deleteMut.mutateAsync(id)}
-      isSubmitting={createMut.isPending || updateMut.isPending}
-    />
+    <>
+      <CrudPage
+        title={t('appointments.title')}
+        addLabel={t('appointments.newAppointment')}
+        columns={columns}
+        data={data?.data ?? []}
+        isLoading={isLoading}
+        fields={fields}
+        initialValues={{ patient_id: '', doctor_id: '', scheduled_date: '', start_time: '', end_time: '', status: 'pending' }}
+        onCreate={(v) => createMut.mutateAsync(v)}
+        onUpdate={(v) => updateMut.mutateAsync(v)}
+        onDelete={(id) => deleteMut.mutateAsync(id)}
+        isSubmitting={createMut.isPending || updateMut.isPending}
+      />
+
+      <Modal
+        open={Boolean(startVisitError)}
+        onClose={closeStartVisitError}
+        title={t('appointments.startVisit', { defaultValue: 'Start Visit' })}
+        size="sm"
+      >
+        <p className="rounded-lg border border-red-100 bg-red-50 p-3 text-sm text-red-600 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-400">
+          {startVisitError}
+        </p>
+        <div className="flex justify-end pt-6">
+          <Button variant="secondary" onClick={closeStartVisitError}>
+            {t('common.close', { defaultValue: 'Close' })}
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 };
 

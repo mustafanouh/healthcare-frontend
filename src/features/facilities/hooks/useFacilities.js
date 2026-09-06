@@ -15,3 +15,9 @@ export const useFacilityStaff = (id) => useQuery({
   queryFn: () => facilityService.staff(id),
   enabled: Boolean(id),
 });
+
+export const useFacilityManager = (id) => useQuery({
+  queryKey: ['facilities', 'manager', id],
+  queryFn: () => facilityService.manager(id),
+  enabled: Boolean(id),
+});

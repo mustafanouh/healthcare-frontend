@@ -15,6 +15,10 @@ export const facilityService = {
         const { data } = await axiosInstance.get(ENDPOINTS.facilityStaff(id));
         return normalizeListResponse(data);
     },
+    manager: async (id) => {
+        const { data } = await axiosInstance.get(ENDPOINTS.facilityManager(id));
+        return data;
+    },
 };
 
 export default facilityService;

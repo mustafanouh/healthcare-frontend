@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Spinner from '../../../shared/components/ui/Spinner';
 import TableActionButton from '../../../shared/components/ui/TableActionButton';
 
-const FacilitiesTable = ({ data = [], isLoading = false, onEdit, onDelete, onView, onViewStaff, viewLabel, staffLabel, onViewDepartments, departmentsLabel }) => {
+const FacilitiesTable = ({ data = [], isLoading = false, onEdit, onDelete, onView, onViewStaff, viewLabel, staffLabel, onViewDepartments, departmentsLabel, onViewManager, managerLabel }) => {
     const { t } = useTranslation(['dashboard', 'common']);
     const [openMenuId, setOpenMenuId] = useState(null);
 
@@ -48,6 +48,7 @@ const FacilitiesTable = ({ data = [], isLoading = false, onEdit, onDelete, onVie
                                             {onEdit && <TableActionButton variant="primary" label={t('actions.edit', { ns: 'common' })} onClick={() => { setOpenMenuId(null); onEdit(facility); }} />}
                                             {onViewStaff && <TableActionButton variant="primary" label={staffLabel} onClick={() => { setOpenMenuId(null); onViewStaff(facility); }} />}
                                             {onViewDepartments && <TableActionButton variant="primary" label={departmentsLabel} onClick={() => { setOpenMenuId(null); onViewDepartments(facility); }} />}
+                                            {onViewManager && <TableActionButton variant="primary" label={managerLabel} onClick={() => { setOpenMenuId(null); onViewManager(facility); }} />}
                                             {onDelete && <TableActionButton variant="danger" label={t('actions.delete', { ns: 'common' })} onClick={() => { setOpenMenuId(null); onDelete(facility); }} />}
                                         </div>
                                     )}

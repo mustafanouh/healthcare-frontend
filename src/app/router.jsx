@@ -28,6 +28,7 @@ const LabDashboard = lazy(() => import('../features/lab/pages/LabDashboard'));
 const AppointmentsPage = lazy(() => import('../features/appointments/pages/AppointmentsPage'));
 const DoctorSchedulePage = lazy(() => import('../features/doctor-schedule/pages/DoctorSchedulePage'));
 const VisitsPage = lazy(() => import('../features/visits/pages/VisitsPage'));
+const VisitDetailsPage = lazy(() => import('../features/visits/pages/VisitDetailsPage'));
 const PrescriptionsPage = lazy(() => import('../features/prescriptions/pages/PrescriptionsPage'));
 const LabResultsPage = lazy(() => import('../features/lab-results/pages/LabResultsPage'));
 const DiagnosesPage = lazy(() => import('../features/patient/pages/DiagnosesPage'));
@@ -39,6 +40,7 @@ const FacilitiesPage = lazy(() => import('../features/facilities/pages/Facilitie
 const FacilityDetailsPage = lazy(() => import('../features/facilities/pages/FacilityDetailsPage'));
 const FacilityStaffPage = lazy(() => import('../features/facilities/pages/FacilityStaffPage'));
 const FacilityDepartmentsPage = lazy(() => import('../features/facilities/pages/FacilityDepartmentsPage'));
+const FacilityManagerPage = lazy(() => import('../features/facilities/pages/FacilityManagerPage'));
 const DepartmentDetailsPage = lazy(() => import('../features/facilities/pages/DepartmentDetailsPage'));
 const DepartmentsPage = lazy(() => import('../features/facilities/pages/DepartmentsPage'));
 const SpecializationsPage = lazy(() => import('../features/facilities/pages/SpecializationsPage'));
@@ -78,6 +80,7 @@ export const router = createBrowserRouter([
           { path: '/admin/facilities/:id', element: wrap(<FacilityDetailsPage />) },
           { path: '/admin/facilities/:id/staff', element: wrap(<FacilityStaffPage />) },
           { path: '/admin/facilities/:id/departments', element: wrap(<FacilityDepartmentsPage />) },
+          { path: '/admin/facilities/:id/manager', element: wrap(<FacilityManagerPage />) },
           { path: '/admin/facilities/:facilityId/departments/:departmentId', element: wrap(<DepartmentDetailsPage />) },
           { path: '/admin/departments', element: wrap(<DepartmentsPage />) },
           { path: '/admin/specializations', element: wrap(<SpecializationsPage />) },
@@ -92,6 +95,7 @@ export const router = createBrowserRouter([
           // { path: '/admin/lab-results', element: wrap(<LabResultsPage />) },
           { path: '/admin/appointments', element: wrap(<AppointmentsPage />) },
           { path: '/admin/visits', element: wrap(<VisitsPage />) },
+          { path: '/admin/visits/:id', element: wrap(<VisitDetailsPage />) },
           { path: '/admin/audit-logs', element: wrap(<AuditLogsPage />) },
           { path: '/admin/audit-logs/:id', element: wrap(<AuditLogDetailsPage />) },
           { path: '/admin/user-roles', element: wrap(<UserRolesPage />) },
@@ -102,6 +106,7 @@ export const router = createBrowserRouter([
           { path: '/doctor/schedule', element: wrap(<DoctorSchedulePage />) },
           { path: '/doctor/appointments', element: wrap(<AppointmentsPage />) },
           { path: '/doctor/visits', element: wrap(<VisitsPage />) },
+          { path: '/doctor/visits/:id', element: wrap(<VisitDetailsPage />) },
           { path: '/doctor/prescriptions', element: wrap(<PrescriptionsPage />) },
           { path: '/doctor/lab-requests', element: wrap(<LabRequestsPage />) },
 

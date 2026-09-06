@@ -64,7 +64,9 @@
     "todayAppointments": "Today's appointments",
     "upcoming": "Upcoming appointments",
     "myPatients": "My patients",
-    "startVisit": "Start visit"
+    "startVisit": "Start visit",
+    "startVisitConfirmTitle": "Start visit",
+    "startVisitConfirmMessage": "Are you sure you want to start this visit?"
   },
   "patient": {
     "title": "My health dashboard",
@@ -139,8 +141,24 @@
   },
   "visits": {
     "title": "Visits",
+    "detailsTitle": "Visit #{{id}}",
     "newVisit": "New visit",
     "visitedAt": "Visit date",
+    "status": "Status",
+    "appointment": "Appointment",
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "diagnoses": "Diagnoses",
+    "prescription": "Prescription",
+    "appointmentDetails": "Appointment details",
+    "appointmentDate": "Scheduled date",
+    "appointmentTime": "Start time",
+    "appointmentReason": "Reason",
+    "labRequests": "Laboratory requests",
+    "recordDates": "Record dates",
+    "sections": {
+      "overview": "Visit overview"
+    },
     "diagnosis": "Diagnosis",
     "addDiagnosis": "Add diagnosis",
     "diagnosisCode": "Diagnosis code",
@@ -193,6 +211,10 @@
     "viewDetails": "View details",
     "viewStaff": "View staff",
     "viewDepartments": "View departments",
+    "viewManager": "View manager",
+    "manager": "Facility manager",
+    "managerAccount": "Account information",
+    "managerProfile": "Personal information",
     "viewSpecializations": "View specializations",
     "departments": "Facility departments",
     "addDepartment": "Add department",
