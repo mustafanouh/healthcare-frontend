@@ -120,6 +120,7 @@
     ,"itemsPerPage": "Items per page"
     ,"page": "Page"
     ,"doctor": "Doctor"
+    ,"prescriptions": "Prescriptions"
   },
   "status": {
     "pending": "Pending",
@@ -129,7 +130,9 @@
     "active": "Active",
     "inactive": "Inactive",
     "in_progress": "In progress",
-    "processing": "Processing"
+    "processing": "Processing",
+    "dispensed": "Dispensed",
+    "partial": "Partially dispensed"
   },
   "theme": {
     "light": "Light",

@@ -40,7 +40,7 @@ const DispensingPage = () => {
       initialValues={{ prescription_item_id: '', quantity_dispensed: '', dispensed_at: '' }}
       // onCreate={(v) => createMut.mutateAsync(v)}
       // onUpdate={(v) => updateMut.mutateAsync(v)}
-      onDelete={(id) => deleteMut.mutateAsync(id)}
+      // onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
     />
   );

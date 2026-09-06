@@ -25,6 +25,7 @@ export const ENDPOINTS = {
   doctors: '/doctors',
   labStaff: '/labstaff',
   pharmacists: '/pharmacists',
+  pharmacistDashboard: '/dashboard',
 
   // Patients & medical data
   patients: '/patients',

@@ -97,6 +97,9 @@
     "title": "لوحة تحكم الصيدلي",
     "subtitle": "الوصفات الطبية وعمليات الصرف",
     "pendingPrescriptions": "وصفات قيد الانتظار",
+    "partiallyDispensed": "وصفات مصروفة جزئياً",
+    "completedPrescriptions": "وصفات مكتملة",
+    "dispensedToday": "المصروف اليوم",
     "dispenseNow": "صرف الآن"
   },
   "lab": {
@@ -185,12 +188,17 @@
     "medicationName": "اسم الدواء",
     "dosage": "الجرعة",
     "quantity": "الكمية الموصوفة",
+    "dispensed": "المصروف",
+    "remaining": "المتبقي",
     "frequency": "التكرار",
     "duration": "المدة",
     "dispenseQuantity": "الكمية المصروفة",
     "detailsTitle": "الوصفة #{{id}}",
     "visitId": "معرّف الزيارة",
     "patient": "المريض",
+    "page": "الصفحة {{current}} من {{total}}",
+    "dispensingSuccessPartial": "تم صرف {{quantity}} بنجاح. الكمية المتبقية: {{remaining}}.",
+    "dispensingSuccessComplete": "تم صرف كامل الكمية الموصوفة بنجاح.",
     "dispensingMissingPharmacist": "تعذر تحديد الصيدلي الحالي أو أن الكمية غير صحيحة"
   },
   "labResults": {

@@ -120,6 +120,7 @@
     ,"itemsPerPage": "العناصر في الصفحة"
     ,"page": "صفحة"
     ,"doctor": "الطبيب"
+    ,"prescriptions": "الوصفات الطبية"
   },
   "status": {
     "pending": "قيد الانتظار",
@@ -129,7 +130,9 @@
     "active": "نشط",
     "inactive": "غير نشط",
     "in_progress": "قيد التنفيذ",
-    "processing": "قيد المعالجة"
+    "processing": "قيد المعالجة",
+    "dispensed": "تم الصرف",
+    "partial": "مصروفة جزئياً"
   },
   "theme": {
     "light": "فاتح",

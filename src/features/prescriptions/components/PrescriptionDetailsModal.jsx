@@ -50,6 +50,7 @@ const PrescriptionDetailsModal = ({
     const [quantities, setQuantities] = useState({});
     const [dispensingItemId, setDispensingItemId] = useState(null);
     const [dispensingError, setDispensingError] = useState(null);
+    const [dispensingSuccess, setDispensingSuccess] = useState(null);
 
     const {
         data: response,
@@ -132,6 +133,7 @@ const PrescriptionDetailsModal = ({
 
         setDispensingItemId(item.id);
         setDispensingError(null);
+        setDispensingSuccess(null);
 
         try {
             /*
@@ -174,7 +176,16 @@ const PrescriptionDetailsModal = ({
                 ...current,
                 [item.id]: '',
             }));
+            setDispensingSuccess(
+                quantity === remainingQuantity
+                    ? t('prescriptions.dispensingSuccessComplete')
+                    : t('prescriptions.dispensingSuccessPartial', {
+                        quantity,
+                        remaining: remainingQuantity - quantity,
+                    })
+            );
         } catch (error) {
+            setDispensingSuccess(null);
             setDispensingError(
                 parseApiError(
                     error,
@@ -320,11 +331,11 @@ const PrescriptionDetailsModal = ({
                                             </th>
 
                                             <th className="px-4 py-3 text-start text-xs font-semibold text-gray-500">
-                                                Dispensed
+                                                {t('prescriptions.dispensed')}
                                             </th>
 
                                             <th className="px-4 py-3 text-start text-xs font-semibold text-gray-500">
-                                                Remaining
+                                                {t('prescriptions.remaining')}
                                             </th>
 
                                             <th className="px-4 py-3 text-start text-xs font-semibold text-gray-500">
@@ -516,6 +527,12 @@ const PrescriptionDetailsModal = ({
                     {dispensingError && (
                         <p className="mt-3 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-300">
                             {dispensingError}
+                        </p>
+                    )}
+
+                    {dispensingSuccess && (
+                        <p className="mt-3 rounded-xl bg-green-50 px-4 py-3 text-sm text-green-700 dark:bg-green-900/20 dark:text-green-300">
+                            {dispensingSuccess}
                         </p>
                     )}
 

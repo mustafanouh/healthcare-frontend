@@ -97,6 +97,9 @@
     "title": "Pharmacist dashboard",
     "subtitle": "Prescriptions and dispensing",
     "pendingPrescriptions": "Pending prescriptions",
+    "partiallyDispensed": "Partially dispensed",
+    "completedPrescriptions": "Completed prescriptions",
+    "dispensedToday": "Dispensed today",
     "dispenseNow": "Dispense now"
   },
   "lab": {
@@ -185,12 +188,17 @@
     "medicationName": "Medication name",
     "dosage": "Dosage",
     "quantity": "Quantity prescribed",
+    "dispensed": "Dispensed",
+    "remaining": "Remaining",
     "frequency": "Frequency",
     "duration": "Duration",
     "dispenseQuantity": "Quantity dispensed",
     "detailsTitle": "Prescription #{{id}}",
     "visitId": "Visit ID",
     "patient": "Patient",
+    "page": "Page {{current}} of {{total}}",
+    "dispensingSuccessPartial": "Dispensed {{quantity}} item(s) successfully. Remaining: {{remaining}}.",
+    "dispensingSuccessComplete": "The full prescribed quantity was dispensed successfully.",
     "dispensingMissingPharmacist": "The current pharmacist could not be identified or the quantity is invalid"
   },
   "labResults": {
