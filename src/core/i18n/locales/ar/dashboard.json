@@ -33,7 +33,7 @@
     "oldValue": "القيمة السابقة",
     "newValue": "القيمة الجديدة",
     "notAvailable": "لا توجد بيانات",
-    "page": "الصفحة {{current}} من {{total}} سجل",
+    "page": "الصفحة {{current}} من {{total}} صفحات",
     "actions": {
       "create": "إضافة",
       "update": "تعديل",
@@ -78,8 +78,8 @@
     "medicalHistory": "السجل الطبي"
   },
   "diagnoses": {
-    "title": "التشخيصات والحساسيات",
-    "subtitle": "عرض التشخيصات والحساسيات المرتبطة بزياراتك",
+    "title": "التشخيصات",
+    "subtitle": "عرض التشخيصات المرتبطة بزياراتك",
     "detailsTitle": "تفاصيل التشخيص #{{id}}",
     "code": "رمز التشخيص",
     "description": "الوصف",
@@ -89,9 +89,15 @@
     "diagnosedAt": "تاريخ التشخيص",
     "types": {
       "primary": "رئيسي",
-      "secondary": "ثانوي",
-      "allergy": "حساسية"
+      "secondary": "ثانوي"
     }
+  },
+  "doctorDiagnoses": {
+    "title": "التشخيصات السريرية",
+    "subtitle": "تسجيل وإدارة تشخيصات الزيارات النشطة",
+    "add": "إضافة تشخيص",
+    "searchPlaceholder": "البحث بالرمز أو الوصف",
+    "page": "الصفحة {{current}} من {{total}} سجل"
   },
   "pharmacist": {
     "title": "لوحة تحكم الصيدلي",
@@ -106,6 +112,9 @@
     "title": "لوحة تحكم المختبر",
     "subtitle": "طلبات التحاليل والنتائج",
     "pendingRequests": "طلبات قيد الانتظار",
+    "inProgressRequests": "طلبات قيد التنفيذ",
+    "completedRequests": "الطلبات المكتملة",
+    "completedToday": "المكتمل اليوم",
     "enterResult": "إدخال نتيجة"
   },
   "appointments": {
@@ -158,6 +167,39 @@
   },
   "visits": {
     "title": "الزيارات",
+    "activeTitle": "الزيارات النشطة",
+    "activeSubtitle": "تابع العمل على الزيارات الجارية حالياً.",
+    "noActiveVisits": "لا توجد زيارات نشطة",
+    "noActiveVisitsHint": "ابدأ موعداً مؤكداً ليظهر هنا.",
+    "openActive": "فتح الزيارة",
+    "patientProfile": "ملف المريض",
+    "dateOfBirth": "تاريخ الميلاد",
+    "nationalNumber": "الرقم الوطني",
+    "bloodType": "فصيلة الدم",
+    "emergencyContact": "جهة اتصال الطوارئ",
+    "medicalHistory": "السجل المرضي السابق",
+    "medicalHistorySubtitle": "راجع الحالات المرضية المسجلة للمريض قبل تقديم العلاج.",
+    "noMedicalHistory": "لا توجد حالات مرضية سابقة مسجلة.",
+    "addDiagnosisDescription": "سجّل تشخيصاً أولياً أو ثانوياً لهذه الزيارة.",
+    "requestLabAnalysis": "إضافة تحليل مخبري",
+    "requestLabAnalysisDescription": "أرسل طلباً للمختبر أثناء كون الزيارة نشطة.",
+    "createPrescription": "إنشاء وصفة طبية",
+    "createPrescriptionDescription": "أنشئ وصفة لهذه الزيارة ثم أضف الأدوية إليها.",
+    "activeVisit": "الزيارة النشطة",
+    "visitNumber": "الزيارة #{{id}}",
+    "completeVisit": "إنهاء الزيارة",
+    "description": "الوصف",
+    "formType": "النوع",
+    "primary": "أولي",
+    "secondary": "ثانوي",
+    "saveDiagnosis": "حفظ التشخيص",
+    "labTest": "التحليل المخبري",
+    "selectLabTest": "اختر تحليلاً مخبرياً",
+    "requestedAt": "تاريخ ووقت الطلب",
+    "requestAnalysis": "إضافة التحليل",
+    "prescriptionNotes": "ملاحظات الوصفة",
+    "addMedicationToPrescription": "إضافة دواء إلى الوصفة #{{id}}",
+    "addMedication": "إضافة الدواء",
     "detailsTitle": "تفاصيل الزيارة #{{id}}",
     "newVisit": "زيارة جديدة",
     "visitedAt": "تاريخ الزيارة",
@@ -257,6 +299,8 @@
   },
   "doctors": {
     "profileId": "معرّف الملف الشخصي",
+    "searchPlaceholder": "البحث في سجلات الأطباء",
+    "page": "الصفحة {{current}} من {{total}} صفحات",
     "workPlacement": "المنشأة · القسم · التخصص",
     "qualification": "المؤهل",
     "yearsOfExperience": "سنوات الخبرة",
@@ -280,6 +324,8 @@
   },
   "patients": {
     "pageSubtitle": "إدارة سجلات المرضى وملفاتهم الطبية",
+    "searchPlaceholder": "البحث في سجلات المرضى",
+    "page": "الصفحة {{current}} من {{total}} صفحات",
     "userId": "معرّف المستخدم",
     "nationalNumber": "الرقم الوطني",
     "gender": "الجنس",
@@ -298,9 +344,6 @@
     "addCondition": "إضافة حالة طبية",
     "detailsTitle": "مريض #{{id}}",
     "patientRecord": "سجل المريض",
-    "condition": "الحالة الطبية",
-    "diagnosedAt": "تاريخ التشخيص",
-    "addCondition": "إضافة حالة طبية",
     "conditionsSubtitle": "الأمراض والحساسيات المشخصة",
     "sections": {
       "profile": "المعلومات الشخصية",
@@ -319,6 +362,7 @@
   },
   "pharmacists": {
     "pageSubtitle": "إدارة الصيادلة وتعييناتهم",
+    "searchPlaceholder": "البحث في سجلات الصيادلة",
     "profileId": "معرّف الملف الشخصي",
     "specialization": "التخصص",
     "degree": "الشهادة",
@@ -338,6 +382,8 @@
   },
   "labStaff": {
     "pageSubtitle": "إدارة طاقم المختبر وتعييناتهم",
+    "searchPlaceholder": "البحث في طاقم المختبر",
+    "page": "الصفحة {{current}} من {{total}} صفحات",
     "profileId": "معرّف الملف الشخصي",
     "specialization": "التخصص",
     "degree": "الشهادة",

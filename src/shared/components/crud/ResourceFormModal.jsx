@@ -25,6 +25,7 @@ const ResourceFormModal = ({
   isSubmitting = false,
   validationSchema,
   submitError,
+  submitErrors = {},
 }) => {
   const { t } = useTranslation('common');
 
@@ -40,6 +41,12 @@ const ResourceFormModal = ({
     formik.setValues({ ...initialValues, ...(record || {}) });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [record, open]);
+
+  useEffect(() => {
+    if (!open || !Object.keys(submitErrors).length) return;
+    formik.setErrors(submitErrors);
+    formik.setTouched(Object.fromEntries(Object.keys(submitErrors).map((name) => [name, true])));
+  }, [open, submitErrors]);
 
   return (
     <Modal open={open} onClose={onClose} title={title} size="lg">

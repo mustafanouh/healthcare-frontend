@@ -2,12 +2,42 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { PageHeader, Card, Badge, Button } from '../../../shared/components/ui';
 import { useLabRequestItems } from '../../lab-results/hooks/useLabRequestItems';
+import { useLabDashboard } from '../hooks/useLabDashboard';
 import { formatDate } from '../../../shared/utils/formatters';
 
 const LabDashboard = () => {
   const { t } = useTranslation(['dashboard', 'common']);
+  const { data: dashboardData, isLoading: dashboardLoading } = useLabDashboard();
   const { data: reqData, isLoading } = useLabRequestItems({ status: 'pending' });
   const requests = reqData?.data ?? [];
+  const summary = dashboardData?.data?.summary ?? dashboardData?.summary ?? {};
+
+  const stats = [
+    {
+      key: 'pending_requests',
+      label: t('lab.pendingRequests'),
+      cardClass: 'border-rose-100 dark:border-rose-900/40',
+      valueClass: 'text-rose-600 dark:text-rose-400',
+    },
+    {
+      key: 'in_progress_requests',
+      label: t('lab.inProgressRequests'),
+      cardClass: 'border-blue-100 dark:border-blue-900/40',
+      valueClass: 'text-blue-600 dark:text-blue-400',
+    },
+    {
+      key: 'completed_requests',
+      label: t('lab.completedRequests'),
+      cardClass: 'border-emerald-100 dark:border-emerald-900/40',
+      valueClass: 'text-emerald-600 dark:text-emerald-400',
+    },
+    {
+      key: 'completed_today',
+      label: t('lab.completedToday'),
+      cardClass: 'border-violet-100 dark:border-violet-900/40',
+      valueClass: 'text-violet-600 dark:text-violet-400',
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -15,24 +45,21 @@ const LabDashboard = () => {
         title={t('lab.title')}
         subtitle={t('lab.subtitle')}
         action={
-          <Link to="/lab/results">
+          <Link to="/lab/requests">
             <Button>{t('lab.enterResult')}</Button>
           </Link>
         }
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-rose-50 dark:bg-rose-900/20 rounded-2xl p-5 flex items-center gap-4">
-          <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/40 rounded-xl flex items-center justify-center">
-            <svg className="w-6 h-6 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3h6m-1 0v6.5a4.5 4.5 0 11-4 0V3m4 0H9" />
-            </svg>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{t('lab.pendingRequests')}</p>
-            <p className="text-2xl font-bold text-rose-600 dark:text-rose-400">{requests.length}</p>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {stats.map(({ key, label, cardClass, valueClass }) => (
+          <Card key={key} className={cardClass}>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
+            <p className={`mt-2 text-3xl font-bold ${valueClass}`}>
+              {dashboardLoading ? <span className="inline-block w-10 h-9 bg-gray-100 dark:bg-surface-800 rounded animate-pulse" /> : summary[key] ?? 0}
+            </p>
+          </Card>
+        ))}
       </div>
 
       <Card>
@@ -59,7 +86,7 @@ const LabDashboard = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Badge status={req.status ?? 'pending'} />
-                  <Link to={`/lab/results?request_item_id=${req.id}`}>
+                  <Link to={`/lab/requests?request_item_id=${req.id}`}>
                     <Button size="sm">{t('lab.enterResult')}</Button>
                   </Link>
                 </div>

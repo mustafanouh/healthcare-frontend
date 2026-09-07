@@ -33,7 +33,7 @@
     "oldValue": "Previous value",
     "newValue": "New value",
     "notAvailable": "No data",
-    "page": "Page {{current}} of {{total}} records",
+    "page": "Page {{current}} of {{total}} pages",
     "actions": {
       "create": "Added",
       "update": "Updated",
@@ -78,8 +78,8 @@
     "medicalHistory": "Medical history"
   },
   "diagnoses": {
-    "title": "Diagnoses and allergies",
-    "subtitle": "View diagnoses and allergies linked to your visits",
+    "title": "Diagnoses",
+    "subtitle": "View diagnoses linked to your visits",
     "detailsTitle": "Diagnosis details #{{id}}",
     "code": "Diagnosis code",
     "description": "Description",
@@ -89,9 +89,15 @@
     "diagnosedAt": "Diagnosed at",
     "types": {
       "primary": "Primary",
-      "secondary": "Secondary",
-      "allergy": "Allergy"
+      "secondary": "Secondary"
     }
+  },
+  "doctorDiagnoses": {
+    "title": "Clinical diagnoses",
+    "subtitle": "Record and manage diagnoses for active visits",
+    "add": "Add diagnosis",
+    "searchPlaceholder": "Search by code or description",
+    "page": "Page {{current}} of {{total}} records"
   },
   "pharmacist": {
     "title": "Pharmacist dashboard",
@@ -106,6 +112,9 @@
     "title": "Lab dashboard",
     "subtitle": "Test requests and results",
     "pendingRequests": "Pending requests",
+    "inProgressRequests": "In-progress requests",
+    "completedRequests": "Completed requests",
+    "completedToday": "Completed today",
     "enterResult": "Enter result"
   },
   "appointments": {
@@ -158,6 +167,39 @@
   },
   "visits": {
     "title": "Visits",
+    "activeTitle": "Active visits",
+    "activeSubtitle": "Continue working on visits currently in progress.",
+    "noActiveVisits": "No active visits",
+    "noActiveVisitsHint": "Start a confirmed appointment to see it here.",
+    "openActive": "Open visit",
+    "patientProfile": "Patient profile",
+    "dateOfBirth": "Date of birth",
+    "nationalNumber": "National number",
+    "bloodType": "Blood type",
+    "emergencyContact": "Emergency contact",
+    "medicalHistory": "Previous medical history",
+    "medicalHistorySubtitle": "Review the patient's recorded medical conditions before treatment.",
+    "noMedicalHistory": "No previous medical conditions recorded.",
+    "addDiagnosisDescription": "Record a primary or secondary diagnosis for this visit.",
+    "requestLabAnalysis": "Request lab analysis",
+    "requestLabAnalysisDescription": "Send a laboratory request while the visit is active.",
+    "createPrescription": "Create prescription",
+    "createPrescriptionDescription": "Create one prescription for this visit, then add its medications.",
+    "activeVisit": "Active visit",
+    "visitNumber": "Visit #{{id}}",
+    "completeVisit": "Complete visit",
+    "description": "Description",
+    "formType": "Type",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "saveDiagnosis": "Save diagnosis",
+    "labTest": "Lab test",
+    "selectLabTest": "Select a lab test",
+    "requestedAt": "Requested at",
+    "requestAnalysis": "Request analysis",
+    "prescriptionNotes": "Prescription notes",
+    "addMedicationToPrescription": "Add medication to prescription #{{id}}",
+    "addMedication": "Add medication",
     "detailsTitle": "Visit #{{id}}",
     "newVisit": "New visit",
     "visitedAt": "Visit date",
@@ -257,6 +299,8 @@
   },
   "doctors": {
     "profileId": "Profile ID",
+    "searchPlaceholder": "Search doctor records",
+    "page": "Page {{current}} of {{total}} pages",
     "workPlacement": "Facility · Department · Specialization",
     "qualification": "Qualification",
     "yearsOfExperience": "Years of experience",
@@ -280,6 +324,8 @@
   },
   "patients": {
     "pageSubtitle": "Manage patient records and medical profiles",
+    "searchPlaceholder": "Search patient records",
+    "page": "Page {{current}} of {{total}} pages",
     "userId": "User ID",
     "nationalNumber": "National ID",
     "gender": "Gender",
@@ -298,9 +344,6 @@
     "addCondition": "Add medical condition",
     "detailsTitle": "Patient #{{id}}",
     "patientRecord": "Patient record",
-    "condition": "Medical condition",
-    "diagnosedAt": "Diagnosed at",
-    "addCondition": "Add medical condition",
     "conditionsSubtitle": "Diagnosed conditions and allergies",
     "sections": {
       "profile": "Personal information",
@@ -319,6 +362,7 @@
   },
   "pharmacists": {
     "pageSubtitle": "Manage pharmacists and their assignments",
+    "searchPlaceholder": "Search pharmacist records",
     "profileId": "Profile ID",
     "specialization": "Specialization",
     "degree": "Degree",
@@ -338,6 +382,8 @@
   },
   "labStaff": {
     "pageSubtitle": "Manage laboratory staff and their assignments",
+    "searchPlaceholder": "Search lab staff",
+    "page": "Page {{current}} of {{total}} pages",
     "profileId": "Profile ID",
     "specialization": "Specialization",
     "degree": "Degree",

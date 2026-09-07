@@ -46,8 +46,10 @@ export const NAV_GROUPS = [
       { to: '/doctor/schedule', labelKey: 'nav.schedule', icon: ICONS.calendar },
       { to: '/doctor/appointments', labelKey: 'nav.appointments', icon: ICONS.calendar },
       { to: '/doctor/visits', labelKey: 'nav.visits', icon: ICONS.clipboard },
+      { to: '/doctor/active-visits', labelKey: 'nav.activeVisits', icon: ICONS.clipboard },
       { to: '/doctor/prescriptions', labelKey: 'nav.prescriptions', icon: ICONS.pill },
       { to: '/doctor/lab-requests', labelKey: 'nav.labRequests', icon: ICONS.flask },
+      { to: '/doctor/diagnoses', labelKey: 'nav.diagnoses', icon: ICONS.clipboard },
     ],
   },
   {

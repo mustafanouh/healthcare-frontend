@@ -66,13 +66,15 @@ const CrudPage = ({
   const [viewRecord, setViewRecord] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [submitError, setSubmitError] = useState(null);
+  const [submitErrors, setSubmitErrors] = useState({});
 
-  const openCreate = () => { setEditRecord(null); setSubmitError(null); setFormOpen(true); };
-  const openEdit = (row) => { setEditRecord(row); setSubmitError(null); setFormOpen(true); };
-  const closeForm = () => { setFormOpen(false); setEditRecord(null); setSubmitError(null); };
+  const openCreate = () => { setEditRecord(null); setSubmitError(null); setSubmitErrors({}); setFormOpen(true); };
+  const openEdit = (row) => { setEditRecord(row); setSubmitError(null); setSubmitErrors({}); setFormOpen(true); };
+  const closeForm = () => { setFormOpen(false); setEditRecord(null); setSubmitError(null); setSubmitErrors({}); };
 
   const handleSubmit = async (values) => {
     setSubmitError(null);
+    setSubmitErrors({});
     try {
       if (editRecord) {
         await onUpdate?.({ id: editRecord.id, payload: values });
@@ -82,6 +84,10 @@ const CrudPage = ({
       closeForm();
     } catch (error) {
       setSubmitError(parseApiError(error, t('errors.generic')));
+      const fieldErrors = error?.response?.data?.errors ?? {};
+      setSubmitErrors(Object.fromEntries(
+        Object.entries(fieldErrors).map(([field, messages]) => [field, Array.isArray(messages) ? messages.join('\n') : messages]),
+      ));
     }
   };
 
@@ -145,6 +151,7 @@ const CrudPage = ({
         isSubmitting={isSubmitting}
         validationSchema={validationSchema}
         submitError={submitError}
+        submitErrors={submitErrors}
       />
 
       {viewRecord && renderDetailsModal?.({

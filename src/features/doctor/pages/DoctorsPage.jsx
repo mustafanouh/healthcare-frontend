@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CrudPage from '../../../shared/components/crud/CrudPage';
@@ -66,13 +66,42 @@ const mapRecordToForm = (record) => ({
 const DoctorsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
   const navigate = useNavigate();
-  const { data, isLoading } = useDoctors();
+  const [searchInput, setSearchInput] = useState('');
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearch(searchInput.trim());
+      setPage(1);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [searchInput]);
+
+  const queryParams = {
+    page,
+    per_page: perPage,
+    ...(search && { search }),
+  };
+  const { data, isLoading, isFetching } = useDoctors(queryParams);
   const { data: deptSpecData } = useFacilityDeptSpecs();
   const { data: facilityDeptData } = useFacilityDepartments();
   const { data: specData } = useSpecializations();
   const createMut = useCreateDoctor();
   const updateMut = useUpdateDoctor();
   const deleteMut = useDeleteDoctor();
+
+  const rows = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+  const pagination = data?.meta ?? data ?? {};
+  const totalItems = Number(pagination.total ?? rows.length);
+  const hasServerPagination = pagination.last_page != null || pagination.next_page_url != null || pagination.total != null;
+  const totalPages = Number(pagination.last_page ?? Math.max(1, Math.ceil(totalItems / perPage)));
+  const currentPage = Number(pagination.current_page ?? page);
+  const hasNextPage = hasServerPagination
+    ? currentPage < totalPages
+    : (page === 1 || rows.length > 0);
 
   const deptSpecs = useMemo(() => {
     const facilityDepartments = Array.isArray(facilityDeptData?.data)
@@ -93,11 +122,7 @@ const DoctorsPage = () => {
         ? deptSpecData
         : [];
 
-    const doctorsList = Array.isArray(data?.data)
-      ? data.data
-      : Array.isArray(data)
-        ? data
-        : [];
+    const doctorsList = rows;
 
     const fdMap = Object.fromEntries(facilityDepartments.map((fd) => [fd.id, fd]));
     const specMap = Object.fromEntries(specializations.map((s) => [s.id, s]));
@@ -116,7 +141,7 @@ const DoctorsPage = () => {
       );
 
     return mergeDeptSpecOptions(fromApi, fromDoctors);
-  }, [deptSpecData, facilityDeptData, specData, data]);
+  }, [deptSpecData, facilityDeptData, specData, rows]);
 
   const fields = [
     {
@@ -134,6 +159,55 @@ const DoctorsPage = () => {
     { name: 'achievements', label: t('doctors.achievements'), fullWidth: true },
   ];
 
+  const tableToolbar = (
+    <div className="flex flex-wrap items-end gap-3 border-b border-gray-100 p-5 dark:border-surface-800">
+      <label className="text-sm text-gray-600 dark:text-gray-300">
+        <span className="mb-1.5 block font-medium">{t('actions.search', { ns: 'common' })}</span>
+        <input
+          value={searchInput}
+          onChange={(event) => setSearchInput(event.target.value)}
+          placeholder={t('doctors.searchPlaceholder')}
+          className="h-10 w-56 rounded-lg border border-gray-200 bg-white px-3 text-sm dark:border-surface-700 dark:bg-surface-900 dark:text-gray-200"
+        />
+      </label>
+      <label className="text-sm text-gray-600 dark:text-gray-300">
+        <span className="mb-1.5 block font-medium">{t('common.itemsPerPage', { ns: 'common' })}</span>
+        <select
+          value={perPage}
+          onChange={(event) => { setPerPage(Number(event.target.value)); setPage(1); }}
+          className="h-10 min-w-24 rounded-lg border border-gray-200 bg-white px-3 text-sm dark:border-surface-700 dark:bg-surface-900 dark:text-gray-200"
+        >
+          {[10, 25, 50, 100].map((value) => <option key={value} value={value}>{value}</option>)}
+        </select>
+      </label>
+      {(searchInput || search) && (
+        <button
+          type="button"
+          onClick={() => { setSearchInput(''); setSearch(''); setPage(1); }}
+          className="h-10 px-3 text-sm font-medium text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
+        >
+          {t('common.clear', { ns: 'common' })}
+        </button>
+      )}
+    </div>
+  );
+
+  const tableFooter = (
+    <div className="flex items-center justify-between border-t border-gray-100 px-5 py-4 text-sm dark:border-surface-800">
+      <span className="text-gray-500 dark:text-gray-400">
+        {t('doctors.page', { current: currentPage, total: totalPages })}
+      </span>
+      <div className="flex gap-2">
+        <button type="button" disabled={isFetching || currentPage <= 1} onClick={() => setPage((value) => value - 1)} className="rounded-lg border border-gray-200 px-3 py-1.5 disabled:opacity-40 dark:border-surface-700">
+          {t('actions.previous', { ns: 'common' })}
+        </button>
+        <button type="button" disabled={isFetching || !hasNextPage} onClick={() => setPage((value) => value + 1)} className="rounded-lg border border-gray-200 px-3 py-1.5 disabled:opacity-40 dark:border-surface-700">
+          {isFetching ? t('actions.loading', { ns: 'common' }) : t('actions.next', { ns: 'common' })}
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <CrudPage
       title={t('nav.doctors', { ns: 'common' })}
@@ -141,8 +215,10 @@ const DoctorsPage = () => {
       addLabel={t('actions.add', { ns: 'common' })}
       columns={[]}
       TableComponent={DoctorsTable}
-      data={data?.data ?? []}
+      data={rows}
       isLoading={isLoading}
+      tableToolbar={tableToolbar}
+      tableFooter={!isLoading ? tableFooter : null}
       fields={fields}
       initialValues={EMPTY_VALUES}
       mapRecordToForm={mapRecordToForm}

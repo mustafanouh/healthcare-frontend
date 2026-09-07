@@ -294,3 +294,148 @@ ret
     ]
 }
 وبعدها سوف نعرض
+
+
+<!-- ============ -->
+
+عند حجز المواعيد والتأكيد يظهر زر 
+Start Visit
+عند الضغط عليها ونجاح العملية قم بنقل الدكتور الى واجهة خاصة 
+باضافة تشخيص و تحليل و وصفة 
+وعند الضغط على احد الخيارات تظهر لهم ال post الخاص فيهم 
+حيث لدي 
+post {{baseUrl}}/diagnoses
+body 
+            {   
+                "visit_id" : 7,
+                "diagnosis_code" : "L20",
+                "description" : "Atopic Dermatitis",
+                "diagnosis_type" : "secondary",
+                "notes" : "Apply topical medication as directed."
+            }
+            ret 
+            {
+    "success": true,
+    "message": "Diagnosis created successfully.",
+    "data": {
+        "visit_id": 8,
+        "diagnosis_code": "La0",
+        "description": "Atopic Dermatitis",
+        "diagnosis_type": "secondary",
+        "notes": "Apply topical medication as directed.",
+        "updated_at": "2026-09-07T11:47:24.000000Z",
+        "created_at": "2026-09-07T11:47:24.000000Z",
+        "id": 18
+    }
+}
+وعند الضغط على 
+post {{baseUrl}}/prescriptions
+{
+               "visit_id" : 2,
+                "notes" :" Patient must return after 7 days."
+}
+ret 
+
+{
+    "success": true,
+    "message": "Prescription created successfully.",
+    "data": {
+        "visit_id": 2,
+        "status": "pending",
+        "notes": "Patient must return after 7 days.",
+        "updated_at": "2026-05-31T21:11:04.000000Z",
+        "created_at": "2026-05-31T21:11:04.000000Z",
+        "id": 4
+    }
+}
+erorr
+{
+    "message": "This visit already has a prescription.",
+    "errors": {
+        "visit_id": [
+            "This visit already has a prescription."
+        ]
+    }
+}
+
+وبعدها اضافة العناصر في الوصفة 
+post {{baseUrl}}/prescription-items
+          {
+               "prescription_id" : 1,
+                "medication_name" : "Amoxicillin",
+                "dosage" : "250 mg",
+                "quantity_prescribed" : 21,
+                "frequency" : "Three times daily",
+                "duration" : " 7 days"
+          }
+          ret 
+          {
+    "success": true,
+    "message": "Prescription item created successfully.",
+    "data": {
+        "prescription_id": 1,
+        "medication_name": "Amoxicillin",
+        "dosage": "250 mg",
+        "quantity_prescribed": 21,
+        "frequency": "Three times daily",
+        "duration": "7 days",
+        "updated_at": "2026-06-01T06:22:17.000000Z",
+        "created_at": "2026-06-01T06:22:17.000000Z",
+        "id": 4
+    }
+}
+
+          طبعا يعود رسالة في حالة الاخطاء مثل 
+{
+    "message": "Prescription items can only be modified while the prescription is pending.",
+    "errors": {
+        "prescription_id": [
+            "Prescription items can only be modified while the prescription is pending."
+        ]
+    }
+}
+قم بعرض رسالة الخطأ اسفل كل input حسب الخطأ
+
+او الضغط على اضافة تحليل 
+ post {{baseUrl}}/lab-request-items
+ body 
+      {     
+                "visit_id" : 1,
+                "lab_test_id" : 1,
+                "requested_at" : "2026-06-02 12:00:00",
+                "notes" : "Fasting blood sugar test"
+     }
+     ret 
+     {
+    "success": true,
+    "message": "Lab request item created successfully.",
+    "data": {
+        "visit_id": 1,
+        "lab_test_id": 1,
+        "requested_at": "2026-06-02 12:00:00",
+        "notes": "Fasting blood sugar test",
+        "updated_at": "2026-06-02T19:44:28.000000Z",
+        "created_at": "2026-06-02T19:44:28.000000Z",
+        "id": 4
+    }
+}
+error 
+{
+    "message": "Lab tests can only be requested during an active visit.",
+    "errors": {
+        "visit_id": [
+            "Lab tests can only be requested during an active visit."
+        ]
+    }
+}
+وبعد الانهاء يضغط على زر انهاء الزيارة 
+PATCH {{baseUrl}}/visits/8/complete
+{
+    "message": "Visit status cannot be changed.",
+    "errors": {
+        "status": [
+            "Visit status cannot be changed."
+        ]
+    }
+}
+حيث سوف تقوم بانشاء صفحة خاصة لعرض الزيارة النشطة  الخاصة بالطبيب 

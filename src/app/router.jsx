@@ -20,6 +20,7 @@ const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'));
 // ── Role dashboards ───────────────────────────────────────────────────────
 const AdminDashboard = lazy(() => import('../features/admin/pages/AdminDashboard'));
 const DoctorDashboard = lazy(() => import('../features/doctor/pages/DoctorDashboard'));
+const DoctorDiagnosesPage = lazy(() => import('../features/doctor/pages/DoctorDiagnosesPage'));
 const PatientDashboard = lazy(() => import('../features/patient/pages/PatientDashboard'));
 const PharmacistDashboard = lazy(() => import('../features/pharmacist/pages/PharmacistDashboard'));
 const LabDashboard = lazy(() => import('../features/lab/pages/LabDashboard'));
@@ -28,7 +29,9 @@ const LabDashboard = lazy(() => import('../features/lab/pages/LabDashboard'));
 const AppointmentsPage = lazy(() => import('../features/appointments/pages/AppointmentsPage'));
 const DoctorSchedulePage = lazy(() => import('../features/doctor-schedule/pages/DoctorSchedulePage'));
 const VisitsPage = lazy(() => import('../features/visits/pages/VisitsPage'));
+const ActiveVisitsPage = lazy(() => import('../features/visits/pages/ActiveVisitsPage'));
 const VisitDetailsPage = lazy(() => import('../features/visits/pages/VisitDetailsPage'));
+const ActiveVisitPage = lazy(() => import('../features/visits/pages/ActiveVisitPage'));
 const PrescriptionsPage = lazy(() => import('../features/prescriptions/pages/PrescriptionsPage'));
 const LabResultsPage = lazy(() => import('../features/lab-results/pages/LabResultsPage'));
 const DiagnosesPage = lazy(() => import('../features/patient/pages/DiagnosesPage'));
@@ -106,9 +109,12 @@ export const router = createBrowserRouter([
           { path: '/doctor/schedule', element: wrap(<DoctorSchedulePage />) },
           { path: '/doctor/appointments', element: wrap(<AppointmentsPage />) },
           { path: '/doctor/visits', element: wrap(<VisitsPage />) },
+          { path: '/doctor/active-visits', element: wrap(<ActiveVisitsPage />) },
+          { path: '/doctor/visits/:id/active', element: wrap(<ActiveVisitPage />) },
           { path: '/doctor/visits/:id', element: wrap(<VisitDetailsPage />) },
           { path: '/doctor/prescriptions', element: wrap(<PrescriptionsPage />) },
           { path: '/doctor/lab-requests', element: wrap(<LabRequestsPage />) },
+          { path: '/doctor/diagnoses', element: wrap(<DoctorDiagnosesPage />) },
 
           { path: '/patient/dashboard', element: wrap(<PatientDashboard />) },
           { path: '/patient/appointments', element: wrap(<AppointmentsPage />) },

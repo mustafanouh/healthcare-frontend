@@ -74,7 +74,7 @@ const LabRequestsPage = () => {
         { key: 'id', label: t('common.id', { ns: 'common' }) },
         { key: 'lab_test', label: t('labResults.test'), render: (request) => request.lab_test?.name ?? `#${request.lab_test_id}` },
         { key: 'patient', label: t('appointments.patient'), render: (request) => request.visit?.patient?.profile?.full_name ?? '—' },
-        { key: 'doctor', label: t('appointments.doctor'), render: (request) => request.visit?.doctor?.employee?.profile?.full_name ?? '—' },
+        ...(!isDoctor ? [{ key: 'doctor', label: t('appointments.doctor'), render: (request) => request.visit?.doctor?.employee?.profile?.full_name ?? '—' }] : []),
         { key: 'requested_at', label: t('labResults.requestedAt'), render: (request) => formatDate(request.requested_at) },
         { key: 'status', label: t('common.status', { ns: 'common' }), render: (request) => <Badge status={request.status} /> },
         { key: 'notes', label: t('common.notes', { ns: 'common' }), render: (request) => request.notes || '—' },

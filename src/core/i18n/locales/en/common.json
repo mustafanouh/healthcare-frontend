@@ -20,6 +20,15 @@
     "pharmacist": "Pharmacist",
     "labStaff": "Lab staff"
   },
+  "departments": {
+    "searchPlaceholder": "Search by department name or description"
+  },
+  "specializations": {
+    "searchPlaceholder": "Search by specialization name or description"
+  },
+  "appointments": {
+    "searchPlaceholder": "Search appointments"
+  },
   "nav": {
     "dashboard": "Dashboard",
     "appointments": "Appointments",
@@ -27,6 +36,7 @@
     "medicalConditions": "Medical Conditions",
     "doctors": "Doctors",
     "visits": "Visits",
+    "activeVisits": "Active visits",
     "auditLogs": "Audit logs",
     "userRoles": "User roles",
     "prescriptions": "Prescriptions",
@@ -39,7 +49,7 @@
     "specializations": "Specializations",
     "pharmacists": "Pharmacists",
     "labStaff": "Lab Staff",
-    "diagnoses": "Diagnoses and allergies",
+    "diagnoses": "Diagnoses",
     "schedule": "Schedule",
     "employees": "Employees",
     "settings": "Settings",
@@ -122,6 +132,8 @@
     ,"page": "Page"
     ,"doctor": "Doctor"
     ,"prescriptions": "Prescriptions"
+    ,"savedSuccessfully": "Saved successfully."
+    ,"saveError": "Could not save this record."
   },
   "status": {
     "pending": "Pending",

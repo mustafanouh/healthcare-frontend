@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CrudPage from '../../../shared/components/crud/CrudPage';
-import { Badge } from '../../../shared/components/ui';
 import LabResultDetailsModal from '../components/LabResultDetailsModal';
 import { useLabResults, useUpdateLabResult, useDeleteLabResult } from '../hooks/useLabResults';
 import { useLabRequestItems } from '../hooks/useLabRequestItems';
@@ -24,16 +23,7 @@ const EMPTY_VALUES = {
 };
 
 const formatUpdatePayload = (values) => ({
-  lab_request_item_id: Number(values.lab_request_item_id),
-  lab_staff_id: Number(values.lab_staff_id),
-  notes: values.notes,
-  status: values.status,
   value: values.value !== '' ? Number(values.value) : undefined,
-  unit: values.unit || undefined,
-  reference_range: values.reference_range || undefined,
-  completed_at: values.completed_at
-    ? values.completed_at.replace('T', ' ').slice(0, 19)
-    : undefined,
 });
 
 const mapRecordToForm = (record) => ({
@@ -148,11 +138,6 @@ const LabResultsPage = () => {
       cellVariant: 'badge',
     },
     {
-      key: 'status',
-      label: t('common.status', { ns: 'common' }),
-      render: (r) => <Badge status={r.status ?? r.lab_request_item?.status} />,
-    },
-    {
       key: 'lab_staff',
       label: t('labResults.labStaffId'),
       render: (r) => r.lab_staff?.employee?.profile?.full_name ?? r.lab_staff?.specialization ?? `#${r.lab_staff_id}`,
@@ -172,6 +157,7 @@ const LabResultsPage = () => {
       type: 'select',
       options: requestItemOptions,
       fullWidth: true,
+      createOnly: true,
     },
     {
       name: 'lab_staff_id',
@@ -179,19 +165,20 @@ const LabResultsPage = () => {
       type: 'select',
       options: labStaffOptions,
       fullWidth: true,
+      createOnly: true,
     },
     { name: 'value', label: t('labResults.value'), type: 'number', dir: 'ltr' },
-    { name: 'notes', label: t('common.notes', { ns: 'common' }), fullWidth: true },
+    { name: 'notes', label: t('common.notes', { ns: 'common' }), fullWidth: true, createOnly: true },
     {
       name: 'status',
       label: t('common.status', { ns: 'common' }),
       type: 'select',
       options: statusOptions,
-      editOnly: true,
+      createOnly: true,
     },
-    { name: 'unit', label: t('labResults.unit'), dir: 'ltr', editOnly: true },
-    { name: 'reference_range', label: t('labResults.referenceRange'), dir: 'ltr', editOnly: true },
-    { name: 'completed_at', label: t('labResults.completedAt'), type: 'datetime-local', dir: 'ltr', editOnly: true },
+    { name: 'unit', label: t('labResults.unit'), dir: 'ltr', createOnly: true },
+    { name: 'reference_range', label: t('labResults.referenceRange'), dir: 'ltr', createOnly: true },
+    { name: 'completed_at', label: t('labResults.completedAt'), type: 'datetime-local', dir: 'ltr', createOnly: true },
   ];
 
   const tableToolbar = (
@@ -256,7 +243,6 @@ const LabResultsPage = () => {
       )}
 
       onUpdate={canManage ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: formatUpdatePayload(payload) }) : undefined}
-      onDelete={canManage ? (id) => deleteMut.mutateAsync(id) : undefined}
       isSubmitting={canManage && updateMut.isPending}
     />
   );

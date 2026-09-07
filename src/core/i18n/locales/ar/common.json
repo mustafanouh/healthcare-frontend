@@ -20,6 +20,15 @@
     "pharmacist": "صيدلي",
     "labStaff": "طاقم مختبر"
   },
+  "departments": {
+    "searchPlaceholder": "البحث باسم القسم أو الوصف"
+  },
+  "specializations": {
+    "searchPlaceholder": "البحث باسم الاختصاص أو الوصف"
+  },
+  "appointments": {
+    "searchPlaceholder": "البحث في المواعيد"
+  },
   "nav": {
     "dashboard": "الرئيسية",
     "appointments": "المواعيد",
@@ -27,6 +36,7 @@
     "medicalConditions": "الحالات الطبية",
     "doctors": "الأطباء",
     "visits": "الزيارات",
+    "activeVisits": "الزيارات النشطة",
     "auditLogs": "سجل العمليات",
     "userRoles": "أدوار المستخدمين",
     "prescriptions": "الوصفات الطبية",
@@ -39,7 +49,7 @@
     "specializations": "التخصصات",
     "pharmacists": "الصيادلة",
     "labStaff": "طاقم المختبر",
-    "diagnoses": "التشخيصات والحساسيات",
+    "diagnoses": "التشخيصات",
     "schedule": "الجدول الزمني",
     "employees": "الموظفين",
     "settings": "الإعدادات",
@@ -145,6 +155,8 @@
     "en": "English",
     "toggle": "تغيير اللغة"
   },
+  "savedSuccessfully": "تم الحفظ بنجاح.",
+  "saveError": "تعذر حفظ هذا السجل.",
   "errors": {
     "generic": "حدث خطأ ما، حاول مرة أخرى",
     "network": "تعذر الاتصال بالخادم",
