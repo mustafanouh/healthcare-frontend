@@ -15,6 +15,7 @@ import {
 import { usePatients } from '../../patient/hooks/usePatients';
 import { useFacilities, useFacilityBookingDepartments, useFacilityBookingSpecializations, useFacilityBookingDoctors } from '../../facilities/hooks/useFacilities';
 import { useAuth } from '../../../core/hooks/useAuth';
+import { useRole } from '../../../core/hooks/useRole';
 import { formatDate, formatTime } from '../../../shared/utils/formatters';
 import { parseApiError } from '../../../shared/utils/parseApiError';
 
@@ -194,6 +195,7 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
 const AppointmentsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
   const { user } = useAuth();
+  const { isDoctor } = useRole();
   const navigate = useNavigate();
   const isPatientPage = window.location.pathname === '/patient/appointments';
 
@@ -331,11 +333,11 @@ const AppointmentsPage = () => {
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
     { key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
-    {
+    ...(!isDoctor ? [{
       key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.employee?.profile?.full_name
         ?? r.doctor?.profile?.full_name
         ?? `#${r.doctor_id}`
-    },
+    }] : []),
     { key: 'scheduled_date', label: t('appointments.scheduledDate'), render: (r) => formatDate(r.scheduled_date) },
     { key: 'time', label: t('appointments.startTime'), render: (r) => `${formatTime(r.start_time)} ` },
     { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
