@@ -134,6 +134,10 @@
     ,"prescriptions": "Prescriptions"
     ,"savedSuccessfully": "Saved successfully."
     ,"saveError": "Could not save this record."
+    ,"edit": "Edit"
+    ,"delete": "Delete"
+    ,"deletedSuccessfully": "Deleted successfully."
+    ,"deleteError": "Could not delete this record."
   },
   "status": {
     "pending": "Pending",

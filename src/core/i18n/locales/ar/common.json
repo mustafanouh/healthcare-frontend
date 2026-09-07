@@ -132,6 +132,10 @@
     ,"page": "صفحة"
     ,"doctor": "الطبيب"
     ,"prescriptions": "الوصفات الطبية"
+    ,"edit": "تعديل"
+    ,"delete": "حذف"
+    ,"deletedSuccessfully": "تم الحذف بنجاح."
+    ,"deleteError": "تعذر حذف هذا السجل."
   },
   "status": {
     "pending": "قيد الانتظار",

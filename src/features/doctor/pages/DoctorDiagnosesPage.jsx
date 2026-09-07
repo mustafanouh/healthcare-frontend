@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import { useCreateDiagnosis, useDeleteDiagnosis, useDiagnoses, useUpdateDiagnosis } from '../../visits/hooks/useDiagnoses';
+import { usePatients } from '../../patient/hooks/usePatients';
 import { formatDate } from '../../../shared/utils/formatters';
 
 const PER_PAGE = 10;
@@ -24,10 +25,21 @@ const DoctorDiagnosesPage = () => {
 
   const queryParams = { page, per_page: perPage, ...(search && { search }), ...(type && { diagnosis_type: type }) };
   const query = useDiagnoses(queryParams);
+  const patientsQuery = usePatients({ per_page: 100 });
   const createMutation = useCreateDiagnosis();
   const updateMutation = useUpdateDiagnosis();
   const deleteMutation = useDeleteDiagnosis();
   const rows = Array.isArray(query.data?.data) ? query.data.data : Array.isArray(query.data) ? query.data : [];
+  const patientList = Array.isArray(patientsQuery.data?.data)
+    ? patientsQuery.data.data
+    : Array.isArray(patientsQuery.data?.data?.data)
+      ? patientsQuery.data.data.data
+      : Array.isArray(patientsQuery.data)
+        ? patientsQuery.data
+        : [];
+  const patientNamesById = Object.fromEntries(
+    patientList.map((patient) => [String(patient.id), patient.profile?.full_name ?? patient.full_name ?? patient.name])
+  );
   const pagination = query.data?.meta ?? query.data ?? {};
   const totalItems = Number(pagination.total ?? rows.length);
   const totalPages = Number(pagination.last_page ?? Math.max(1, Math.ceil(totalItems / perPage)));
@@ -44,12 +56,16 @@ const DoctorDiagnosesPage = () => {
   };
 
   const columns = [
-    { key: 'id', label: t('common.id', { ns: 'common' }) },
-    { key: 'visit_id', label: t('diagnoses.visitId'), dir: 'ltr' },
+    {
+      key: 'patient',
+      label: t('visits.patient'),
+      render: (row) => row.visit?.patient?.profile?.full_name
+        ?? patientNamesById[String(row.visit?.patient_id)]
+        ?? `#${row.visit?.patient_id ?? '—'}`,
+    },
     { key: 'diagnosis_code', label: t('diagnoses.code'), dir: 'ltr' },
     { key: 'description', label: t('diagnoses.description') },
     { key: 'diagnosis_type', label: t('diagnoses.type'), cellVariant: 'badge' },
-    { key: 'patient', label: t('visits.patient'), render: (row) => row.visit?.patient?.profile?.full_name ?? `#${row.visit?.patient_id ?? '—'}` },
     { key: 'created_at', label: t('diagnoses.diagnosedAt'), render: (row) => formatDate(row.created_at), dir: 'ltr' },
   ];
 

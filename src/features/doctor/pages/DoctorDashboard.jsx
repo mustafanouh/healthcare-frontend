@@ -113,7 +113,7 @@ import {
   useStartVisitFromAppointment,
 } from '../../appointments/hooks/useAppointments';
 import { useAuth } from '../../../core/hooks/useAuth';
-import { formatDate, formatTime } from '../../../shared/utils/formatters';
+import { formatTime } from '../../../shared/utils/formatters';
 import { parseApiError } from '../../../shared/utils/parseApiError';
 
 const DoctorDashboard = () => {
@@ -185,7 +185,7 @@ const DoctorDashboard = () => {
 
       <Card>
         <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
-          {t('doctor.todayAppointments')} — {formatDate(today)}
+          {t('doctor.appointments')}
         </h2>
 
         {isLoading ? (

@@ -192,6 +192,8 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
   );
 };
 
+const APPOINTMENT_STATUS_OPTIONS = ['pending', 'confirmed', 'cancelled', 'completed'];
+
 const AppointmentsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
   const { user } = useAuth();
@@ -216,6 +218,7 @@ const AppointmentsPage = () => {
   const [startVisitAppointment, setStartVisitAppointment] = useState(null);
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
 
@@ -251,7 +254,7 @@ const AppointmentsPage = () => {
   const patientId = user?.patient?.id ?? user?.patient_id ?? patientRecord?.id ?? user?.id;
   const queryParams = isPatientPage
     ? { patient_id: patientId }
-    : { page, per_page: perPage, ...(search && { search }) };
+    : { page, per_page: perPage, ...(search && { search }), ...(status && { status }) };
   const { data, isLoading, isFetching } = useAppointments(queryParams);
 
   const handleStartVisit = async (appointment) => {
@@ -260,9 +263,11 @@ const AppointmentsPage = () => {
 
     try {
       const response = await startVisitMut.mutateAsync(appointment.id);
-      const visit = response?.data ?? response;
+      const visit = response?.data?.id
+        ? response.data
+        : response?.data?.data ?? response?.data ?? response;
       const visitId = visit?.id ?? visit?.visit_id;
-      if (visitId) navigate('/doctor/active-visits');
+      if (visitId) navigate(`/doctor/visits/${visitId}/active`);
     } catch (error) {
       setStartVisitError(
         parseApiError(error, t('common.requestError', { defaultValue: 'Could not start the visit.' }))
@@ -475,10 +480,23 @@ const AppointmentsPage = () => {
           {[10, 25, 50, 100].map((value) => <option key={value} value={value}>{value}</option>)}
         </select>
       </label>
-      {(searchInput || search) && (
+      <label className="text-sm text-gray-600 dark:text-gray-300">
+        <span className="mb-1.5 block font-medium">{t('common.status', { ns: 'common' })}</span>
+        <select
+          value={status}
+          onChange={(event) => { setStatus(event.target.value); setPage(1); }}
+          className="h-10 min-w-40 rounded-lg border border-gray-200 bg-white px-3 text-sm dark:border-surface-700 dark:bg-surface-900 dark:text-gray-200"
+        >
+          <option value="">{t('common.all', { ns: 'common' })}</option>
+          {APPOINTMENT_STATUS_OPTIONS.map((option) => (
+            <option key={option} value={option}>{t(`status.${option}`, { ns: 'common' })}</option>
+          ))}
+        </select>
+      </label>
+      {(searchInput || search || status) && (
         <button
           type="button"
-          onClick={() => { setSearchInput(''); setSearch(''); setPage(1); }}
+          onClick={() => { setSearchInput(''); setSearch(''); setStatus(''); setPage(1); }}
           className="h-10 px-3 text-sm font-medium text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
         >
           {t('common.clear', { ns: 'common' })}
