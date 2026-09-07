@@ -228,7 +228,7 @@ const DoctorsPage = () => {
       onView={(doctor) => navigate(`/admin/doctors/${doctor.id}`)}
       onCreate={(v) => createMut.mutateAsync(formatPayload(v))}
       onUpdate={({ id, payload }) => updateMut.mutateAsync({ id, payload: formatPayload(payload) })}
-      onDelete={(id) => deleteMut.mutateAsync(id)}
+      // onDelete={(id) => deleteMut.mutateAsync(id)}
       isSubmitting={createMut.isPending || updateMut.isPending}
     />
   );

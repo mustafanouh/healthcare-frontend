@@ -9,7 +9,8 @@ import {
     useEmployees,
     useCreateEmployee,
     useUpdateEmployee,
-    useDeleteEmployee,
+    useSoftDeleteEmployee,
+    useActivateEmployee,
 } from '../hooks/useEmployees';
 
 import { useFacilities } from '../../facilities/hooks/useFacilities';
@@ -90,6 +91,8 @@ const formatDateForForm = (value) => {
 
     return String(value).slice(0, 10);
 };
+
+const isEmployeeActive = (value) => value === true || value === 1 || value === '1' || value === 'true';
 
 /**
  * Keep laboratory as "laboratory".
@@ -398,7 +401,8 @@ const EmployeesPage = () => {
 
     const createMut = useCreateEmployee();
     const updateMut = useUpdateEmployee();
-    const deleteMut = useDeleteEmployee();
+    const deactivateMut = useSoftDeleteEmployee();
+    const activateMut = useActivateEmployee();
 
     /**
      * -------------------------------------------------------
@@ -575,7 +579,7 @@ const EmployeesPage = () => {
                 ns: 'common',
             }),
             render: (record) =>
-                record?.is_active
+                isEmployeeActive(record?.is_active)
                     ? t('status.active', {
                         ns: 'common',
                     })
@@ -967,12 +971,23 @@ const EmployeesPage = () => {
                             formatPayload(payload),
                     })
                 }
-                onDelete={(id) =>
-                    deleteMut.mutateAsync(id)
-                }
+                onDelete={(id, employee) => isEmployeeActive(employee?.is_active)
+                    ? deactivateMut.mutateAsync(id)
+                    : activateMut.mutateAsync(id)}
+                deleteLabel={(employee) => isEmployeeActive(employee?.is_active)
+                    ? t('actions.deactivate', { ns: 'common' })
+                    : t('actions.activate', { ns: 'common' })}
+                deleteConfirmTitle={(employee) => isEmployeeActive(employee?.is_active)
+                    ? t('actions.deactivate', { ns: 'common' })
+                    : t('actions.activate', { ns: 'common' })}
+                deleteConfirmMessage={(employee) => isEmployeeActive(employee?.is_active)
+                    ? t('actions.confirmDeactivate', { ns: 'common' })
+                    : t('actions.confirmActivate', { ns: 'common' })}
                 isSubmitting={
                     createMut.isPending ||
-                    updateMut.isPending
+                    updateMut.isPending ||
+                    deactivateMut.isPending ||
+                    activateMut.isPending
                 }
                 onView={(row) =>
                     navigate(

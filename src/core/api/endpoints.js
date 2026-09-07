@@ -20,6 +20,7 @@ export const ENDPOINTS = {
 
   // Employees (new system)
   employees: '/employees',
+  employeeSoftDelete: (id) => `/employees/${id}/soft-delete`,
 
   // Staff (using employee_id)
   doctors: '/doctors',

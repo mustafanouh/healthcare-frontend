@@ -133,6 +133,7 @@ const EnhancedDataTable = ({
   isLoading = false,
   onEdit,
   onDelete,
+  deleteLabel,
   onView,
   viewLabel,
   renderRowActions,
@@ -207,7 +208,7 @@ const EnhancedDataTable = ({
                     {onDelete && (
                       <TableActionButton
                         variant="danger"
-                        label={t('actions.delete')}
+                        label={typeof deleteLabel === 'function' ? deleteLabel(row) : (deleteLabel ?? t('actions.delete'))}
                         onClick={() => onDelete(row)}
                       />
                     )}

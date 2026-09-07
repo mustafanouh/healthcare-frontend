@@ -42,6 +42,9 @@ const CrudPage = ({
   onCreate,
   onUpdate,
   onDelete,
+  deleteLabel,
+  deleteConfirmTitle,
+  deleteConfirmMessage,
   mapRecordToForm,
   renderDetailsModal,
   onView,
@@ -93,7 +96,7 @@ const CrudPage = ({
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
-    await onDelete?.(deleteTarget.id);
+    await onDelete?.(deleteTarget.id, deleteTarget);
     setDeleteTarget(null);
   };
 
@@ -132,6 +135,7 @@ const CrudPage = ({
           onViewManager={onViewManager}
           managerLabel={managerLabel}
           renderRowActions={renderRowActions}
+          deleteLabel={deleteLabel}
           viewLabel={viewLabel ?? t('actions.viewMore')}
           onEdit={onUpdate ? openEdit : undefined}
           onDelete={onDelete ? (row) => setDeleteTarget(row) : undefined}
@@ -163,18 +167,18 @@ const CrudPage = ({
       <Modal
         open={Boolean(deleteTarget)}
         onClose={() => setDeleteTarget(null)}
-        title={t('actions.delete')}
+        title={typeof deleteConfirmTitle === 'function' ? deleteConfirmTitle(deleteTarget) : (deleteConfirmTitle ?? t('actions.delete'))}
         size="sm"
       >
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
-          {t('actions.confirmDelete')}
+          {typeof deleteConfirmMessage === 'function' ? deleteConfirmMessage(deleteTarget) : (deleteConfirmMessage ?? t('actions.confirmDelete'))}
         </p>
         <div className="flex gap-3 justify-end">
           <Button variant="secondary" onClick={() => setDeleteTarget(null)}>
             {t('actions.cancel')}
           </Button>
           <Button variant="danger" onClick={handleDelete}>
-            {t('actions.delete')}
+            {typeof deleteLabel === 'function' ? deleteLabel(deleteTarget) : (deleteLabel ?? t('actions.delete'))}
           </Button>
         </div>
       </Modal>
