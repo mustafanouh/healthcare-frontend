@@ -7,6 +7,11 @@ const AddLabResultModal = ({ open, requestItem, onClose, onSubmit, isSubmitting 
     const { t } = useTranslation(['dashboard', 'common']);
     const [submitError, setSubmitError] = useState(null);
 
+    const handleClose = () => {
+        setSubmitError(null);
+        onClose();
+    };
+
     const handleSubmit = async (values) => {
         setSubmitError(null);
         try {
@@ -15,7 +20,7 @@ const AddLabResultModal = ({ open, requestItem, onClose, onSubmit, isSubmitting 
                 notes: values.notes,
                 value: Number(values.value),
             });
-            onClose();
+            handleClose();
         } catch (error) {
             setSubmitError(parseApiError(error, t('errors.generic', { ns: 'common' })));
         }
@@ -24,7 +29,7 @@ const AddLabResultModal = ({ open, requestItem, onClose, onSubmit, isSubmitting 
     return (
         <ResourceFormModal
             open={open}
-            onClose={onClose}
+            onClose={handleClose}
             title={t('labResults.addForRequest')}
             fields={[
                 { name: 'value', label: t('labResults.value'), type: 'number', dir: 'ltr', required: true },

@@ -3,7 +3,7 @@
     "title": "لوحة تحكم المدير",
     "subtitle": "نظرة عامة على المجمع الطبي",
     "welcome": "مرحباً، {{name}}",
-    "recentAppointments": "مواعيد اليوم",
+    "recentAppointments": "مواعيد الاخيرة",
     "appointmentsTodayHint": "آخر المواعيد المجدولة لليوم",
     "quickLinks": "اختصارات سريعة",
     "quickLinksHint": "انتقل مباشرة إلى الأقسام الأكثر استخداماً",

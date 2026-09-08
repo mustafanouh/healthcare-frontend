@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import CrudPage from '../../../shared/components/crud/CrudPage';
 import { Badge, TableActionButton } from '../../../shared/components/ui';
-import { useLabRequestItems, useCreateLabRequestItem, useUpdateLabRequestItem, useDeleteLabRequestItem } from '../../lab-results/hooks/useLabRequestItems';
+import { useLabRequestItems, useCreateLabRequestItem, useUpdateLabRequestItem, useDeleteLabRequestItem, useStartLabRequestItem } from '../../lab-results/hooks/useLabRequestItems';
 import { useCreateLabResult } from '../../lab-results/hooks/useLabResults';
 import { useLabTests } from '../../lab-tests/hooks/useLabTests';
 import AddLabResultModal from '../components/AddLabResultModal';
@@ -16,7 +16,7 @@ const PER_PAGE = 10;
 
 const LabRequestsPage = () => {
     const { t } = useTranslation(['dashboard', 'common']);
-    const { isDoctor, isLabStaff, isAdmin } = useRole();
+    const { isDoctor, isLabStaff, isAdmin, isPatient } = useRole();
     const canManageRequests = isDoctor || isAdmin;
     const canStartAnalysis = isLabStaff || isAdmin;
     const queryClient = useQueryClient();
@@ -41,7 +41,7 @@ const LabRequestsPage = () => {
     const createMut = useCreateLabRequestItem();
     const updateMut = useUpdateLabRequestItem();
     const deleteMut = useDeleteLabRequestItem();
-    const startMut = useUpdateLabRequestItem();
+    const startMut = useStartLabRequestItem();
     const createResultMut = useCreateLabResult({
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['lab-request-items', 'list'] });
@@ -64,7 +64,7 @@ const LabRequestsPage = () => {
     const startAnalysis = async (request) => {
         setStartError('');
         try {
-            await startMut.mutateAsync({ id: request.id, payload: { status: 'processing' } });
+            await startMut.mutateAsync(request.id);
         } catch (error) {
             setStartError(parseApiError(error, t('errors.generic', { ns: 'common' })));
         }
@@ -73,7 +73,7 @@ const LabRequestsPage = () => {
     const columns = [
         { key: 'id', label: t('common.id', { ns: 'common' }) },
         { key: 'lab_test', label: t('labResults.test'), render: (request) => request.lab_test?.name ?? `#${request.lab_test_id}` },
-        { key: 'patient', label: t('appointments.patient'), render: (request) => request.visit?.patient?.profile?.full_name ?? '—' },
+        ...(!isPatient ? [{ key: 'patient', label: t('appointments.patient'), render: (request) => request.visit?.patient?.profile?.full_name ?? '—' }] : []),
         ...(!isDoctor ? [{ key: 'doctor', label: t('appointments.doctor'), render: (request) => request.visit?.doctor?.employee?.profile?.full_name ?? '—' }] : []),
         { key: 'requested_at', label: t('labResults.requestedAt'), render: (request) => formatDate(request.requested_at) },
         { key: 'status', label: t('common.status', { ns: 'common' }), render: (request) => <Badge status={request.status} /> },
@@ -81,7 +81,7 @@ const LabRequestsPage = () => {
     ];
     const fields = [
         { name: 'lab_test_id', label: t('labResults.test'), type: 'select', options: labTestOptions, placeholder: t('labRequests.selectTest'), fullWidth: true },
-        { name: 'requested_at', label: t('labResults.requestedAt'), type: 'datetime-local', dir: 'ltr' },
+        // { name: 'requested_at', label: t('labResults.requestedAt'), type: 'datetime-local', dir: 'ltr' },
         { name: 'notes', label: t('common.notes', { ns: 'common' }), fullWidth: true },
     ];
     const toolbar = (
@@ -95,12 +95,15 @@ const LabRequestsPage = () => {
 
     return (
         <>
-            <CrudPage title={t('nav.labRequests', { ns: 'common' })} columns={columns} data={rows} isLoading={isLoading} fields={canManageRequests ? fields : []} initialValues={{ lab_test_id: '', requested_at: '', notes: '' }} onCreate={canManageRequests ? (values) => createMut.mutateAsync(normalizePayload(values)) : undefined} onUpdate={canManageRequests ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) }) : undefined} onDelete={canManageRequests ? (id) => deleteMut.mutateAsync(id) : undefined} isSubmitting={canManageRequests && (createMut.isPending || updateMut.isPending)} tableToolbar={toolbar} tableFooter={pagination} renderRowActions={canStartAnalysis ? (request) => (
-                <>
-                    {request.status === 'pending' && <TableActionButton variant="primary" label={t('labRequests.start')} onClick={() => startAnalysis(request)} />}
-                    {request.status === 'processing' && <TableActionButton variant="primary" label={t('labResults.addForRequest')} onClick={() => setResultRequest(request)} />}
-                </>
-            ) : undefined} />
+            <CrudPage title={t('nav.labRequests', { ns: 'common' })} columns={columns} data={rows} isLoading={isLoading} fields={canManageRequests ? fields : []} initialValues={{ lab_test_id: '', requested_at: '', notes: '' }}
+                // onCreate={canManageRequests ? (values) => createMut.mutateAsync(normalizePayload(values)) : undefined} 
+                onUpdate={canManageRequests ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) }) : undefined}
+                onDelete={canManageRequests ? (id) => deleteMut.mutateAsync(id) : undefined} isSubmitting={canManageRequests && (createMut.isPending || updateMut.isPending)} tableToolbar={toolbar} tableFooter={pagination} renderRowActions={canStartAnalysis ? (request) => (
+                    <>
+                        {request.status === 'pending' && <TableActionButton variant="primary" label={t('labRequests.start')} onClick={() => startAnalysis(request)} />}
+                        {request.status === 'processing' && <TableActionButton variant="primary" label={t('labResults.addForRequest')} onClick={() => setResultRequest(request)} />}
+                    </>
+                ) : undefined} />
             <AddLabResultModal open={Boolean(resultRequest)} requestItem={resultRequest} onClose={() => setResultRequest(null)} onSubmit={(payload) => createResultMut.mutateAsync(payload)} isSubmitting={createResultMut.isPending} />
         </>
     );

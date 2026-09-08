@@ -13,6 +13,21 @@ export const facilityService = {
     },
     staff: async (id) => {
         const { data } = await axiosInstance.get(ENDPOINTS.facilityStaff(id));
+        if (data?.data && !Array.isArray(data.data)) {
+            const groups = [
+                ['doctors', 'doctor'],
+                ['pharmacists', 'pharmacist'],
+                ['lab_staff', 'lab_staff'],
+            ];
+            const staff = groups.flatMap(([key, type]) => (
+                Array.isArray(data.data[key]?.data)
+                    ? data.data[key].data.map((member) => ({ ...member, type }))
+                    : []
+            ));
+
+            return { ...data, data: staff, total: staff.length };
+        }
+
         return normalizeListResponse(data);
     },
     manager: async (id) => {

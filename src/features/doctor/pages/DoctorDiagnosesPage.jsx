@@ -123,7 +123,7 @@ const DoctorDiagnosesPage = () => {
       isLoading={query.isLoading}
       fields={fields}
       initialValues={{ visit_id: '', diagnosis_code: '', description: '', diagnosis_type: 'primary', notes: '' }}
-      onCreate={(values) => createMutation.mutateAsync({ ...values, visit_id: Number(values.visit_id) })}
+      // onCreate={(values) => createMutation.mutateAsync({ ...values, visit_id: Number(values.visit_id) })}
       onUpdate={updateDiagnosis}
       onDelete={(id) => deleteMutation.mutateAsync(id)}
       isSubmitting={createMutation.isPending || updateMutation.isPending}

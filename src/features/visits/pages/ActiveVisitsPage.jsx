@@ -48,8 +48,8 @@ const ActiveVisitsPage = () => {
                             <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
                                 {activeVisits.map((visit) => (
                                     <tr key={visit.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-surface-800/40">
-                                        <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">#{visit.id}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{visit.patient?.profile?.full_name ?? `#${visit.patient_id}`}</td>
+                                        <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">{visit.id}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{visit.patient?.profile?.full_name ?? `${visit.patient_id}`}</td>
                                         <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{formatDateTime(visit.visited_at)}</td>
                                         <td className="px-6 py-4"><Badge status={visit.status} /></td>
                                         <td className="px-6 py-4"><Button size="sm" onClick={() => navigate(`/doctor/visits/${visit.id}/active`)}>{t('visits.openActive', { defaultValue: 'Open visit' })}</Button></td>

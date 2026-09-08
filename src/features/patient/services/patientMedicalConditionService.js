@@ -10,6 +10,11 @@ export const patientMedicalConditionService = {
         const body = await baseService.list(params);
         return normalizeListResponse(body);
     },
+    // جديد: يرجع chronic_diseases + allergies لمريض واحد
+    getSummaryByPatient: async (patientId) => {
+        const { data } = await axiosInstance.get(ENDPOINTS.patientMedicalConditionsByPatient(patientId));
+        return data; // { success, data: { patient_id, chronic_diseases, allergies } }
+    },
 };
 
 export default patientMedicalConditionService;

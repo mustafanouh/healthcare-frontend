@@ -79,7 +79,7 @@ const ActiveVisitPage = () => {
     const [createdPrescriptionItems, setCreatedPrescriptionItems] = useState(() => persistedState.createdPrescriptionItems ?? []);
     const [prescriptionItemFormOpen, setPrescriptionItemFormOpen] = useState(() => persistedState.prescriptionItemFormOpen ?? true);
     const [editingPrescriptionItem, setEditingPrescriptionItem] = useState(() => persistedState.editingPrescriptionItem ?? null);
-    const [labRequest, setLabRequest] = useState(() => persistedState.labRequest ?? { lab_test_id: '', requested_at: '', notes: '' });
+    const [labRequest, setLabRequest] = useState(() => persistedState.labRequest ?? { lab_test_id: '', notes: '' }); //ss
     const [errors, setErrors] = useState(EMPTY_ERRORS);
     const [success, setSuccess] = useState('');
     const [createdPrescription, setCreatedPrescription] = useState(() => persistedState.createdPrescription ?? null);
@@ -231,12 +231,12 @@ const ActiveVisitPage = () => {
     };
     const createLabRequest = (event) => {
         event.preventDefault();
-        const payload = { ...labRequest, visit_id: Number(id), lab_test_id: Number(labRequest.lab_test_id), requested_at: labRequest.requested_at.replace('T', ' ') };
+        const payload = { ...labRequest, visit_id: Number(id), lab_test_id: Number(labRequest.lab_test_id) };
         submit(labMut, payload, 'Lab request', (response) => {
             const selectedTest = tests.find((test) => String(test.id) === String(labRequest.lab_test_id));
             const created = response?.data?.data ?? response?.data ?? response;
             setCreatedLabRequests((current) => [...current, { ...payload, id: created?.id, lab_test_name: selectedTest?.name ?? `#${labRequest.lab_test_id}` }]);
-            setLabRequest({ lab_test_id: '', requested_at: '', notes: '' });
+            setLabRequest({ lab_test_id: '', notes: '' });
             setLabFormOpen(false);
         });
     };
@@ -341,7 +341,9 @@ const ActiveVisitPage = () => {
                             <Button type="button" variant="secondary" onClick={() => setLabFormOpen(true)}>{t('visits.addAnotherLabRequest')}</Button>
                         </div>
                     ) : (
-                        <form onSubmit={createLabRequest} className="space-y-4"><Select label={t('visits.labTest')} name="lab_test_id" value={labRequest.lab_test_id} onChange={update(setLabRequest, 'lab_test_id')} options={tests.map((test) => ({ value: String(test.id), label: test.name }))} placeholder={t('visits.selectLabTest')} error={inputError('lab_test_id')} touched={Boolean(inputError('lab_test_id'))} required /><Input label={t('visits.requestedAt')} name="requested_at" type="datetime-local" value={labRequest.requested_at} onChange={update(setLabRequest, 'requested_at')} {...commonInput('requested_at')} required /><Input label={t('common.notes', { ns: 'common' })} name="notes" as="textarea" value={labRequest.notes} onChange={update(setLabRequest, 'notes')} {...commonInput('notes')} /><div className="flex flex-wrap gap-2"><Button type="submit" loading={labMut.isPending}>{t('visits.requestAnalysis')}</Button>{createdLabRequests.length > 0 && <Button type="button" variant="secondary" onClick={() => setLabFormOpen(false)}>{t('actions.cancel', { ns: 'common' })}</Button>}</div></form>
+                        <form onSubmit={createLabRequest} className="space-y-4"><Select label={t('visits.labTest')} name="lab_test_id" value={labRequest.lab_test_id} onChange={update(setLabRequest, 'lab_test_id')} options={tests.map((test) => ({ value: String(test.id), label: test.name }))} placeholder={t('visits.selectLabTest')} error={inputError('lab_test_id')} touched={Boolean(inputError('lab_test_id'))} required />
+                            {/* <Input label={t('visits.requestedAt')} name="requested_at" type="datetime-local" value={labRequest.requested_at} onChange={update(setLabRequest, 'requested_at')} {...commonInput('requested_at')} required /> */}
+                            <Input label={t('common.notes', { ns: 'common' })} name="notes" as="textarea" value={labRequest.notes} onChange={update(setLabRequest, 'notes')} {...commonInput('notes')} /><div className="flex flex-wrap gap-2"><Button type="submit" loading={labMut.isPending}>{t('visits.requestAnalysis')}</Button>{createdLabRequests.length > 0 && <Button type="button" variant="secondary" onClick={() => setLabFormOpen(false)}>{t('actions.cancel', { ns: 'common' })}</Button>}</div></form>
                     )}
                 </ActionCard>
 

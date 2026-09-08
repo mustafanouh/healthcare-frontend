@@ -83,16 +83,16 @@ const PrescriptionsPage = () => {
 
   const fields = [
 
-    { name: 'visit_id', label: 'Visit', type: 'select', options: visitOptions, placeholder: 'Select visit', fullWidth: true },
+    { name: 'visit_id', label: 'Visit', type: 'select', options: visitOptions, placeholder: 'Select visit', blank: true, fullWidth: true },
     { name: 'patient_id', label: 'Patient', type: 'select', options: visitOptions, placeholder: 'Select patient', fullWidth: true },
-    {
-      name: 'status',
-      label: t('common.status', { ns: 'common' }),
-      type: 'select',
-      options: ['pending', 'dispensed', 'cancelled'].map((s) => ({
-        value: s, label: t(`status.${s}`, { ns: 'common' }),
-      })),
-    },
+    // {
+    //   name: 'status',
+    //   label: t('common.status', { ns: 'common' }),
+    //   type: 'select',
+    //   options: ['pending', 'dispensed', 'cancelled'].map((s) => ({
+    //     value: s, label: t(`status.${s}`, { ns: 'common' }),
+    //   })),
+    // },
     { name: 'notes', label: t('common.notes', { ns: 'common' }), fullWidth: true },
   ];
 
@@ -182,9 +182,9 @@ const PrescriptionsPage = () => {
       tableFooter={!prescriptionsQuery.isLoading ? tableFooter : null}
       fields={canManage ? fields : []}
       initialValues={{ visit_id: '', status: 'pending', notes: '' }}
-      onCreate={canManage ? (v) => createMut.mutateAsync(normalizePayload(v)) : undefined}
+      // onCreate={canManage ? (v) => createMut.mutateAsync(normalizePayload(v)) : undefined}
       onUpdate={canManage ? ({ id, payload }) => updateMut.mutateAsync({ id, payload: normalizePayload(payload) }) : undefined}
-      onDelete={canManage ? (id) => deleteMut.mutateAsync(id) : undefined}
+      // onDelete={canManage ? (id) => deleteMut.mutateAsync(id) : undefined}
       isSubmitting={canManage && (createMut.isPending || updateMut.isPending)}
       renderDetailsModal={({ record, onClose }) => (
         <PrescriptionDetailsModal open onClose={onClose} prescription={record} canDispense={isPharmacist || isAdmin} />

@@ -30,18 +30,16 @@ const FacilityStaffPage = () => {
                                 <th className="px-5 py-3.5 text-start text-xs font-semibold uppercase text-gray-500">{t('common.id', { ns: 'common' })}</th>
                                 <th className="px-5 py-3.5 text-start text-xs font-semibold uppercase text-gray-500">{t('common.name', { ns: 'common' })}</th>
                                 <th className="px-5 py-3.5 text-start text-xs font-semibold uppercase text-gray-500">{t('facilities.staffType')}</th>
-                                <th className="px-5 py-3.5 text-start text-xs font-semibold uppercase text-gray-500">{t('common.phone', { ns: 'common' })}</th>
                                 <th className="px-5 py-3.5 text-start text-xs font-semibold uppercase text-gray-500">{t('facilities.qualification')}</th>
                             </tr></thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-surface-800">
                                 {staff.map((member) => {
-                                    const profile = member.profile || member.user?.profile || {};
+                                    const profile = member.employee?.profile || member.profile || member.user?.profile || {};
                                     const type = member.type || member.role || member.user?.roles?.[0] || '—';
                                     return <tr key={`${type}-${member.id}`} className="hover:bg-blue-50/40 dark:hover:bg-blue-900/10">
-                                        <td className="px-5 py-4 font-semibold text-gray-600 dark:text-gray-300">{member.id}</td>
+                                        <td className="px-5 py-4 font-semibold text-gray-600 dark:text-gray-300">{member.employee_id || member.id}</td>
                                         <td className="px-5 py-4 font-medium text-gray-900 dark:text-gray-100">{profile.full_name || member.name || member.user?.name || '—'}</td>
                                         <td className="px-5 py-4"><span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">{type}</span></td>
-                                        <td className="px-5 py-4 text-gray-600 dark:text-gray-300" dir="ltr">{profile.phone || member.phone || '—'}</td>
                                         <td className="px-5 py-4 text-gray-600 dark:text-gray-300">{member.qualification || member.degree || member.specialization?.name || '—'}</td>
                                     </tr>;
                                 })}

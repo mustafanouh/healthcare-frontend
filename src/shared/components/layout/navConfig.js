@@ -60,6 +60,7 @@ export const NAV_GROUPS = [
       { to: '/patient/appointments', labelKey: 'nav.appointments', icon: ICONS.calendar },
       { to: '/patient/prescriptions', labelKey: 'nav.prescriptions', icon: ICONS.pill },
       { to: '/patient/lab-results', labelKey: 'nav.labResults', icon: ICONS.flask },
+      { to: '/patient/lab-requests', labelKey: 'nav.labRequests', icon: ICONS.flask },
       { to: '/patient/diagnoses', labelKey: 'nav.diagnoses', icon: ICONS.clipboard },
     ],
   },

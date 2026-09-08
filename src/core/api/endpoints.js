@@ -33,6 +33,7 @@ export const ENDPOINTS = {
   medicalConditions: '/medical-conditions',
   medicalConditionsUpdate: '/medical_conditions',
   patientMedicalConditions: '/patient-medical-conditions',
+   patientMedicalConditionsByPatient: (patientId) => `/patient-medical-conditions/patient/${patientId}`,
 
   // Scheduling
   appointments: '/appointments',
@@ -56,6 +57,7 @@ export const ENDPOINTS = {
   // Laboratory
   labTests: '/lab-tests',
   labRequestItems: '/lab-request-items',
+  labRequestItemStart: (id) => `/lab-request-items/${id}/start`,
   labResults: '/lab-results',
 
   // Administration

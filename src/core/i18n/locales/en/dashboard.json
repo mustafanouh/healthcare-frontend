@@ -3,7 +3,7 @@
     "title": "Admin dashboard",
     "subtitle": "Overview of the healthcare system",
     "welcome": "Welcome, {{name}}",
-    "recentAppointments": "Today's appointments",
+    "recentAppointments": "Recent appointments",
     "appointmentsTodayHint": "Latest appointments scheduled for today",
     "quickLinks": "Quick links",
     "quickLinksHint": "Jump to the most used sections",
