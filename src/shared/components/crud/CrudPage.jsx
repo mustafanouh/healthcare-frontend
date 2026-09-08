@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, PageHeader, EnhancedDataTable, Button, Modal } from '../ui';
 import ResourceFormModal from './ResourceFormModal';
-import { parseApiError } from '../../utils/parseApiError';
+import { parseApiError, parseApiFieldErrors } from '../../utils/parseApiError';
 
 /**
  * Fully generic CRUD page.
@@ -87,10 +87,7 @@ const CrudPage = ({
       closeForm();
     } catch (error) {
       setSubmitError(parseApiError(error, t('errors.generic')));
-      const fieldErrors = error?.response?.data?.errors ?? {};
-      setSubmitErrors(Object.fromEntries(
-        Object.entries(fieldErrors).map(([field, messages]) => [field, Array.isArray(messages) ? messages.join('\n') : messages]),
-      ));
+      setSubmitErrors(parseApiFieldErrors(error));
     }
   };
 

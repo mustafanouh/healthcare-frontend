@@ -44,8 +44,11 @@ const ResourceFormModal = ({
 
   useEffect(() => {
     if (!open || !Object.keys(submitErrors).length) return;
+    formik.setTouched(
+      Object.fromEntries(Object.keys(submitErrors).map((name) => [name, true])),
+      false,
+    );
     formik.setErrors(submitErrors);
-    formik.setTouched(Object.fromEntries(Object.keys(submitErrors).map((name) => [name, true])));
   }, [open, submitErrors]);
 
   return (

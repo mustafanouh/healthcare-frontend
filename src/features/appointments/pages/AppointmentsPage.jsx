@@ -17,7 +17,7 @@ import { useFacilities, useFacilityBookingDepartments, useFacilityBookingSpecial
 import { useAuth } from '../../../core/hooks/useAuth';
 import { useRole } from '../../../core/hooks/useRole';
 import { formatDate, formatTime } from '../../../shared/utils/formatters';
-import { parseApiError } from '../../../shared/utils/parseApiError';
+import { parseApiError, parseApiFieldErrors } from '../../../shared/utils/parseApiError';
 
 const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = false, patientsError = '', patientId, onSubmit, isSubmitting }) => {
   const { t } = useTranslation(['dashboard', 'common']);
@@ -30,6 +30,7 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
   const [startTime, setStartTime] = useState('');
   const [reason, setReason] = useState('');
   const [submitError, setSubmitError] = useState('');
+  const [submitErrors, setSubmitErrors] = useState({});
 
   const { data: facilitiesData, isLoading: facilitiesLoading } = useFacilities();
   const { data: departmentsData, isLoading: departmentsLoading } = useFacilityBookingDepartments(facilityId);
@@ -37,7 +38,10 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
   const { data: doctorsData, isLoading: doctorsLoading } = useFacilityBookingDoctors(facilityId, departmentId, specializationId);
 
   const listFromResponse = (response) => Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
-  const facilities = listFromResponse(facilitiesData).filter((facility) => facility.facility_type === 'hospital' && Boolean(facility.is_active));
+  const facilities = listFromResponse(facilitiesData).filter((facility) => (
+    ['hospital', 'clinic'].includes(String(facility.facility_type).toLowerCase())
+    && Boolean(facility.is_active)
+  ));
   const departments = listFromResponse(departmentsData).filter((department) => Boolean(department.is_active));
   const specializations = listFromResponse(specializationsData).filter((specialization) => Boolean(specialization.is_active));
   const doctors = listFromResponse(doctorsData).filter((doctor) => Boolean(doctor.employee?.is_active));
@@ -99,12 +103,14 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
   const handleClose = () => {
     reset();
     setSubmitError('');
+    setSubmitErrors({});
     onClose();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitError('');
+    setSubmitErrors({});
     try {
       await onSubmit({
         patient_id: Number(selectedPatientId),
@@ -115,8 +121,14 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
       });
     } catch (error) {
       setSubmitError(parseApiError(error, t('common.saveError', { defaultValue: 'Could not save the appointment.' })));
+      setSubmitErrors(parseApiFieldErrors(error));
     }
   };
+
+  const fieldError = (name) => ({
+    error: submitErrors[name],
+    touched: Boolean(submitErrors[name]),
+  });
 
   return (
     <Modal open={open} onClose={handleClose} title={t('appointments.newAppointment')} size="lg">
@@ -126,12 +138,12 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
             {submitError}
           </div>
         )}
-        {!patientId && <Select label={t('appointments.patient')} name="patient_id" value={selectedPatientId} onChange={(event) => setSelectedPatientId(event.target.value)} options={patients} placeholder={patientsLoading ? t('appointments.loadingPatients', { defaultValue: 'Loading patients...' }) : patientsError || t('appointments.selectPatient', { defaultValue: 'Select a patient' })} disabled={patientsLoading || Boolean(patientsError)} required />}
+        {!patientId && <Select label={t('appointments.patient')} name="patient_id" value={selectedPatientId} onChange={(event) => setSelectedPatientId(event.target.value)} options={patients} placeholder={patientsLoading ? t('appointments.loadingPatients', { defaultValue: 'Loading patients...' }) : patientsError || t('appointments.selectPatient', { defaultValue: 'Select a patient' })} disabled={patientsLoading || Boolean(patientsError)} required {...fieldError('patient_id')} />}
 
-        <Select label={t('appointments.facility', { defaultValue: 'Facility' })} name="facility_id" value={facilityId} onChange={(event) => setFacilityId(event.target.value)} options={facilityOptions} placeholder={facilitiesLoading ? t('appointments.loadingFacilities', { defaultValue: 'Loading facilities...' }) : t('appointments.selectFacility', { defaultValue: 'Select a hospital' })} disabled={facilitiesLoading} required />
-        <Select label={t('appointments.department', { defaultValue: 'Department' })} name="department_id" value={departmentId} onChange={(event) => setDepartmentId(event.target.value)} options={departmentOptions} placeholder={departmentsLoading ? t('appointments.loadingDepartments', { defaultValue: 'Loading departments...' }) : t('appointments.selectDepartment', { defaultValue: 'Select a department' })} disabled={!facilityId || departmentsLoading} required />
-        <Select label={t('appointments.specialization', { defaultValue: 'Specialization' })} name="specialization_id" value={specializationId} onChange={(event) => setSpecializationId(event.target.value)} options={specializationOptions} placeholder={specializationsLoading ? t('appointments.loadingSpecializations', { defaultValue: 'Loading specializations...' }) : t('appointments.selectSpecialization', { defaultValue: 'Select a specialization' })} disabled={!departmentId || specializationsLoading} required />
-        <Select label={t('appointments.doctor')} name="doctor_id" value={doctorId} onChange={(event) => setDoctorId(event.target.value)} options={doctorOptions} placeholder={doctorsLoading ? t('appointments.loadingDoctors', { defaultValue: 'Loading doctors...' }) : t('appointments.selectDoctor', { defaultValue: 'Select a doctor' })} disabled={!specializationId || doctorsLoading} required />
+        <Select label={t('appointments.facility', { defaultValue: 'Facility' })} name="facility_id" value={facilityId} onChange={(event) => setFacilityId(event.target.value)} options={facilityOptions} placeholder={facilitiesLoading ? t('appointments.loadingFacilities', { defaultValue: 'Loading facilities...' }) : t('appointments.selectFacility', { defaultValue: 'Select a facility' })} disabled={facilitiesLoading} required {...fieldError('facility_id')} />
+        <Select label={t('appointments.department', { defaultValue: 'Department' })} name="department_id" value={departmentId} onChange={(event) => setDepartmentId(event.target.value)} options={departmentOptions} placeholder={departmentsLoading ? t('appointments.loadingDepartments', { defaultValue: 'Loading departments...' }) : t('appointments.selectDepartment', { defaultValue: 'Select a department' })} disabled={!facilityId || departmentsLoading} required {...fieldError('department_id')} />
+        <Select label={t('appointments.specialization', { defaultValue: 'Specialization' })} name="specialization_id" value={specializationId} onChange={(event) => setSpecializationId(event.target.value)} options={specializationOptions} placeholder={specializationsLoading ? t('appointments.loadingSpecializations', { defaultValue: 'Loading specializations...' }) : t('appointments.selectSpecialization', { defaultValue: 'Select a specialization' })} disabled={!departmentId || specializationsLoading} required {...fieldError('specialization_id')} />
+        <Select label={t('appointments.doctor')} name="doctor_id" value={doctorId} onChange={(event) => setDoctorId(event.target.value)} options={doctorOptions} placeholder={doctorsLoading ? t('appointments.loadingDoctors', { defaultValue: 'Loading doctors...' }) : t('appointments.selectDoctor', { defaultValue: 'Select a doctor' })} disabled={!specializationId || doctorsLoading} required {...fieldError('doctor_id')} />
 
         <Input
           label={t('appointments.scheduledDate')}
@@ -141,6 +153,7 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
           onChange={(event) => setScheduledDate(event.target.value)}
           min={new Date().toISOString().split('T')[0]}
           required
+          {...fieldError('scheduled_date')}
         />
 
         <Input
@@ -150,6 +163,7 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
           onChange={(event) => setReason(event.target.value)}
           placeholder={t('appointments.reasonPlaceholder', { defaultValue: 'Describe the reason for your appointment' })}
           required
+          {...fieldError('reason')}
         />
 
         <div>
@@ -166,6 +180,7 @@ const PatientBookingModal = ({ open, onClose, patients = [], patientsLoading = f
             }
             disabled={!doctorId || !scheduledDate || slotsLoading || slots.length === 0}
             required
+            {...fieldError('start_time')}
           />
           {slotsError && (
             <p className="mt-1.5 text-xs text-red-500">

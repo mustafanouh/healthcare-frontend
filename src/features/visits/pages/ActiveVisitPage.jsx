@@ -12,7 +12,7 @@ import { usePatient } from '../../patient/hooks/usePatients';
 import { usePatientMedicalConditionsSummary } from '../../patient/hooks/usePatientMedicalConditions';
 import { Badge, Button, Card, Input, Select, Spinner } from '../../../shared/components/ui';
 import { formatDate, formatDateTime } from '../../../shared/utils/formatters';
-import { parseApiError } from '../../../shared/utils/parseApiError';
+import { parseApiError, parseApiFieldErrors } from '../../../shared/utils/parseApiError';
 // import { usePatientMedicalConditions } from '../../patient/hooks/usePatients';
 const EMPTY_ERRORS = {};
 const ACTIVE_VISIT_STORAGE_PREFIX = 'healthcare.active-visit.';
@@ -124,9 +124,8 @@ const ActiveVisitPage = () => {
             onSuccess?.(response);
             setSuccess(t('common.savedSuccessfully', { defaultValue: `${formName} saved successfully.` }));
         } catch (error) {
-            const fieldErrors = error?.response?.data?.errors ?? {};
             setErrors({
-                ...fieldErrors,
+                ...parseApiFieldErrors(error),
                 _form: parseApiError(error, t('common.saveError', { defaultValue: 'Could not save this record.' })),
             });
         }

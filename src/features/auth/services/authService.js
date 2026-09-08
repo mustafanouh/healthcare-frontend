@@ -17,10 +17,10 @@ export const authService = {
    * Body: { name, email, password, password_confirmation,
    *         national_number, phone, gender, address, date_of_birth }
    */
-  register: async (payload) => {
-    const { data } = await axiosInstance.post(ENDPOINTS.auth.register, payload);
-    return data;
-  },
+   register: async (payload) => {
+     const { data } = await axiosInstance.post(ENDPOINTS.auth.register, payload);
+     return data;
+   },
 
   /**
    * POST /logout

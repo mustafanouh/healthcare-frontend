@@ -1,6 +1,7 @@
 import { ENDPOINTS } from '../../../core/api/endpoints';
 import { createResourceService } from '../../../core/api/createResourceService';
 import { normalizeListResponse } from '../../../shared/utils/normalizeListResponse';
+import axiosInstance from '../../../core/api/axiosInstance';
 
 const baseService = createResourceService(ENDPOINTS.patientMedicalConditions);
 
@@ -10,10 +11,9 @@ export const patientMedicalConditionService = {
         const body = await baseService.list(params);
         return normalizeListResponse(body);
     },
-    // جديد: يرجع chronic_diseases + allergies لمريض واحد
-    getSummaryByPatient: async (patientId) => {
+    forPatient: async (patientId) => {
         const { data } = await axiosInstance.get(ENDPOINTS.patientMedicalConditionsByPatient(patientId));
-        return data; // { success, data: { patient_id, chronic_diseases, allergies } }
+        return normalizeListResponse(data);
     },
 };
 

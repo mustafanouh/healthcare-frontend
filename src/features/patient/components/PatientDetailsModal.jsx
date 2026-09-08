@@ -11,6 +11,16 @@ import {
   useDeletePatientMedicalCondition,
 } from '../hooks/usePatientMedicalConditions';
 
+const getConditionList = (response) => {
+  if (Array.isArray(response)) return response;
+  if (Array.isArray(response?.data)) return response.data;
+  if (Array.isArray(response?.data?.data)) return response.data.data;
+  return [
+    ...(Array.isArray(response?.data?.chronic_diseases) ? response.data.chronic_diseases : []),
+    ...(Array.isArray(response?.data?.allergies) ? response.data.allergies : []),
+  ];
+};
+
 const DetailRow = ({ label, value, dir }) => (
   <div className="py-2.5 border-b border-gray-100 dark:border-surface-800 last:border-0">
     <dt className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">{label}</dt>
@@ -37,8 +47,8 @@ const PatientDetailsModal = ({ open, patient, onClose }) => {
   const createCondition = useCreatePatientMedicalCondition();
   const updateCondition = useUpdatePatientMedicalCondition();
   const deleteCondition = useDeletePatientMedicalCondition();
-  const patientConditions = conditionResponse?.data ?? [];
-  const availableConditions = availableResponse?.data ?? [];
+  const patientConditions = getConditionList(conditionResponse);
+  const availableConditions = Array.isArray(availableResponse?.data) ? availableResponse.data : [];
   const conditionFields = [
     {
       name: 'medical_condition_id',

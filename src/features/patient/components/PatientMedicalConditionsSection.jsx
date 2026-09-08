@@ -11,6 +11,16 @@ import {
     useDeletePatientMedicalCondition,
 } from '../hooks/usePatientMedicalConditions';
 
+const getConditionList = (response) => {
+    if (Array.isArray(response)) return response;
+    if (Array.isArray(response?.data)) return response.data;
+    if (Array.isArray(response?.data?.data)) return response.data.data;
+    return [
+        ...(Array.isArray(response?.data?.chronic_diseases) ? response.data.chronic_diseases : []),
+        ...(Array.isArray(response?.data?.allergies) ? response.data.allergies : []),
+    ];
+};
+
 const PatientMedicalConditionsSection = ({ patient, compact = false }) => {
     const { t, i18n } = useTranslation(['dashboard', 'common']);
     const [formOpen, setFormOpen] = useState(false);
@@ -21,8 +31,8 @@ const PatientMedicalConditionsSection = ({ patient, compact = false }) => {
     const createMutation = useCreatePatientMedicalCondition();
     const updateMutation = useUpdatePatientMedicalCondition();
     const deleteMutation = useDeletePatientMedicalCondition();
-    const conditions = conditionResponse?.data ?? [];
-    const availableConditions = availableResponse?.data ?? [];
+    const conditions = getConditionList(conditionResponse);
+    const availableConditions = Array.isArray(availableResponse?.data) ? availableResponse.data : [];
 
     const fields = [
         {

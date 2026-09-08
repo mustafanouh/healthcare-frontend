@@ -1,8 +1,10 @@
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input, Select, Button } from '../../../shared/components/ui';
 import { registerSchema } from '../../../shared/utils/validators';
 import { useRegisterMutation } from '../hooks/useAuthMutations';
+import { parseApiError, parseApiFieldErrors } from '../../../shared/utils/parseApiError';
 
 const RegisterForm = () => {
   const { t } = useTranslation(['auth', 'common']);
@@ -23,6 +25,25 @@ const RegisterForm = () => {
     validationSchema: registerSchema(t),
     onSubmit: (values) => registerMutation.mutate(values),
   });
+
+  const registerFieldErrors = parseApiFieldErrors(registerMutation.error);
+  const registerErrorMessage = parseApiError(registerMutation.error, t('errors.registerFailed'));
+  const hasUnmappedFieldErrors = Object.keys(registerFieldErrors).some(
+    (field) => !Object.prototype.hasOwnProperty.call(formik.values, field),
+  );
+
+  useEffect(() => {
+    if (!registerMutation.error) return;
+
+    const fieldErrors = parseApiFieldErrors(registerMutation.error);
+    if (Object.keys(fieldErrors).length) {
+      formik.setTouched(
+        Object.fromEntries(Object.keys(fieldErrors).map((field) => [field, true])),
+        false,
+      );
+      formik.setErrors(fieldErrors);
+    }
+  }, [registerMutation.error]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4" noValidate>
@@ -63,10 +84,10 @@ const RegisterForm = () => {
         />
       </div>
 
-      {registerMutation.isError && (
+      {registerMutation.isError && (hasUnmappedFieldErrors || !Object.keys(registerFieldErrors).length) && (
         <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/40 rounded-lg">
           <p className="text-sm text-red-600 dark:text-red-400">
-            {registerMutation.error?.response?.data?.message || t('errors.registerFailed')}
+            {registerErrorMessage}
           </p>
         </div>
       )}

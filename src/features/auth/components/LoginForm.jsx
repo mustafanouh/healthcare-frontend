@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input, Button } from '../../../shared/components/ui';
 import { loginSchema } from '../../../shared/utils/validators';
-import { parseApiError } from '../../../shared/utils/parseApiError';
+import { parseApiError, parseApiFieldErrors } from '../../../shared/utils/parseApiError';
 import { useLoginMutation } from '../hooks/useAuthMutations';
 
 const LoginForm = () => {
@@ -21,6 +22,19 @@ const LoginForm = () => {
     validationSchema: loginSchema(t),
     onSubmit: (values) => loginMutation.mutate(values),
   });
+
+  useEffect(() => {
+    if (!loginMutation.error) return;
+
+    const fieldErrors = parseApiFieldErrors(loginMutation.error);
+    if (Object.keys(fieldErrors).length) {
+      formik.setTouched(
+        Object.fromEntries(Object.keys(fieldErrors).map((field) => [field, true])),
+        false,
+      );
+      formik.setErrors(fieldErrors);
+    }
+  }, [loginMutation.error]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4" noValidate>
@@ -64,4 +78,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

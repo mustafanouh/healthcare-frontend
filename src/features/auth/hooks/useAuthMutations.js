@@ -34,16 +34,27 @@ export const useLoginMutation = () => {
 };
 
 /**
- * Handles POST /register. On success, redirects to /login so the
- * user can sign in with their new credentials.
+ * Handles POST /register. The API returns an access token and user,
+ * so the newly created patient can continue directly to their dashboard.
  */
 export const useRegisterMutation = () => {
   const navigate = useNavigate();
+  const setAuth = useAuthStore((s) => s.setAuth);
 
   return useMutation({
-    mutationFn: authService.register,
-    onSuccess: () => {
-      navigate('/login', { state: { registered: true } });
+    mutationFn: async (payload) => {
+      const data = await authService.register(payload);
+      const { token, user } = parseAuthResponse(data);
+
+      if (!token || !user) {
+        throw new Error('Registration succeeded but no authenticated user was returned');
+      }
+
+      return { token, user };
+    },
+    onSuccess: ({ token, user }) => {
+      setAuth(user, token);
+      navigate('/patient/dashboard', { replace: true });
     },
   });
 };
