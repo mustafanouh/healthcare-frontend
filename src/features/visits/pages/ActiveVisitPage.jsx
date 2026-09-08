@@ -8,11 +8,12 @@ import { useCreatePrescriptionItem, useUpdatePrescriptionItem, useDeletePrescrip
 import { useCreateLabRequestItem, useUpdateLabRequestItem, useDeleteLabRequestItem } from '../../lab-results/hooks/useLabRequestItems';
 import { useLabTests } from '../../lab-tests/hooks/useLabTests';
 import { usePatient } from '../../patient/hooks/usePatients';
-import { usePatientMedicalConditions } from '../../patient/hooks/usePatientMedicalConditions';
+// import { usePatientMedicalConditionsSummary } from '../../patient/hooks/usePatients';
+import { usePatientMedicalConditionsSummary } from '../../patient/hooks/usePatientMedicalConditions';
 import { Badge, Button, Card, Input, Select, Spinner } from '../../../shared/components/ui';
 import { formatDate, formatDateTime } from '../../../shared/utils/formatters';
 import { parseApiError } from '../../../shared/utils/parseApiError';
-
+// import { usePatientMedicalConditions } from '../../patient/hooks/usePatients';
 const EMPTY_ERRORS = {};
 const ACTIVE_VISIT_STORAGE_PREFIX = 'healthcare.active-visit.';
 
@@ -46,14 +47,11 @@ const ActiveVisitPage = () => {
     const patientId = visit?.patient_id ?? visit?.patient?.id;
     const { data: patientResponse, isLoading: patientLoading } = usePatient(patientId);
     const patient = patientResponse?.data ?? patientResponse ?? visit?.patient;
-    const { data: conditionsResponse, isLoading: conditionsLoading } = usePatientMedicalConditions(patientId);
-    const medicalConditions = Array.isArray(conditionsResponse?.data)
-        ? conditionsResponse.data
-        : Array.isArray(conditionsResponse)
-            ? conditionsResponse
-            : conditionsResponse?.data
-                ? [conditionsResponse.data]
-                : [];
+    const { data: conditionsSummary, isLoading: conditionsLoading } = usePatientMedicalConditionsSummary(patientId);
+    const medicalConditions = [
+        ...(conditionsSummary?.chronic_diseases ?? []),
+        ...(conditionsSummary?.allergies ?? []),
+    ];
     const { data: testsResponse } = useLabTests();
     const tests = Array.isArray(testsResponse?.data) ? testsResponse.data : Array.isArray(testsResponse) ? testsResponse : [];
     const persistedState = readActiveVisitState(id);

@@ -12,9 +12,35 @@ const DispensingPage = () => {
 
   const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
-    { key: 'prescription_item_id', label: 'Prescription Item ID' },
-    { key: 'quantity_dispensed', label: t('prescriptions.dispenseQuantity') },
-    { key: 'dispensed_at', label: t('common.date', { ns: 'common' }), render: (r) => formatDate(r.dispensed_at) },
+    {
+      key: 'medication_name',
+      label: t('prescriptions.medicationName'),
+      render: (r) => r.prescription_item?.medication_name ?? '—',
+    },
+    {
+      key: 'patient',
+      label: t('appointments.patient'),
+      render: (r) => r.prescription_item?.prescription?.visit?.patient?.profile?.full_name ?? '—',
+    },
+    {
+      key: 'dosage',
+      label: t('prescriptions.dosage'),
+      render: (r) => r.prescription_item?.dosage ?? '—',
+    },
+    {
+      key: 'quantity_dispensed',
+      label: t('prescriptions.dispenseQuantity'),
+    },
+    {
+      key: 'dispensed_at',
+      label: t('common.date', { ns: 'common' }),
+      render: (r) => formatDate(r.dispensed_at),
+    },
+    // {
+    //   key: 'pharmacist',
+    //   label: t('pharmacist.pharmacist', { defaultValue: 'Pharmacist' }),
+    //   render: (r) => r.pharmacist?.employee?.profile?.full_name ?? '—',
+    // },
   ];
 
   const fields = [
