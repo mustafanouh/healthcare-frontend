@@ -10,7 +10,7 @@ import { useRole } from '../../../core/hooks/useRole';
 
 const VisitsPage = () => {
   const { t } = useTranslation(['dashboard', 'common']);
-  const { isDoctor } = useRole();
+  const { isDoctor , isPatient } = useRole();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchInput, setSearchInput] = useState('');
@@ -64,15 +64,14 @@ const VisitsPage = () => {
     label: `${appointment.doctor?.profile?.full_name ?? `Dr #${appointment.doctor_id}`} — ${appointment.patient?.profile?.full_name ?? `Patient #${appointment.patient_id}`} — ${formatTime(appointment.start_time)}`,
   }));
 
-  const columns = [
+ const columns = [
     { key: 'id', label: t('common.id', { ns: 'common' }) },
-    { key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` },
+    ...(!isPatient ? [{ key: 'patient', label: t('appointments.patient'), render: (r) => r.patient?.profile?.full_name ?? `#${r.patient_id}` }] : []),
     ...(!isDoctor ? [{ key: 'doctor', label: t('appointments.doctor'), render: (r) => r.doctor?.employee?.profile?.full_name ?? `#${r.doctor_id}` }] : []),
     { key: 'status', label: t('common.status', { ns: 'common' }), render: (r) => <Badge status={r.status} /> },
     { key: 'visited_at', label: t('visits.visitedAt'), render: (r) => formatDate(r.visited_at) },
     // { key: 'notes', label: t('common.notes', { ns: 'common' }) },
-  ];
-
+];
   const fields = [
     {
       name: 'appointment_id',
@@ -156,7 +155,7 @@ const VisitsPage = () => {
       isLoading={isLoading}
       tableToolbar={tableToolbar}
       tableFooter={!isLoading ? tableFooter : null}
-      onView={(row) => navigate(`${isDoctor ? '/doctor' : '/admin'}/visits/${row.id}`)}
+      onView={(row) => navigate(`${isDoctor ? '/doctor' : isPatient ? '/patient' : '/admin'}/visits/${row.id}`)}
       fields={fields}
       initialValues={{ appointment_id: searchParams.get('appointment_id') ?? '', notes: '', visited_at: '' }}
       onDelete={(id) => deleteMut.mutateAsync(id)}

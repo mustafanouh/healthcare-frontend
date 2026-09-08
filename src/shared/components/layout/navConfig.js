@@ -62,6 +62,8 @@ export const NAV_GROUPS = [
       { to: '/patient/lab-results', labelKey: 'nav.labResults', icon: ICONS.flask },
       { to: '/patient/lab-requests', labelKey: 'nav.labRequests', icon: ICONS.flask },
       { to: '/patient/diagnoses', labelKey: 'nav.diagnoses', icon: ICONS.clipboard },
+      { to: '/patient/visits', labelKey: 'nav.visits', icon: ICONS.clipboard },
+    
     ],
   },
   {

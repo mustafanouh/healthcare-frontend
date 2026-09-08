@@ -122,6 +122,9 @@ export const router = createBrowserRouter([
           { path: '/patient/lab-results', element: wrap(<LabResultsPage />) },
           { path: '/patient/diagnoses', element: wrap(<DiagnosesPage />) },
           { path: '/patient/lab-requests', element: wrap(<LabRequestsPage />) },
+          { path: '/patient/visits', element: wrap(<VisitsPage />) },
+          // { path: '/patient/visits/:id/active', element: wrap(<ActiveVisitPage />) },
+          { path: '/patient/visits/:id', element: wrap(<VisitDetailsPage />) },
 
           { path: '/pharmacist/dashboard', element: wrap(<PharmacistDashboard />) },
           { path: '/pharmacist/prescriptions', element: wrap(<PrescriptionsPage />) },
